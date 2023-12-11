@@ -90,14 +90,17 @@ const Register = ({navigation}) =>{
                 autoCapitalize = "none"
             />
 
+            <View style = {styles.helpingText}>
+                    <Text style={styles.inputText}>Ai deja un cont? Apasă <Text onPress = {()=>navigation.navigate("Login")} style={styles.helpingTextBold}>aici.</Text></Text> 
+                </View>
+
             <Button
                 title="Autentificare"
                 isLoading={isLoading}
-                onPress = {()=>navigation.navigate("Login")}
+                onPress = {()=>navigation.navigate("LandingPage")}
             />
 
             <GoogleButton
-                title="Autentificare folosind Google"
                 isLoading={isLoading}
                 onPress = {()=>navigation.navigate("Login")}
             />
@@ -112,6 +115,20 @@ const Register = ({navigation}) =>{
 const styles = StyleSheet.create({
     header: {
         flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingBottom: 4
+    },
+
+    helpingText: {
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingBottom: 4
+    },
+    helpingTextBold: {
+        fontFamily: "bold",
         justifyContent: "flex-start",
         alignItems: "center",
         paddingHorizontal: 20,
@@ -135,7 +152,8 @@ const styles = StyleSheet.create({
         ...Fonts.inputText,
         color: Colors.greyForText,
         marginVertical: 4
-    }
+    },
+
 })
 
 export default Register;

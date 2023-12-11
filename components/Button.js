@@ -15,7 +15,6 @@ const Button = (props) =>{
 
      onPress = {props.onPress}
      >
-
         {
             isLoading && isLoading == true ? (
                 <ActivityIndicator size="small" color={Colors.white}/>

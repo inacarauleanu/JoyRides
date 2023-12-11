@@ -16,12 +16,14 @@ const isTestMode = true;
 const initialState = {
     inputValues:{
         email: isTestMode ? "example@gmail.com" : "",
-        password: isTestMode ? "*******" : ""
+        password: isTestMode ? "*******" : "",
+        confirmPassword: isTestMode ? "*******" : "",
     },
 
     inputValidities:{
         email: false,
-        password: false
+        password: false,
+        confirmPassword: false
     },
 
     formIsValid: false
@@ -29,7 +31,7 @@ const initialState = {
 
 
 
-const Login = ({navigation}) =>{
+const ForgotPassword = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
@@ -42,16 +44,15 @@ const Login = ({navigation}) =>{
     return (
      <SafeAreaView style={{flex:1, backgroundColor: "white"}}>
     <View style = {styles.header}>
-        <Text style={styles.mainTitle}>Introdu detaliile contului tău</Text>
+        <Text style={styles.mainTitle}>Ai uitat parola? Nicio problemă</Text>
     </View>
 
     <View style = {styles.footer}>
         <KeyboardAwareScrollView>
           {/* <Text style={styles.inputText}>Nume de utilizator...</Text>*/}  
             
-            {/*<Text style={styles.inputText}>Adresa de e-mail</Text>*/}
             <Text style={styles.inputText1}>Dacă adresa de e-mail există în baza de date, vei primi un e-mail prin care vei confirma noua parolă</Text>
-
+            
             <Input 
                 style={styles.input}
                 id="email"
@@ -61,7 +62,7 @@ const Login = ({navigation}) =>{
                 placeholderTextColor={Colors.black}
                 keyboardType="email-address"
             />
-            {/*<Text style={styles.inputText}>Parola</Text>*/}
+            
             <Input 
                 style={styles.input}
                 id="password"
@@ -72,19 +73,20 @@ const Login = ({navigation}) =>{
                 secureTextEntry = {true}
                 autoCapitalize = "none"
             />
-           {/* <Text style={styles.inputText}>Confirmă Parola...</Text>*/}
-            
-            <View style = {styles.helpingText}>
-                    <Text style={styles.inputText}>Ai uitat parola? Apasă <Text onPress = {()=>navigation.navigate("ForgotPassword")} style={styles.helpingTextBold}>aici.</Text></Text> 
-                </View>
 
-            <Button
-                title="Log In"
-                isLoading={isLoading}
-                onPress = {()=>navigation.navigate("LandingPage")}
+            <Input 
+                id="confirmPassword"
+                placeholder="********"
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["confirmPassword"]}
+                placeholderTextColor={Colors.black}
+                secureTextEntry = {true}
+                autoCapitalize = "none"
             />
-
-            <GoogleButton
+           <Text style={styles.inputText1}></Text>
+            
+            <Button
+                title="Trimite"
                 isLoading={isLoading}
                 onPress = {()=>navigation.navigate("Login")}
             />
@@ -104,13 +106,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         paddingBottom: 4
-    },
-
-    inputText1: {
-        ...Fonts.inputText,
-        color: Colors.babyOrange,
-        marginBottom:10,
-        textAlign: "center"
     },
 
     helpingText: {
@@ -145,14 +140,15 @@ const styles = StyleSheet.create({
         ...Fonts.pageTitles,
         color: Colors.black
     },
-    inputText: {
+    inputText1: {
         ...Fonts.inputText,
         color: Colors.greyForText,
-        marginTop: 36,
-        marginBottom: 36
+        marginBottom:56,
+        textAlign: "center"
     },
+  
     
 
 })
 
-export default Login;
+export default ForgotPassword;
