@@ -13,6 +13,7 @@ const {width, height} = Dimensions.get("window");
  };
 
  export const Sizes = {
+   appTitle: 36,
     mainTitle: 36,
     pageTitles: 20,
     buttonText: 21,
@@ -28,9 +29,11 @@ const {width, height} = Dimensions.get("window");
 
  export const Fonts = {
     mainTitle: {fontFamily: "bold", fontSize: Sizes.mainTitle, lineHeight: 55},
+    appTitle: {fontFamily: "bold", fontSize: Sizes.appTitle, lineHeight: 135},
 
-    pageTitles: {fontFamily: "regular", fontSize: Sizes.pageTitles, lineHeight: 136},
-    inputText: {fontFamily: "medium", fontSize: Sizes.otherText, lineHeight: 36},
+
+    pageTitles: {fontFamily: "regular", fontSize: Sizes.pageTitles, lineHeight: 156},
+    inputText: {fontFamily: "medium", fontSize: Sizes.otherText},
 
 
  }

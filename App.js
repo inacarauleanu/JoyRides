@@ -8,6 +8,9 @@ import { useCallback } from "react";
 //screens
 import Login from './screens/Login.js';
 import Register from "./screens/Register.js";
+import ForgotPassword from "./screens/ForgotPassword.js";
+import Welcome from "./screens/Welcome.js";
+import LandingPage from "./screens/LandingPage.js";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,7 +37,7 @@ export default function App() {
     <SafeAreaProvider onLayout = {onLayoutRootView}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName = "Register"
+          initialRouteName = "Welcome"
         >
           <Stack.Screen
             name="Register"
@@ -46,6 +49,27 @@ export default function App() {
           <Stack.Screen
             name = "Login"
             component = {Login}
+            options = {{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name = "ForgotPassword"
+            component = {ForgotPassword}
+            options = {{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name = "Welcome"
+            component = {Welcome}
+            options = {{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name = "LandingPage"
+            component = {LandingPage}
             options = {{
               headerShown: false
             }}
