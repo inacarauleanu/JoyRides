@@ -9,7 +9,9 @@ import { validateInput } from '../utils/actions/formAction.js';
 import { reducer } from '../utils/reducers/formReducers.js';
 import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from '../firebase-config.js';
+import Login from './Login.js';
 
 const isTestMode = true;
 
@@ -34,12 +36,32 @@ const initialState = {
 const ForgotPassword = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
+    const [email, setEmail] = useState('');
+    const [validationMessage, setValidationMessage] = useState('')
+    const [ok, setOk] = useState(0);
 
     const inputChangedHandler = useCallback((inputId, inputValue) =>{
         const result = validateInput(inputId, inputValue)
         dispatchFormState({inputId, validationResult: result, inputValue})
     }, [dispatchFormState])
 
+    async function resetPassword() {
+        try{
+        setOk(0);
+         await sendPasswordResetEmail(auth, email);
+          // Password reset email sent!
+            setValidationMessage('Mail-ul a fost trimis cu succes!');
+            setOk(1);
+            console.log("mail resetare parola trimis");
+            navigation.navigate('Login');
+    }   catch(error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setValidationMessage(errorMessage);
+            console.log(errorMessage);
+            // ..
+        };
+      }
 
     return (
      <SafeAreaView style={{flex:1, backgroundColor: "white"}}>
@@ -56,14 +78,16 @@ const ForgotPassword = ({navigation}) =>{
             <TextInput 
                 style={styles.inputContainer}
                 id="email"
+                value = {email}
                 placeholder="Adresa de e-mail..."
-                onInputChanged={inputChangedHandler}
+                onChangeText={(text) => setEmail(text)}
+               // onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["email"]}
                 placeholderTextColor={Colors.myLightGrey}
                 keyboardType="email-address"
             />
             
-            <TextInput 
+           {/*<TextInput 
                 style={styles.inputContainer}
                 id="password"
                 placeholder="Noua parolă..."
@@ -83,13 +107,15 @@ const ForgotPassword = ({navigation}) =>{
                 placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {true}
                 autoCapitalize = "none"
-            />
-           <Text style={styles.inputText1}></Text>
-            
+    />*/}
+          <View style = {styles.helpingText}>
+            <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
+                </View>
+
             <Button
                 title="Trimite"
                 isLoading={isLoading}
-                onPress = {()=>navigation.navigate("Login")}
+                onPress = {resetPassword}
             />
            
         </KeyboardAwareScrollView>
@@ -123,15 +149,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingBottom: 4
     },
-
+    error: {
+        marginTop: 10,
+        color: 'red',
+      },
+      good: {
+        marginTop: 10,
+        color: 'green',
+      },
     footer: {
         flex: 3,
         backgroundColor: Colors.babyOrange,
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
+        //borderBottomLeftRadius: 50,
+        //borderBottomRightRadius: 50,
         paddingHorizontal: 22,
         paddingVertical: 30,
-
         //borderBottomLeftRadius: 50,
         //borderBottomRightRadius: 50
         
@@ -168,7 +202,8 @@ const styles = StyleSheet.create({
     inputText1: {
         ...Fonts.inputText,
         color: Colors.greyForText,
-        marginBottom:56,
+        marginTop: 44,
+        marginBottom: 44,
         textAlign: "center"
     },
   

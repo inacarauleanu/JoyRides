@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../firebase-config.js";
 import LandingPage from './LandingPage.js';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const isTestMode = true;
 
@@ -45,7 +45,12 @@ const Login = ({navigation}) =>{
   const [password,setPassword] = useState('');
   const [validationMessage,setvalidationMessage] = useState('');
   const [ok, setOk] = useState(0);
-
+// State variable to track password visibility 
+const [showPassword, setShowPassword] = useState(false); 
+// Function to toggle the password visibility state 
+const toggleShowPassword = () => { 
+    setShowPassword(!showPassword); 
+}; 
   async function login() {
     setOk(0);
     if (email === '' || password === '') {
@@ -78,7 +83,7 @@ const Login = ({navigation}) =>{
           {/* <Text style={styles.inputText}>Nume de utilizator...</Text>*/}  
             
             {/*<Text style={styles.inputText}>Adresa de e-mail</Text>*/}
-            <Text style={styles.inputText1}>Dacă adresa de e-mail există în baza de date, vei primi un e-mail prin care vei confirma noua parolă</Text>
+            {/*<Text style={styles.inputText1}>Dacă adresa de e-mail există în baza de date, vei primi un e-mail prin care vei confirma noua parolă</Text>*/}
 
             <TextInput 
                 style={styles.inputContainer}
@@ -92,8 +97,9 @@ const Login = ({navigation}) =>{
                 keyboardType="email-address"
             />
             {/*<Text style={styles.inputText}>Parola</Text>*/}
+            <View style={styles.inputContainer}> 
             <TextInput 
-                style={styles.inputContainer}
+                style={styles.inputText}
                 id="password"
                 placeholder="Parola..."
                 value={password}
@@ -101,14 +107,22 @@ const Login = ({navigation}) =>{
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["password"]}
                 placeholderTextColor={Colors.myLightGrey}
-                secureTextEntry = {true}
+                secureTextEntry = {!showPassword} 
                 autoCapitalize = "none"
             />
+             <MaterialCommunityIcons 
+                    name={showPassword ? 'eye-off' : 'eye'} 
+                    size={24} 
+                    color="#aaa"
+                    style={styles.icon} 
+                    onPress={toggleShowPassword} 
+                /> 
+                </View>
            {/* <Text style={styles.inputText}>Confirmă Parola...</Text>*/}
             
             <View style = {styles.helpingText}>
             <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
-                    <Text style={styles.inputText}>Ai uitat parola? Apasă <Text onPress = {()=>navigation.navigate("ForgotPassword")} style={styles.helpingTextBold}>aici.</Text></Text> 
+                    <Text style={styles.inputText1}>Ai uitat parola? Apasă <Text onPress = {()=>navigation.navigate("ForgotPassword")} style={styles.helpingTextBold}>aici.</Text></Text> 
                 </View>
 
             <Button
@@ -138,12 +152,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingBottom: 4
     },
-
+    icon: { 
+        marginLeft: 100,
+        
+    },
     inputText1: {
         ...Fonts.inputText,
-        color: Colors.babyOrange,
-        marginBottom:10,
-        textAlign: "center"
+        color: Colors.black,
+        marginBottom:30,
+        textAlign: "center",
+        fontFamily:"regular"
     },
 
     helpingText: {
@@ -193,6 +211,8 @@ const styles = StyleSheet.create({
         borderWidth: .7,
         marginVertical: 5,
         flexDirection: "row",
+        alignItems: 'center', 
+        justifyContent: 'center', 
         color: Colors.greyForText,
         borderColor: "white",
         shadowColor: "#000",
@@ -205,7 +225,9 @@ const styles = StyleSheet.create({
         elevation: 5,
         flex: 1,
         fontFamily: "regular",
-        paddingLeft: 20
+        paddingLeft: 20,
+        fontSize: 16, 
+        
     },
 
     
@@ -214,10 +236,13 @@ const styles = StyleSheet.create({
         color: Colors.black
     },
     inputText: {
-        ...Fonts.inputText,
+        
+       // ...Fonts.inputText,
+       fontFamily: "regular",
         color: Colors.greyForText,
-        marginTop: 36,
-        marginBottom: 36
+        flex: 1, 
+        fontSize: 16, 
+       
     },
     
 
