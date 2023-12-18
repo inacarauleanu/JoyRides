@@ -29,7 +29,7 @@ const initialState = {
 
 
 
-const Login = ({navigation}) =>{
+const Welcome = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Login;
+export default Welcome;

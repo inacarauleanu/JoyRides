@@ -4,7 +4,7 @@ import {SafeAreaProvider} from "react-native-safe-area-context";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import { useCallback } from "react";
-
+import { auth } from "./firebase-config.js";
 //screens
 import Login from './screens/Login.js';
 import Register from "./screens/Register.js";
@@ -33,6 +33,7 @@ export default function App() {
   if(!fontsLoaded){
     return null
   }
+  
   return (
     <SafeAreaProvider onLayout = {onLayoutRootView}>
       <NavigationContainer>

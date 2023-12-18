@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -53,33 +53,34 @@ const ForgotPassword = ({navigation}) =>{
             
             <Text style={styles.inputText1}>Dacă adresa de e-mail există în baza de date, vei primi un e-mail prin care vei confirma noua parolă</Text>
             
-            <Input 
-                style={styles.input}
+            <TextInput 
+                style={styles.inputContainer}
                 id="email"
-                placeholder="example@gmail.com"
+                placeholder="Adresa de e-mail..."
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["email"]}
-                placeholderTextColor={Colors.black}
+                placeholderTextColor={Colors.myLightGrey}
                 keyboardType="email-address"
             />
             
-            <Input 
-                style={styles.input}
+            <TextInput 
+                style={styles.inputContainer}
                 id="password"
-                placeholder="********"
+                placeholder="Noua parolă..."
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["password"]}
-                placeholderTextColor={Colors.black}
+                placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {true}
                 autoCapitalize = "none"
             />
 
-            <Input 
+            <TextInput 
+                style={styles.inputContainer}
                 id="confirmPassword"
-                placeholder="********"
+                placeholder="Confirma noua parolă..."
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["confirmPassword"]}
-                placeholderTextColor={Colors.black}
+                placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {true}
                 autoCapitalize = "none"
             />
@@ -135,6 +136,30 @@ const styles = StyleSheet.create({
         //borderBottomRightRadius: 50
         
         
+    },
+
+    inputContainer: {
+        width: "100%",
+        backgroundColor: Colors.white,
+        paddingHorizontal: Sizes.padding,
+        paddingVertical: Sizes.padding2,
+        borderRadius: 50,
+        borderWidth: .7,
+        marginVertical: 5,
+        flexDirection: "row",
+        color: Colors.greyForText,
+        borderColor: "white",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        flex: 1,
+        fontFamily: "regular",
+        paddingLeft: 20
     },
     mainTitle: {
         ...Fonts.pageTitles,
