@@ -11,6 +11,7 @@ import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "C:/Users/inaca/JoyRides/firebase-config.js";
+import { getDatabase, ref, set } from "firebase/database";
 
 const isTestMode = true;
 
@@ -50,35 +51,53 @@ const Register = ({navigation}) =>{
      }
 
      function checkPassword(firstpassword,secondpassword) {
+        setValidationMessage('');
+        setValidationMessageGood('');
         if(firstpassword !== secondpassword){
+            ok = 0;
           setValidationMessage('Parolele nu se potrivesc') 
         }
         else setValidationMessage('')
       }
+
+      function writeUserData(userId, name, email) {
+        const db = getDatabase();
+        set(ref(db, 'users/' + userId), {
+          username: name,
+          email: email,
+        });
+      }
+    
       async function createAccount() {
         setValidationMessage('');
-        setValidationMessageGood('');
-        
          ok = 0;
-
-        email === '' || password === '' 
-        ? setValidationMessage('Toate campurile trebuiesc completate')
-        : ''
         try {
+            setValidationMessage('');
+            if(email === '' || password === '' || fullname === '' || confirmPassword === '')
+            setValidationMessage('Toate campurile trebuiesc completate')
+        else
+           { if(password !== confirmPassword){
+              setValidationMessage('Parolele nu se potrivesc');
+            }else{
           await createUserWithEmailAndPassword(auth, email, password);
-          /*const user = userCredential.user;
-
-        // Update the user's profile with fullname
-            user.updateProfile({
-          displayName: fullname,
-         })*/
-          //navigation.navigate('Landing Page');
-          setValidationMessageGood('Utilizatorul a fost inregistrat cu succes')
+          ok = 1;
+          setValidationMessage('Utilizatorul a fost inregistrat cu succes');
+          const userId = auth.currentUser.uid;
+          writeUserData(userId,fullname, email);
           console.log("bagat");
+          setConfirmPassword('');
+          setEmail('');
+          setFullname('');
+          setPassword('');
+
+            }
+        }
         } catch (error) {
-          setValidationMessage(error.message);
+            if(error.code === "auth/email-already-in-use") setValidationMessage("Acest e-mail este deja folosit");
+            else setValidationMessage(error.message);
         }
       }
+
     const inputChangedHandler = useCallback((inputId, inputValue) =>{
         const result = validateInput(inputId, inputValue)
         dispatchFormState({inputId, validationResult: result, inputValue})
@@ -91,23 +110,23 @@ const Register = ({navigation}) =>{
         <Text style={styles.mainTitle}>Crează-ți un cont gratuit</Text>
     </View>
 
-    <View style = {styles.footer}>
+    <View style = {styles.footer} >
         <KeyboardAwareScrollView>
           {/* <Text style={styles.inputText}>Nume de utilizator...</Text>*/}  
-            <TextInput style={styles.inputContainer}
-                //id="fullName"
+            <TextInput style={styles.inputContainer} 
+                id="fullName"
                 value={fullname}
-                placeholder="John Doe"
+                placeholder="Nume de utilizator..."
                // onInputChanged={inputChangedHandler}
-               onChangeText={(text) => setFullname(text)}
+                onChangeText={(text) => setFullname(text)}
                 errorText={formState.inputValidities["fullName"]}
                 placeholderTextColor={Colors.myLightGrey}
             />
             {/*<Text style={styles.inputText}>Adresa de e-mail...</Text>*/}
             <TextInput style={styles.inputContainer}
-                //id="email"
+                id="email"
                 value={email}
-                placeholder="example@gmail.com"
+                placeholder="Adresa de e-mail..."
                 onChangeText={(text) => setEmail(text)}
                 errorText={formState.inputValidities["email"]}
                 placeholderTextColor={Colors.myLightGrey}
@@ -115,9 +134,9 @@ const Register = ({navigation}) =>{
             />
             {/*<Text style={styles.inputText}>Parola...</Text>*/}
             <TextInput style={styles.inputContainer}
-               // id="password"
+               id="password"
                value={password}
-                placeholder="********"
+                placeholder="Parola..."
                 onChangeText={(value) => validateAndSet(value, setPassword)}
                 errorText={formState.inputValidities["password"]}
                 placeholderTextColor={Colors.myLightGrey}
@@ -126,22 +145,23 @@ const Register = ({navigation}) =>{
             />
            {/* <Text style={styles.inputText}>Confirmă Parola...</Text>*/}
             <TextInput style={styles.inputContainer}
-               // id="confirmPassword"
+                id="confirmPassword"
                value = {confirmPassword}
-                placeholder="********"
+                placeholder="Confirmă parola..."
                 onChangeText={(value) => validateAndSet(value,setConfirmPassword)}
                 errorText={formState.inputValidities["confirmPassword"]}
                 placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {true}
                 autoCapitalize = "none"
-                onBlur={()=>checkPassword(password,confirmPassword)}
+                //onBlur={()=>checkPassword(password,confirmPassword)}
             />
 
+            
             <View style = {styles.helpingText}>
-                    <Text style={styles.error}>{validationMessage}</Text>
-                    <Text style={styles.good}>{validationMessageGood}</Text>
+            <Text style={(ok == 0) ? styles.error:styles.good}>{validationMessage}</Text>
                     <Text style={styles.inputText}>Ai deja un cont? Apasă <Text onPress = {()=>navigation.navigate("Login")} style={styles.helpingTextBold}>aici.</Text></Text> 
                 </View>
+                
 
             <Button
                 title="Autentificare"
@@ -173,7 +193,7 @@ const styles = StyleSheet.create({
     helpingText: {
         justifyContent: "flex-start",
         alignItems: "center",
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         paddingBottom: 4
     },
     helpingTextBold: {
@@ -208,7 +228,8 @@ const styles = StyleSheet.create({
     inputText: {
         ...Fonts.inputText,
         color: Colors.greyForText,
-        marginVertical: 4
+        marginVertical: 4,
+        
     },
     inputContainer: {
         width: "100%",
@@ -220,9 +241,18 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         flexDirection: "row",
         color: Colors.greyForText,
+        borderColor: "white",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
         flex: 1,
         fontFamily: "regular",
-   
+        paddingLeft: 20
     },
 
 })
