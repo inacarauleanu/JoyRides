@@ -10,8 +10,9 @@ import { reducer } from '../utils/reducers/formReducers.js';
 import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../firebase-config.js";
+import LandingPage from './LandingPage.js';
 
-const auth = getAuth();
 
 const isTestMode = true;
 
@@ -43,27 +44,28 @@ const Login = ({navigation}) =>{
     const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [validationMessage,setvalidationMessage] = useState('');
-  
+  const [ok, setOk] = useState(0);
+
   async function login() {
-    ok = 0;
+    setOk(0);
     if (email === '' || password === '') {
-      setvalidationMessage('required filled missing')
+      setvalidationMessage('Niciun câmp nu poate fi lăsat gol');
       return;
     }
 
     try {
       await signInWithEmailAndPassword(auth,email, password);
-      ok = 1;
+     setOk(1);
       setvalidationMessage('Utilizatorul a fost logat cu succes');
       console.log("logat");
           setEmail('');
           setPassword('');
+          navigation.navigate('LandingPage');
     } catch (error) {
         if(error.code === "auth/invalid-credential") setvalidationMessage("Datele introduse sunt invalide");
      else setvalidationMessage(error.message);
     }
   }
-
 
     return (
      <SafeAreaView style={{flex:1, backgroundColor: "white"}}>
@@ -105,7 +107,7 @@ const Login = ({navigation}) =>{
            {/* <Text style={styles.inputText}>Confirmă Parola...</Text>*/}
             
             <View style = {styles.helpingText}>
-            <Text style={(ok == 0) ? styles.error:styles.good}>{validationMessage}</Text>
+            <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
                     <Text style={styles.inputText}>Ai uitat parola? Apasă <Text onPress = {()=>navigation.navigate("ForgotPassword")} style={styles.helpingTextBold}>aici.</Text></Text> 
                 </View>
 

@@ -1,7 +1,11 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button} from 'react-native';
+import { auth } from '../firebase-config';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthentication } from '../utils/hooks/useAuthentication';
 
-const LandingPage = () => {
+const LandingPage = (navigation) => {
+  const { user } = useAuthentication();
   return (
     <View
       style={{
@@ -9,7 +13,8 @@ const LandingPage = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text>Hello, world!</Text>
+      <Text>Hello, {user?.email}!</Text>
+       <Button title="Sign Out" style={{marginTop:10}} onPress={() => signOut(auth)} />
     </View>
   );
 };

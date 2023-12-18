@@ -10,9 +10,9 @@ import { reducer } from '../utils/reducers/formReducers.js';
 import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "C:/Users/inaca/JoyRides/firebase-config.js";
+import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set } from "firebase/database";
-
+import LandingPage from './LandingPage.js';
 const isTestMode = true;
 
 const initialState = {
@@ -45,7 +45,8 @@ const Register = ({navigation}) =>{
     const [confirmPassword, setConfirmPassword] = useState('')
     const [validationMessage, setValidationMessage] = useState('')
     const [validationMessageGood, setValidationMessageGood] = useState('')
-  
+    const [ok, setOk] = useState(0);
+
     let validateAndSet = (value,setValue) => {
         setValue(value)
      }
@@ -54,7 +55,7 @@ const Register = ({navigation}) =>{
         setValidationMessage('');
         setValidationMessageGood('');
         if(firstpassword !== secondpassword){
-            ok = 0;
+           // ok = 0;
           setValidationMessage('Parolele nu se potrivesc') 
         }
         else setValidationMessage('')
@@ -70,7 +71,7 @@ const Register = ({navigation}) =>{
     
       async function createAccount() {
         setValidationMessage('');
-         ok = 0;
+         setOk(0);
         try {
             setValidationMessage('');
             if(email === '' || password === '' || fullname === '' || confirmPassword === '')
@@ -80,7 +81,7 @@ const Register = ({navigation}) =>{
               setValidationMessage('Parolele nu se potrivesc');
             }else{
           await createUserWithEmailAndPassword(auth, email, password);
-          ok = 1;
+          setOk(1);
           setValidationMessage('Utilizatorul a fost inregistrat cu succes');
           const userId = auth.currentUser.uid;
           writeUserData(userId,fullname, email);
@@ -89,7 +90,7 @@ const Register = ({navigation}) =>{
           setEmail('');
           setFullname('');
           setPassword('');
-
+          navigation.navigate('LandingPage');
             }
         }
         } catch (error) {
@@ -105,7 +106,7 @@ const Register = ({navigation}) =>{
 
 
     return (
-     <SafeAreaView style={{flex:1 }}>
+     <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style = {styles.header}>
         <Text style={styles.mainTitle}>Crează-ți un cont gratuit</Text>
     </View>
@@ -154,11 +155,9 @@ const Register = ({navigation}) =>{
                 secureTextEntry = {true}
                 autoCapitalize = "none"
                 //onBlur={()=>checkPassword(password,confirmPassword)}
-            />
-
-            
+            />            
             <View style = {styles.helpingText}>
-            <Text style={(ok == 0) ? styles.error:styles.good}>{validationMessage}</Text>
+            <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
                     <Text style={styles.inputText}>Ai deja un cont? Apasă <Text onPress = {()=>navigation.navigate("Login")} style={styles.helpingTextBold}>aici.</Text></Text> 
                 </View>
                 
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         paddingHorizontal: 22,
-        paddingVertical: 30
+        paddingVertical: 30,
 
     },
     mainTitle: {
