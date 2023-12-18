@@ -11,7 +11,7 @@ import Register from "./screens/Register.js";
 import ForgotPassword from "./screens/ForgotPassword.js";
 import Welcome from "./screens/Welcome.js";
 import LandingPage from "./screens/LandingPage.js";
-
+import RootNavigation from "./navigation/index.js";
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -36,47 +36,7 @@ export default function App() {
   
   return (
     <SafeAreaProvider onLayout = {onLayoutRootView}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName = "Welcome"
-        >
-          <Stack.Screen
-            name="Register"
-            component = {Register}
-            options = {{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name = "Login"
-            component = {Login}
-            options = {{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name = "ForgotPassword"
-            component = {ForgotPassword}
-            options = {{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name = "Welcome"
-            component = {Welcome}
-            options = {{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name = "LandingPage"
-            component = {LandingPage}
-            options = {{
-              headerShown: false
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+     <RootNavigation/>
     </SafeAreaProvider>
   );
 }

@@ -9,7 +9,9 @@ import { validateInput } from '../utils/actions/formAction.js';
 import { reducer } from '../utils/reducers/formReducers.js';
 import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import LandingPage from './LandingPage.js';
+import { getAuth, signInAnonymously } from "firebase/auth";
+import { auth } from '../firebase-config.js';
 
 const isTestMode = true;
 
@@ -27,8 +29,6 @@ const initialState = {
     formIsValid: false
 }
 
-
-
 const Welcome = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -37,6 +37,21 @@ const Welcome = ({navigation}) =>{
         const result = validateInput(inputId, inputValue)
         dispatchFormState({inputId, validationResult: result, inputValue})
     }, [dispatchFormState])
+
+    async function anonimLogin() {
+    
+        signInAnonymously(auth)
+        .then(() => {
+            // Signed in..
+            console.log("logat anonim");
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // ...
+        });
+      }
 
 
     return (
@@ -68,7 +83,7 @@ const Welcome = ({navigation}) =>{
                 style={styles.btn1}
                 title="Continuă ca anonim"
                 isLoading={isLoading}
-                onPress = {()=>navigation.navigate("LandingPage")}
+                onPress = {anonimLogin}
             />
            
         </KeyboardAwareScrollView>

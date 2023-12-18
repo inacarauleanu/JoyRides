@@ -60,7 +60,7 @@ const Login = ({navigation}) =>{
       console.log("logat");
           setEmail('');
           setPassword('');
-          navigation.navigate('LandingPage');
+         // navigation.navigate('LandingPage');
     } catch (error) {
         if(error.code === "auth/invalid-credential") setvalidationMessage("Datele introduse sunt invalide");
      else setvalidationMessage(error.message);

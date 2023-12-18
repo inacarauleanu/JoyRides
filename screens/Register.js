@@ -90,7 +90,7 @@ const Register = ({navigation}) =>{
           setEmail('');
           setFullname('');
           setPassword('');
-          navigation.navigate('LandingPage');
+          //navigation.navigate('LandingPage');
             }
         }
         } catch (error) {
