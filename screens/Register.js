@@ -13,6 +13,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set } from "firebase/database";
 import LandingPage from './LandingPage.js';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 const isTestMode = true;
 
 const initialState = {
@@ -46,6 +48,9 @@ const Register = ({navigation}) =>{
     const [validationMessage, setValidationMessage] = useState('')
     const [validationMessageGood, setValidationMessageGood] = useState('')
     const [ok, setOk] = useState(0);
+    const [showPassword, setShowPassword] = useState(false); 
+    const [showPassword1, setShowPassword1] = useState(false); 
+
 
     let validateAndSet = (value,setValue) => {
         setValue(value)
@@ -104,6 +109,14 @@ const Register = ({navigation}) =>{
         dispatchFormState({inputId, validationResult: result, inputValue})
     }, [dispatchFormState])
 
+    const toggleShowPassword = () => { 
+        setShowPassword(!showPassword); 
+    }; 
+
+    const toggleShowPassword1 = () => { 
+        setShowPassword1(!showPassword1); 
+    }; 
+
 
     return (
      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
@@ -134,28 +147,47 @@ const Register = ({navigation}) =>{
                 keyboardType="email-address"
             />
             {/*<Text style={styles.inputText}>Parola...</Text>*/}
-            <TextInput style={styles.inputContainer}
+            <View style={styles.inputContainer}> 
+            <TextInput style={styles.inputText}
                id="password"
                value={password}
                 placeholder="Parola..."
                 onChangeText={(value) => validateAndSet(value, setPassword)}
                 errorText={formState.inputValidities["password"]}
                 placeholderTextColor={Colors.myLightGrey}
-                secureTextEntry = {true}
+                secureTextEntry = {!showPassword} 
                 autoCapitalize = "none"
             />
+            <MaterialCommunityIcons 
+                    name={showPassword ? 'eye-off' : 'eye'} 
+                    size={24} 
+                    color="#aaa"
+                    style={styles.icon} 
+                    onPress={toggleShowPassword} 
+                /> 
+            </View>
            {/* <Text style={styles.inputText}>Confirmă Parola...</Text>*/}
-            <TextInput style={styles.inputContainer}
+           <View style={styles.inputContainer}> 
+            <TextInput style={styles.inputText}
                 id="confirmPassword"
                value = {confirmPassword}
                 placeholder="Confirmă parola..."
                 onChangeText={(value) => validateAndSet(value,setConfirmPassword)}
                 errorText={formState.inputValidities["confirmPassword"]}
                 placeholderTextColor={Colors.myLightGrey}
-                secureTextEntry = {true}
+                secureTextEntry = {!showPassword1} 
                 autoCapitalize = "none"
                 //onBlur={()=>checkPassword(password,confirmPassword)}
-            />            
+            />
+            <MaterialCommunityIcons 
+                    name={showPassword1 ? 'eye-off' : 'eye'} 
+                    size={24} 
+                    color="#aaa"
+                    style={styles.icon} 
+                    onPress={toggleShowPassword1} 
+                />     
+            </View>        
+            
             <View style = {styles.helpingText}>
             <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
                     <Text style={styles.inputText}>Ai deja un cont? Apasă <Text onPress = {()=>navigation.navigate("Login")} style={styles.helpingTextBold}>aici.</Text></Text> 
@@ -188,7 +220,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingBottom: 4
     },
-
+    icon: { 
+        marginLeft: 100,
+        
+    },
     helpingText: {
         justifyContent: "flex-start",
         alignItems: "center",
@@ -224,11 +259,13 @@ const styles = StyleSheet.create({
         ...Fonts.pageTitles,
         color: Colors.black
     },
+    
     inputText: {
-        ...Fonts.inputText,
+       // ...Fonts.inputText,
+        fontFamily: "regular",
         color: Colors.greyForText,
-        marginVertical: 4,
-        
+        flex: 1, 
+        fontSize: 16, 
     },
     inputContainer: {
         width: "100%",
@@ -251,7 +288,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         flex: 1,
         fontFamily: "regular",
-        paddingLeft: 20
+        paddingLeft: 20,
+        fontSize: 16, 
     },
 
 })
