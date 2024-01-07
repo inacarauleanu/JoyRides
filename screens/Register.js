@@ -9,11 +9,12 @@ import { validateInput } from '../utils/actions/formAction.js';
 import { reducer } from '../utils/reducers/formReducers.js';
 import GoogleButton from '../components/GoogleButton.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set } from "firebase/database";
 import LandingPage from './LandingPage.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+//import App from '../App.js';
 
 const isTestMode = true;
 
@@ -101,6 +102,35 @@ const Register = ({navigation}) =>{
         } catch (error) {
             if(error.code === "auth/email-already-in-use") setValidationMessage("Acest e-mail este deja folosit");
             else setValidationMessage(error.message);
+        }
+      }
+
+      async function signInWithGoogle() {
+        setValidationMessage('');
+         setOk(0);
+        try {
+            const provider = new GoogleAuthProvider()
+            //provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+            setValidationMessage('');
+          await signInWithPopup(auth, provider);
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+          console.log("bagat prin google" + {user});
+
+          //navigation.navigate('LandingPage');       
+        
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+             // The email of the user's account used.
+           // const email = error.customData.email;
+             // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+        setValidationMessage(errorMessage);
         }
       }
 
@@ -202,7 +232,7 @@ const Register = ({navigation}) =>{
 
             <GoogleButton
                 isLoading={isLoading}
-                onPress = {()=>navigation.navigate("Login")}
+                onPress = {signInWithGoogle}
             />
         </KeyboardAwareScrollView>
       
