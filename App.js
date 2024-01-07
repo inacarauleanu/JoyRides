@@ -22,6 +22,7 @@ export default function App() {
     regular: require("./assets/fonts/Montserrat-Regular.ttf"),
     bold: require("./assets/fonts/Montserrat-Bold.ttf"),
     medium: require("./assets/fonts/Montserrat-Medium.ttf"),
+    thin: require("./assets/fonts/Montserrat-Thin.ttf")
   });
 
   const onLayoutRootView = useCallback(async ()=>{
