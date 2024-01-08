@@ -2,12 +2,11 @@ import {Text, View, Button, StyleSheet, Image} from 'react-native';
 import { auth } from '../firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Polyline} from 'react-native-maps';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import DestinationButton from '../components/DestinationButton';
-import Transport from '../components/Transport.js';
 import axios from 'axios';
 
 const LandingPage = (navigation) => {
@@ -17,8 +16,6 @@ const LandingPage = (navigation) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
 
-  const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -42,37 +39,40 @@ const LandingPage = (navigation) => {
     getLocation();
   }, []);
 
+  const [coordinates, setCoordinates] = useState([
+    { latitude: 45.727073937005436, longitude: 21.276126083094514 },
+    { latitude: 45.72926084389645, longitude: 21.2686802708622 },
+    { latitude: 45.73354453672023, longitude: 21.258573707289397 },
+    { latitude: 45.737094061197595, longitude: 21.25059145325732 },
+  ]);
+
+  const [currentCoordinate, setCurrentCoordinate] = useState(coordinates[0]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://192.168.100.20:3000/api/vehicles');
-        const data = await response.json();
-        setVehicles(data);
-        console.log("ceva");
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
+    const intervalId = setInterval(() => {
+      if (coordinates.length > 1) {
+        setCoordinates((prevCoordinates) => {
+          const nextIndex = (prevCoordinates.indexOf(currentCoordinate) + 1) % prevCoordinates.length;
+          setCurrentCoordinate(prevCoordinates[nextIndex]);
+          return prevCoordinates;
+        });
       }
-    };
+    }, 5000);
 
-    // Fetch data initially
-    fetchData();
-
-    // Fetch data and update coordinates every 10 seconds
-    const interval = setInterval(fetchData, 5000);
-
-    // Cleanup interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
-
+    return () => clearInterval(intervalId);
+  }, [currentCoordinate, coordinates]);
   
   return (   
     <View style={styles.container}>
       <DestinationButton/>
       
     <MapView 
-    initialRegion={initialRegion}
+          initialRegion={{
+            latitude: coordinates[0].latitude,
+            longitude: coordinates[0].longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+    
     showsUserLocation = {true}
     showsCompass = {true}
     rotateEnabled = {true}
@@ -86,19 +86,25 @@ const LandingPage = (navigation) => {
               title="Your Location"
             />
           )}
-      {vehicles.map(vehicle => (
-            <Marker
-              key={vehicle.vehicleId}
-              coordinate={{ latitude: vehicle.latitude, longitude: vehicle.longitude }}
-              title={`Vehicle ${vehicle.vehicleId}`}
-            >
-              <Image source={require('../assets/icons/tram.png')}
+      <Polyline
+        coordinates={coordinates}
+        strokeColor="#FFC66C" // Line color
+        strokeWidth={3}
+      />
+       
+       <Marker
+       coordinate={currentCoordinate}
+       title={`Moving Marker`}
+       description={`Visit in 5 seconds`}
+     >
+          <Image source={require('../assets/icons/tram.png')}
       style={{
           width:32,
           height:42
       }}/>
-              </Marker>
-          ))}
+      </Marker>
+             
+        
       {/*<Marker
        coordinate={{
         latitude: 45.73336873421114,
