@@ -14,34 +14,10 @@ import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set } from "firebase/database";
 import LandingPage from './LandingPage.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-//import App from '../App.js';
-
-const isTestMode = true;
-
-const initialState = {
-    inputValues:{
-        fullName: isTestMode ? "John Doe" : "",
-        email: isTestMode ? "example@gmail.com" : "",
-        password: isTestMode ? "*******" : "",
-        confirmPassword: isTestMode ? "*******" : "",
-
-    },
-
-    inputValidities:{
-        fullName: false,
-        email: false,
-        password: false,
-        confirmPassword: false
-    },
-
-    formIsValid: false
-}
-
 
 
 const Register = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
-    const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [fullname, setFullname] = useState('');
@@ -118,7 +94,6 @@ const Register = ({navigation}) =>{
         // The signed-in user info.
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
-        // ...
           console.log("bagat prin google" + {user});
 
           //navigation.navigate('LandingPage');       
@@ -133,11 +108,6 @@ const Register = ({navigation}) =>{
         setValidationMessage(errorMessage);
         }
       }
-
-    const inputChangedHandler = useCallback((inputId, inputValue) =>{
-        const result = validateInput(inputId, inputValue)
-        dispatchFormState({inputId, validationResult: result, inputValue})
-    }, [dispatchFormState])
 
     const toggleShowPassword = () => { 
         setShowPassword(!showPassword); 
@@ -163,7 +133,6 @@ const Register = ({navigation}) =>{
                 placeholder="Nume de utilizator..."
                // onInputChanged={inputChangedHandler}
                 onChangeText={(text) => setFullname(text)}
-                errorText={formState.inputValidities["fullName"]}
                 placeholderTextColor={Colors.myLightGrey}
             />
             {/*<Text style={styles.inputText}>Adresa de e-mail...</Text>*/}
@@ -172,7 +141,6 @@ const Register = ({navigation}) =>{
                 value={email}
                 placeholder="Adresa de e-mail..."
                 onChangeText={(text) => setEmail(text)}
-                errorText={formState.inputValidities["email"]}
                 placeholderTextColor={Colors.myLightGrey}
                 keyboardType="email-address"
             />
@@ -183,7 +151,6 @@ const Register = ({navigation}) =>{
                value={password}
                 placeholder="Parola..."
                 onChangeText={(value) => validateAndSet(value, setPassword)}
-                errorText={formState.inputValidities["password"]}
                 placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {!showPassword} 
                 autoCapitalize = "none"
@@ -203,7 +170,6 @@ const Register = ({navigation}) =>{
                value = {confirmPassword}
                 placeholder="Confirmă parola..."
                 onChangeText={(value) => validateAndSet(value,setConfirmPassword)}
-                errorText={formState.inputValidities["confirmPassword"]}
                 placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {!showPassword1} 
                 autoCapitalize = "none"

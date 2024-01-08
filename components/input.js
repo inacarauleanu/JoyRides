@@ -2,16 +2,11 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 
-
-
-
 const Input = (props) =>{
     
     const onChangeText = (text) =>{
         props.onInputChanged(props.id, text)
     }
-
-
     return (
      <View style={styles.container}>
         <View style={[styles.inputContainer, {borderColor: "gray"}]}>

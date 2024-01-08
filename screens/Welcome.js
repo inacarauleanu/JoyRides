@@ -13,30 +13,10 @@ import LandingPage from './LandingPage.js';
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { auth } from '../firebase-config.js';
 
-const isTestMode = true;
 
-const initialState = {
-    inputValues:{
-        email: isTestMode ? "example@gmail.com" : "",
-        password: isTestMode ? "*******" : ""
-    },
-
-    inputValidities:{
-        email: false,
-        password: false
-    },
-
-    formIsValid: false
-}
 
 const Welcome = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
-    const [formState, dispatchFormState] = useReducer(reducer, initialState);
-
-    const inputChangedHandler = useCallback((inputId, inputValue) =>{
-        const result = validateInput(inputId, inputValue)
-        dispatchFormState({inputId, validationResult: result, inputValue})
-    }, [dispatchFormState])
 
     async function anonimLogin() {
     

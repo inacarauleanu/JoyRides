@@ -44,20 +44,39 @@ const LandingPage = (navigation) => {
     { latitude: 45.72926084389645, longitude: 21.2686802708622 },
     { latitude: 45.73354453672023, longitude: 21.258573707289397 },
     { latitude: 45.737094061197595, longitude: 21.25059145325732 },
+    { latitude: 45.73715297653913,  longitude: 21.250007799830325 },
+    { latitude: 45.7383136358611,  longitude: 21.24074881431289 },
+    { latitude: 45.73653145228806,  longitude: 21.23130743857969 },
+    { latitude: 45.73508619442292,  longitude: 21.226779869762918 },
+    { latitude: 45.73510646512803, longitude: 21.226635268339795 },
+    { latitude: 45.73855105822525,  longitude: 21.225133231290602},
+    { latitude: 45.74168096073263,   longitude: 21.225090315945867,},
+     
   ]);
 
   const [currentCoordinate, setCurrentCoordinate] = useState(coordinates[0]);
+  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (coordinates.length > 1) {
         setCoordinates((prevCoordinates) => {
           const nextIndex = (prevCoordinates.indexOf(currentCoordinate) + 1) % prevCoordinates.length;
+  
+          // verific daca marker-ul a ajuns la ultimele coordonate
+          if (nextIndex === 0) {
+            // intorc array-ul
+            const reversedCoordinates = [...prevCoordinates].reverse();
+            setCurrentCoordinate(reversedCoordinates[0]);
+            return reversedCoordinates;
+          }
+  
           setCurrentCoordinate(prevCoordinates[nextIndex]);
           return prevCoordinates;
         });
       }
     }, 5000);
-
+  
     return () => clearInterval(intervalId);
   }, [currentCoordinate, coordinates]);
   
@@ -88,14 +107,13 @@ const LandingPage = (navigation) => {
           )}
       <Polyline
         coordinates={coordinates}
-        strokeColor="#FFC66C" // Line color
+        strokeColor="#FFC66C" 
         strokeWidth={3}
       />
        
        <Marker
        coordinate={currentCoordinate}
-       title={`Moving Marker`}
-       description={`Visit in 5 seconds`}
+       title={`8`}
      >
           <Image source={require('../assets/icons/tram.png')}
       style={{
@@ -103,39 +121,9 @@ const LandingPage = (navigation) => {
           height:42
       }}/>
       </Marker>
-             
-        
-      {/*<Marker
-       coordinate={{
-        latitude: 45.73336873421114,
-        longitude: 21.261539609618417,
-      }}
-      title="8">
-      <Image source={require('../assets/icons/tram.png')}
-      style={{
-          width:32,
-          height:42
-      }}/>
-    </Marker>*/}
-     {/*<Transport driver={{uid: 'null', location:{
-     latitude: 45.73336873421114,
-     longitude: 21.261539609618417,
-     }
-     }}/>*/}
 
   </MapView>
   </View>
-   /* <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>Hello, {user?.email}!</Text>
-       <Button title="Sign Out" style={{marginTop:10}} onPress={() => signOut(auth)} />
-    </View>*/
-    
-
   );
 };
 

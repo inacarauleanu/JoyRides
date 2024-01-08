@@ -13,37 +13,11 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../firebase-config.js';
 import Login from './Login.js';
 
-const isTestMode = true;
-
-const initialState = {
-    inputValues:{
-        email: isTestMode ? "example@gmail.com" : "",
-        password: isTestMode ? "*******" : "",
-        confirmPassword: isTestMode ? "*******" : "",
-    },
-
-    inputValidities:{
-        email: false,
-        password: false,
-        confirmPassword: false
-    },
-
-    formIsValid: false
-}
-
-
-
 const ForgotPassword = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
-    const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [email, setEmail] = useState('');
     const [validationMessage, setValidationMessage] = useState('')
     const [ok, setOk] = useState(0);
-
-    const inputChangedHandler = useCallback((inputId, inputValue) =>{
-        const result = validateInput(inputId, inputValue)
-        dispatchFormState({inputId, validationResult: result, inputValue})
-    }, [dispatchFormState])
 
     async function resetPassword() {
         try{
@@ -59,7 +33,7 @@ const ForgotPassword = ({navigation}) =>{
             const errorMessage = error.message;
             setValidationMessage(errorMessage);
             console.log(errorMessage);
-            // ..
+            
         };
       }
 
@@ -81,33 +55,10 @@ const ForgotPassword = ({navigation}) =>{
                 value = {email}
                 placeholder="Adresa de e-mail..."
                 onChangeText={(text) => setEmail(text)}
-               // onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["email"]}
                 placeholderTextColor={Colors.myLightGrey}
                 keyboardType="email-address"
             />
             
-           {/*<TextInput 
-                style={styles.inputContainer}
-                id="password"
-                placeholder="Noua parolă..."
-                onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["password"]}
-                placeholderTextColor={Colors.myLightGrey}
-                secureTextEntry = {true}
-                autoCapitalize = "none"
-            />
-
-            <TextInput 
-                style={styles.inputContainer}
-                id="confirmPassword"
-                placeholder="Confirma noua parolă..."
-                onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["confirmPassword"]}
-                placeholderTextColor={Colors.myLightGrey}
-                secureTextEntry = {true}
-                autoCapitalize = "none"
-    />*/}
           <View style = {styles.helpingText}>
             <Text style={(ok === 0) ? styles.error:styles.good}>{validationMessage}</Text>
                 </View>
