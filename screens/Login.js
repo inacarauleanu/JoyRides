@@ -14,40 +14,18 @@ import { auth } from "../firebase-config.js";
 import LandingPage from './LandingPage.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-const isTestMode = true;
-
-const initialState = {
-    inputValues:{
-        email: isTestMode ? "example@gmail.com" : "",
-        password: isTestMode ? "*******" : ""
-    },
-
-    inputValidities:{
-        email: false,
-        password: false
-    },
-
-    formIsValid: false
-}
-
-
-
 const Login = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
-    const [formState, dispatchFormState] = useReducer(reducer, initialState);
-
-    const inputChangedHandler = useCallback((inputId, inputValue) =>{
-        const result = validateInput(inputId, inputValue)
-        dispatchFormState({inputId, validationResult: result, inputValue})
-    }, [dispatchFormState])
 
     const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [validationMessage,setvalidationMessage] = useState('');
   const [ok, setOk] = useState(0);
-// State variable to track password visibility 
+
+// variabila de stare pentru parola
 const [showPassword, setShowPassword] = useState(false); 
-// Function to toggle the password visibility state 
+
+// functia pentru toggle
 const toggleShowPassword = () => { 
     setShowPassword(!showPassword); 
 }; 
@@ -80,19 +58,12 @@ const toggleShowPassword = () => {
 
     <View style = {styles.footer}>
         <KeyboardAwareScrollView>
-          {/* <Text style={styles.inputText}>Nume de utilizator...</Text>*/}  
-            
-            {/*<Text style={styles.inputText}>Adresa de e-mail</Text>*/}
-            {/*<Text style={styles.inputText1}>Dacă adresa de e-mail există în baza de date, vei primi un e-mail prin care vei confirma noua parolă</Text>*/}
-
             <TextInput 
                 style={styles.inputContainer}
                 id="email"
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 placeholder="Adresa de e-mail..."
-                onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["email"]}
                 placeholderTextColor={Colors.myLightGrey}
                 keyboardType="email-address"
             />
@@ -104,8 +75,6 @@ const toggleShowPassword = () => {
                 placeholder="Parola..."
                 value={password}
                 onChangeText={(text) => setPassword(text)}
-                onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["password"]}
                 placeholderTextColor={Colors.myLightGrey}
                 secureTextEntry = {!showPassword} 
                 autoCapitalize = "none"

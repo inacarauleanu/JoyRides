@@ -52,8 +52,4 @@ export const validatePassword = (id, value) => {
 
     const validationResult = validate({[id]: value}, {[id]: constraints});
     return validationResult && validationResult[id]
-
-    
-
-
 }
