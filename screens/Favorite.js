@@ -11,7 +11,7 @@ const Favorites = () => {
   useEffect(() => {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
-    const userRef = ref(db, `users/${userId}/updatedFavorites`);
+    const userRef = ref(db, `users/${userId}/favorite/updatedFavorites`);
 
     const handleData = (snapshot) => {
       const data = snapshot.val();
