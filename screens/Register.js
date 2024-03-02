@@ -45,7 +45,7 @@ const Register = ({navigation}) =>{
 
       function writeUserData(userId, name, email) {
         const db = getDatabase();
-        set(ref(db, 'users/' + userId), {
+        set(ref(db, 'users/' + userId + '/detaliiUser'), {
           username: name,
           email: email,
         });
