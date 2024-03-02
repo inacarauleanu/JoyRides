@@ -79,7 +79,7 @@ const Rute = () => {
                 <Text>{`Coordonate: ${item.location.latitude}, ${item.location.longitude}`}</Text>
               </View>
               <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(item)}>
-                <Icon name={favorites.some((favItem) => favItem.id === item.id) ? 'heart' : 'heart-o'} size={30} />
+                <Icon name={favorites.some((favItem) => favItem.id === item.id) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
               </TouchableOpacity>
             </TouchableOpacity>
           )}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#ffffff',
     marginTop: 35,
     alignContent: "center",
     alignItems: 'center'
