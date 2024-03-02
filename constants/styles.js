@@ -18,6 +18,7 @@ const {width, height} = Dimensions.get("window");
     pageTitles: 20,
     buttonText: 21,
     otherText: 15,
+    basicText: 13,
     radius: 50,
     padding: 8,
     padding2: 16,
@@ -30,10 +31,11 @@ const {width, height} = Dimensions.get("window");
  export const Fonts = {
     mainTitle: {fontFamily: "bold", fontSize: Sizes.mainTitle, lineHeight: 55},
     appTitle: {fontFamily: "bold", fontSize: Sizes.appTitle, lineHeight: 135},
-
+    screenTitle: {fontFamily: "bold", fontSize: Sizes.pageTitles},
 
     pageTitles: {fontFamily: "regular", fontSize: Sizes.pageTitles, lineHeight: 156},
-    inputText: {fontFamily: "medium", fontSize: Sizes.otherText},
+    inputText: {fontFamily: "regular", fontSize: Sizes.otherText},
+    basicText: {fontFamily: "regular", fontSize: Sizes.basicText},
 
 
  }

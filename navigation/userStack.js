@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,15 +11,18 @@ import LandingPage from '../screens/LandingPage';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import Icon from 'react-native-vector-icons/Ionicons';
 import Profil from '../screens/Profil.js';
-//const Stack = createStackNavigator();
+import { color } from 'react-native-elements/dist/helpers/index.js';
+import CumparaBilet from '../screens/CumparaBilet.js';
+import PlataCard from '../screens/PlataCard.js';
+import PlataMesaj from '../screens/PlataMesaj.js';
+
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
-export default function UserStack() {
+function MainStack(){
   return (
-    <NavigationContainer>
-      
-      <Tab.Navigator
+    <Tab.Navigator
         initialRouteName="LandingPage"
         screenOptions={{
           activeTintColor: Colors.babyOrange,
@@ -32,9 +36,16 @@ export default function UserStack() {
           options={{
             tabBarLabel: 'Bilete',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-heart" color={Colors.babyOrange} size={size} />
-            )
+              <Image
+              source={require('../assets/icons/ticket.png')}
+              style={{ width: size, height: size}}
+            />
+            
+            ),
+            
           }}
         />
         <Tab.Screen
@@ -43,8 +54,14 @@ export default function UserStack() {
           options={{
             tabBarLabel: 'Rute',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-settings" color={Colors.babyOrange} size={size} />
+              <Image
+              source={require('../assets/icons/rute.png')}
+              style={{ width: size, height: size}}
+            />
+            
             ),
           }}
         />
@@ -54,8 +71,14 @@ export default function UserStack() {
           options={{
             tabBarLabel: 'Acasă',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-home" color={Colors.babyOrange} size={size} />
+              <Image
+              source={require('../assets/icons/home.png')}
+              style={{ width: size, height: size}}
+            />
+            
             ),
           }}
         />
@@ -65,8 +88,14 @@ export default function UserStack() {
           options={{
             tabBarLabel: 'Notificari',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-alarm" color={Colors.babyOrange} size={size} />
+              <Image
+              source={require('../assets/icons/notification.png')}
+              style={{ width: size, height: size}}
+            />
+            
             ),
           }}
         />
@@ -76,8 +105,14 @@ export default function UserStack() {
           options={{
             tabBarLabel: 'Favorite',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-star" color={Colors.babyOrange} size={size} />
+              <Image
+              source={require('../assets/icons/favorite.png')}
+              style={{ width: size, height: size}}
+            />
+            
             ),
           }}
         />
@@ -93,7 +128,20 @@ export default function UserStack() {
           }}
         />
       </Tab.Navigator>
+  )
+}
 
+export default function UserStack() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false }} />
+        <Stack.Screen name="CumparaBilet" component={CumparaBilet} options={{ headerShown: false }} />
+        <Stack.Screen name="PlataCard" component={PlataCard} options={{ headerShown: false }} />
+        <Stack.Screen name="PlataMesaj" component={PlataMesaj} options={{ headerShown: false }} />
+      </Stack.Navigator>
+      
+      
     </NavigationContainer>
   );
 }
