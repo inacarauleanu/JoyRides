@@ -42,6 +42,7 @@ const CumparaBilet = ({navigation}) =>{
     const [selectedIndexes, setSelectedIndexes] = useState(0);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [amount, setAmount] = useState(0);
 
 
     return ( 
@@ -55,7 +56,6 @@ const CumparaBilet = ({navigation}) =>{
       selectedIndex={selectedIndex}
       onPress={(value) => {
         setSelectedIndex(value);
-        
       }}
       containerStyle={styles.butonContainer}
       selectedButtonStyle = {styles.selectedButtonStyle}
@@ -99,12 +99,14 @@ const CumparaBilet = ({navigation}) =>{
             setIsFocus(false);
           }}
         />
-
+<Text style={styles.semititle}>Total de plată: <Text style={styles.total}>{selectedIndex == 0 ? '4 lei' : '15 lei'}</Text> </Text>
       </View>
       <Button
                 buttonStyle={styles.btn}
                 title="Plata card   "
-                onPress = {()=>navigation.navigate("PlataCard")}
+                onPress = {()=>navigation.navigate("PlataCard",{
+                  amount: selectedIndex == 0 ? 400 : 1500
+                })}
                 titleStyle = {styles.titlu}
                 icon = {
                     <Image
@@ -174,6 +176,13 @@ const CumparaBilet = ({navigation}) =>{
                 textAlign: 'left',
               ...Fonts.inputText,
             },
+        total: {
+              marginTop: 20,
+               marginBottom: 20,
+                 textAlign: 'left',
+               ...Fonts.inputText,
+               color: Colors.myRed
+             },
         textStyle:{
             ...Fonts.basicText,
             color: Colors.black
