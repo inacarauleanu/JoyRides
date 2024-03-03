@@ -7,11 +7,11 @@ router.post('/intents', async(req, res) =>{
           //create payment intent
           const paymentIntent = await stripe.paymentIntents.create({
             amount: req.body.amount,
-            currency: 'eur',
+            currency: 'ron',
             automatic_payment_methods: {
               enabled: true,
             },
-            payment_method_type: ["card"] //by default
+            
           });
              //return the secret
              const clientSecret = paymentIntent.client_secret;

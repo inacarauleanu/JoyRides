@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, Button, Alert, Text } from 'react-native';
 import { StripeProvider, CardField, useStrip, useConfirmPayment } from '@stripe/stripe-react-native';
 
-const PlataCard = () => {
+const PlataCard = ({route}) => {
   //const [loading, setLoading] = useState(false);
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
-
+  const total = route.params.amount;
+  
   const handlePayment = async () => {
+    console.log("total:", JSON.stringify(total));
     const response = await fetch(`http://192.168.100.20:3000/payments/intents`, {
       method: 'POST',
       headers: {
@@ -15,11 +17,12 @@ const PlataCard = () => {
       },
       body: JSON.stringify({
         currency: 'usd',
-        amount:1234,
-        payment_method_type: ["Card"] //by default
+        amount: total,
+        
       }),
     });
     const {clientSecret} = await response.json();
+    console.log(clientSecret);
     return clientSecret;
   };
 
@@ -31,6 +34,7 @@ const PlataCard = () => {
       };
       // Fetch the intent client secret from the backend
       const clientSecret = await handlePayment();
+      console.log(clientSecret);
       // Confirm the payment with the card details
       const {paymentIntent, error} = await confirmPayment(clientSecret, {
         paymentMethodType:'Card',
