@@ -42,7 +42,7 @@ const CumparaBilet = ({navigation}) =>{
     const [selectedIndexes, setSelectedIndexes] = useState(0);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [linie, setLinie] = useState(0);
 
 
     return ( 
@@ -96,6 +96,7 @@ const CumparaBilet = ({navigation}) =>{
           onBlur={() => setIsFocus(false)}
           onChange={item => {
             setValue(item.value);
+            setLinie(item.label);
             setIsFocus(false);
           }}
         />
@@ -105,7 +106,10 @@ const CumparaBilet = ({navigation}) =>{
                 buttonStyle={styles.btn}
                 title="Plata card   "
                 onPress = {()=>navigation.navigate("PlataCard",{
-                  amount: selectedIndex == 0 ? 400 : 1500
+                  amount: selectedIndex == 0 ? 400 : 1500,
+                  valabilitate: selectedIndex == 0 ? '1h' : '24h',
+                  mijloc_transport: selectedIndexes == 0 ? 'tramvai' : (selectedIndexes == 1 ? 'autobuz' : 'troleibuz'),
+                  linie: linie
                 })}
                 titleStyle = {styles.titlu}
                 icon = {
