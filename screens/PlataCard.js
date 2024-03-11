@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {Alert,Button} from 'react-native';
-import { ButtonGroup, Image } from 'react-native-elements';
+import {Alert} from 'react-native';
+import { ButtonGroup, Image, Button } from 'react-native-elements';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { StripeProvider, CardField, useStrip, useConfirmPayment } from '@stripe/stripe-react-native';
@@ -18,6 +18,9 @@ const PlataCard = ({navigation, route}) => {
   const valabilitate = route.params.valabilitate;
   const mijloc_transport = route.params.mijloc_transport;
   const linie = route.params.linie;
+
+  console.log("valabilitate", valabilitate);
+  console.log("linie", linie);
 
   const [currentDate, setCurrentDate] = useState('');
   const [currentTime, setCurrentTime] = useState('');
@@ -53,6 +56,7 @@ const PlataCard = ({navigation, route}) => {
   }
   
   const handlePayment = async () => {
+
     console.log("total:", JSON.stringify(total));
     console.log("valabilitate:", JSON.stringify(valabilitate));
     console.log("mijloc_transport:", JSON.stringify(mijloc_transport));
@@ -143,10 +147,23 @@ const PlataCard = ({navigation, route}) => {
           setCardDetails(cardDetails);
         }}
       />
-      <Button
-      title="Plătește acum   "
+       <Button
+                buttonStyle={styles.btn}
+                title="Plătește acum      "
                 onPress={handlePayPress}
-                disabled={loading} />
+                disabled={loading} 
+                titleStyle = {styles.titlu}
+                icon = {
+                    <Image
+                    source={require('../assets/icons/credit-card.png')}
+                    style={{ width: 20, height: 20}}
+                  />
+                  
+                }
+                iconRight = 'true'
+                
+            
+        />
       </KeyboardAwareScrollView>
     </View>
     </SafeAreaView>
@@ -236,12 +253,12 @@ const styles = StyleSheet.create({
       marginBottom: 44,
       textAlign: "center"
   },
-  btn1:{
+  btn:{
     paddingHorizontal: Sizes.padding,
     paddingVertical: Sizes.padding2,
     borderWidth: 1,
     borderRadius: 50,
-    borderColor: Colors.myLightGrey,
+    borderColor: Colors.babyOrange,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.black,
