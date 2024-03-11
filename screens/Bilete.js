@@ -1,10 +1,12 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import Button from '../components/Button.js';
+import {Image } from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
-import { getDatabase, ref, onValue, off } from "firebase/database";
+import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue } from "firebase/database";
 import { auth } from "../firebase-config.js";
 import CumparaBilet from './CumparaBilet.js';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Use the appropriate icon library
 
 const Bilete = ({navigation}) =>{
   const [loading, setLoading] = useState(true);
@@ -13,19 +15,22 @@ const Bilete = ({navigation}) =>{
   useEffect(() => {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
-    const userRef = ref(db, `users/${userId}/bilete`);
+    const userRef = query(ref(db, `users/${userId}/bilete`), orderByValue('total'));
 
     const handleData = (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const bilete = Object.values(data);
-        setBilete(bilete);
-      } else {
+        const bilete = Object.entries(data).map(([id, ticket]) => ({ id, ...ticket }));;
+        const IDs = Object.keys(bilete);
+        setBilete(bilete); 
+
+      } else { 
         // cazul in care nu exista niciun favorit
-        setBilete([]);
+        setBilete([]); 
       }
       setLoading(false);
       console.log(bilete);
+
     };
 
     const handleError = (error) => {
@@ -51,17 +56,31 @@ const Bilete = ({navigation}) =>{
         <FlatList
           data={bilete}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleItemClick(item)} style={styles.itemContainer}>
+            <TouchableOpacity onPress={()=>navigation.navigate("VeziBilet",{
+              valabilitate: `${item.valabilitate}`,
+              data_efectuare: `${item.data_efectuare}`,
+              ora_efectuare: `${item.ora_efectuare}`,
+              id: `${item.id}`
+            })}
+              style={styles.itemContainer}>
             <View style={{ padding: 10 }}>
               <Text style={styles.name}>{`${item.data_efectuare}`}</Text>
+              <Text style={styles.name}>{`${item.ora_efectuare}`}</Text>
               <Text>{`Linie: ${item.linie}`}</Text>
               <Text>{`Mijloc de transport: ${item.mijloc_transport}`}</Text>
               <Text>{`Valabilitate: ${item.valabilitate}`}</Text>
               <Text>{`Total: ${item.total}`}</Text>
+              <Text>{`Status: ${item.status}`}</Text>
             </View>
+            <TouchableOpacity style={styles.favoriteButton}>
+            <Image
+                    source={require('../assets/icons/check.png')}
+                    style={{ width: 20, height: 20}}
+            />
+              </TouchableOpacity>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.data_efectuare}
+          keyExtractor={(item) => item.id}
         />
       ) : (
         <Text>Niciun bilet achiziționat</Text>
@@ -93,7 +112,7 @@ const Bilete = ({navigation}) =>{
       itemContainer: {
         backgroundColor: '#fff',
         borderRadius: 8,
-        padding: 15,
+        paddingRight: 60,
         marginBottom: 15,
         elevation: 3,
       },
@@ -118,6 +137,12 @@ const Bilete = ({navigation}) =>{
         justifyContent: "center",
         backgroundColor: Colors.babyOrange,
         marginVertical: 12
+        },
+        favoriteButton: {
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          padding: 10,
         },
     });
     

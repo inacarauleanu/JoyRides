@@ -20,6 +20,7 @@ const PlataCard = ({navigation, route}) => {
   const linie = route.params.linie;
 
   const [currentDate, setCurrentDate] = useState('');
+  const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
     var date = new Date().getDate(); //Current Date
@@ -29,12 +30,15 @@ const PlataCard = ({navigation, route}) => {
     var min = new Date().getMinutes(); //Current Minutes
     var sec = new Date().getSeconds(); //Current Seconds
     setCurrentDate(
-      date + '/' + month + '/' + year 
-      + ' ' + hours + ':' + min + ':' + sec
+      date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec
+    );
+
+    setCurrentTime(
+      hours + ':' + min + ':' + sec
     );
   }, []);
 
-  function writeUserBilete(userId, valabilitate, mijloc_transport, linie, total, data_efectuare) {
+  function writeUserBilete(userId, valabilitate, mijloc_transport, linie, total,  ora_efectuare) {
     const db = getDatabase();
 
     set(ref(db, 'users/' + userId + '/bilete/' + uuid.v4()), {
@@ -42,7 +46,9 @@ const PlataCard = ({navigation, route}) => {
       mijloc_transport: mijloc_transport,
       linie: linie,
       total: total/100,
-      data_efectuare: data_efectuare
+      data_efectuare: new Date().toISOString(),
+      ora_efectuare: ora_efectuare,
+      status: "valid"
     });
   }
   
@@ -91,7 +97,7 @@ const PlataCard = ({navigation, route}) => {
       } else if (paymentIntent) {
         console.log('Success from promise', paymentIntent);
         const userId = auth.currentUser.uid;
-        writeUserBilete(userId, JSON.stringify(valabilitate), JSON.stringify(mijloc_transport), JSON.stringify(linie), JSON.stringify(total), currentDate);
+        writeUserBilete(userId, JSON.stringify(valabilitate), JSON.stringify(mijloc_transport), JSON.stringify(linie), JSON.stringify(total), currentTime);
         Alert.alert('Plată efectuată cu succes', 'Tranzacția a fost efectuată cu succes!',[
           {
             onPress: ()=>navigation.navigate("Bilete")
