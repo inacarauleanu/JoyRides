@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 //import Button from '../components/Button.js';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { ButtonGroup, Button, Image } from 'react-native-elements';
@@ -105,12 +105,16 @@ const CumparaBilet = ({navigation}) =>{
       <Button
                 buttonStyle={styles.btn}
                 title="Plata card   "
-                onPress = {()=>navigation.navigate("PlataCard",{
+                onPress = {()=>{
+                  if(linie != 0){
+                  navigation.navigate("PlataCard",{
                   amount: selectedIndex == 0 ? 400 : 1500,
                   valabilitate: selectedIndex == 0 ? '1h' : '24h',
                   mijloc_transport: selectedIndexes == 0 ? 'tramvai' : (selectedIndexes == 1 ? 'autobuz' : 'troleibuz'),
-                  linie: linie
-                })}
+                  linie: linie 
+                })}else  Alert.alert('Alege linia pe care urmează să călătorești!');
+              }
+            }
                 titleStyle = {styles.titlu}
                 icon = {
                     <Image
