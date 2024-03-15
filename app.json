@@ -15,14 +15,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ina.carauleanu.JoyRides"
     },
     "android": {
-      "permissions": ["INTERNET"],
+      "permissions": [
+        "INTERNET",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ina.carauleanu.JoyRides"
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
@@ -34,7 +41,11 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6d791653-b026-46d5-a45c-5c5154ad8f6f"
+      }
+    }
   }
 }
-
