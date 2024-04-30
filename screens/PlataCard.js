@@ -62,10 +62,10 @@ const PlataCard = ({navigation, route}) => {
     console.log("mijloc_transport:", JSON.stringify(mijloc_transport));
     console.log("linie:", JSON.stringify(linie));
 
-    const response = await fetch(`http://192.168.100.20:3000/payments/intents`, {
+    const response = await fetch(`http://192.168.1.101:3000/payments/intents`, { //DE SCHIMBAT LA TIMISOARA
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
       },
       body: JSON.stringify({
         currency: 'usd',

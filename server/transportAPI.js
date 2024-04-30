@@ -15,5 +15,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at http://192.168.100.20:${port}`);
+  console.log(`Server is running at http://192.168.1.101:${port}`); //CALAFAT
+ // console.log(`Server is running at http://192.168.100.20:${port}`); TIMISOARA
 });

@@ -1,0 +1,802 @@
+{
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=990": [
+    {
+      "line": "Linia 11 spre Arena Aqua",
+      "stops": [
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "22:52"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "22:52"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "22:54"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "22:56"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "22:58"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:00"
+        },
+        {
+          "stop_name": "P-ța Mărăști",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Bastion",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "P-ța Badea Cârțan",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "Samuil Micu",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "Renașterii",
+          "arrival_time": "23:09"
+        },
+        {
+          "stop_name": "P-ța V. Economu",
+          "arrival_time": "23:10"
+        },
+        {
+          "stop_name": "Arena Aqua",
+          "arrival_time": "23:13"
+        }
+      ]
+    },
+    {
+      "line": "Linia 11 spre Ghe. Barițiu",
+      "stops": [
+        {
+          "stop_name": "Arena Aqua",
+          "arrival_time": "22:52"
+        },
+        {
+          "stop_name": "P-ța V. Economu",
+          "arrival_time": "22:55"
+        },
+        {
+          "stop_name": "Renașterii",
+          "arrival_time": "22:56"
+        },
+        {
+          "stop_name": "Samuil Micu",
+          "arrival_time": "22:57"
+        },
+        {
+          "stop_name": "P-ța Badea Cârțan",
+          "arrival_time": "1 min."
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "A. Popovici",
+          "arrival_time": "3 min."
+        },
+        {
+          "stop_name": "Oituz",
+          "arrival_time": "5 min."
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "8 min."
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "10 min."
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "11 min."
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "13 min."
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "15 min."
+        },
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "16 min."
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2786": [
+    {
+      "line": "Linia M11 spre Pod Ghiroda",
+      "stops": [
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "22:59"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "22:59"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "P-ța Mărăști",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "Bastion",
+          "arrival_time": "23:10"
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "23:12"
+        },
+        {
+          "stop_name": "RATT",
+          "arrival_time": "23:14"
+        },
+        {
+          "stop_name": "P-ța Badea Cârțan",
+          "arrival_time": "23:14"
+        },
+        {
+          "stop_name": "Samuil Micu",
+          "arrival_time": "23:15"
+        },
+        {
+          "stop_name": "Renașterii",
+          "arrival_time": "23:16"
+        },
+        {
+          "stop_name": "P-ța V. Economu",
+          "arrival_time": "23:17"
+        },
+        {
+          "stop_name": "Arena Aqua",
+          "arrival_time": "3 min."
+        },
+        {
+          "stop_name": "Moticica",
+          "arrival_time": "5 min."
+        },
+        {
+          "stop_name": "ROMTRANS",
+          "arrival_time": "7 min."
+        },
+        {
+          "stop_name": "Banat Car",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "Lugojului",
+          "arrival_time": "11 min."
+        },
+        {
+          "stop_name": "Primăria Ghiroda",
+          "arrival_time": "13 min."
+        },
+        {
+          "stop_name": "Ialomița",
+          "arrival_time": "22:59"
+        }
+      ]
+    },
+    {
+      "line": "Linia M11 spre Ghe. Barițiu",
+      "stops": [
+        {
+          "stop_name": "Ialomița",
+          "arrival_time": "22:59"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:00"
+        },
+        {
+          "stop_name": "Ialomița 19",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Câmpului",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Moldovei",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "Prieteniei",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "Spartacus",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Bobâlna",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "Cometei",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "Arena Aqua",
+          "arrival_time": "23:10"
+        },
+        {
+          "stop_name": "Camping",
+          "arrival_time": "23:11"
+        },
+        {
+          "stop_name": "P-ța V. Economu",
+          "arrival_time": "23:14"
+        },
+        {
+          "stop_name": "Renașterii",
+          "arrival_time": "23:15"
+        },
+        {
+          "stop_name": "Samuil Micu",
+          "arrival_time": "23:16"
+        },
+        {
+          "stop_name": "P-ța Badea Cârțan",
+          "arrival_time": "23:18"
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "23:19"
+        },
+        {
+          "stop_name": "A. Popovici",
+          "arrival_time": "23:20"
+        },
+        {
+          "stop_name": "Oituz",
+          "arrival_time": "23:22"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:25"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "23:27"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:28"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "23:30"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "23:32"
+        },
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "23:33"
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1006": [
+    {
+      "line": "Linia 14 spre I.I.de la Brad",
+      "stops": [
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "22:51"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "22:51"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "22:53"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "22:55"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "22:57"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "22:58"
+        },
+        {
+          "stop_name": "P-ța Mărăști",
+          "arrival_time": "23:00"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "Cimitirul Eroilor",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "Div 9 Cavalerie",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Pomiculturii",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "Ap. Petru și Pavel",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "I.I.de la Brad",
+          "arrival_time": "23:09"
+        }
+      ]
+    },
+    {
+      "line": "Linia 14 spre Ghe. Barițiu",
+      "stops": [
+        {
+          "stop_name": "I.I.de la Brad",
+          "arrival_time": "22:51"
+        },
+        {
+          "stop_name": "Ap. Petru și Pavel",
+          "arrival_time": "22:52"
+        },
+        {
+          "stop_name": "Pomiculturii",
+          "arrival_time": "22:53"
+        },
+        {
+          "stop_name": "Div 9 Cavalerie",
+          "arrival_time": "22:55"
+        },
+        {
+          "stop_name": "Cimitirul Eroilor",
+          "arrival_time": "22:56"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "22:59"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "23:17"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "23:19"
+        },
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "23:20"
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=989": [
+    {
+      "line": "Linia 15 spre T. Grozăvescu",
+      "stops": [
+        {
+          "stop_name": "Gir.Sudului 2tb",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "Parc Sudului 2tb",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "Bv.Sudului 2tb",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "Spitalul Județean",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Casa Tineretului",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "Sala Olimpia",
+          "arrival_time": "23:09"
+        },
+        {
+          "stop_name": "Comp.Stud_3Tb",
+          "arrival_time": "23:11"
+        },
+        {
+          "stop_name": "Parcul Copiilor",
+          "arrival_time": "23:12"
+        },
+        {
+          "stop_name": "T. Grozăvescu",
+          "arrival_time": "23:14"
+        }
+      ]
+    },
+    {
+      "line": "Linia 15 spre M-șal C-tin Prezan",
+      "stops": [
+        {
+          "stop_name": "T. Grozăvescu",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Parcul Copiilor",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "Complex Studențesc",
+          "arrival_time": ""
+        },
+        {
+          "stop_name": "Cluj",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "Cl. Martirilor",
+          "arrival_time": "4 min."
+        },
+        {
+          "stop_name": "Martir I. Stanciu",
+          "arrival_time": "6 min."
+        },
+        {
+          "stop_name": "M-șal C-tin Prezan",
+          "arrival_time": "7 min."
+        },
+        {
+          "stop_name": "Gir.Sudului 2tb",
+          "arrival_time": "9 min."
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1206": [
+    {
+      "line": "Linia 16 spre T. Grozăvescu",
+      "stops": [
+        {
+          "stop_name": "Gir.Sudului 1Tb",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "M-șal C-tin Prezan",
+          "arrival_time": "22:53"
+        },
+        {
+          "stop_name": "Martir I. Stanciu",
+          "arrival_time": "22:54"
+        },
+        {
+          "stop_name": "Cl. Martirilor",
+          "arrival_time": "22:56"
+        },
+        {
+          "stop_name": "Casa Tineretului",
+          "arrival_time": "22:57"
+        },
+        {
+          "stop_name": "Sala Olimpia",
+          "arrival_time": "22:59"
+        },
+        {
+          "stop_name": "Pasaj Michelangelo",
+          "arrival_time": "23:01"
+        },
+        {
+          "stop_name": "Univ. de Vest",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "A Șaguna",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "I.C. Brătianu",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "T. Grozăvescu",
+          "arrival_time": "23:08"
+        }
+      ]
+    },
+    {
+      "line": "Linia 16 spre Gir.Sudului 1Tb",
+      "stops": [
+        {
+          "stop_name": "T. Grozăvescu",
+          "arrival_time": "22:51"
+        },
+        {
+          "stop_name": "P-ța Huniade",
+          "arrival_time": "22:53"
+        },
+        {
+          "stop_name": "Pod A. Șaguna",
+          "arrival_time": "22:55"
+        },
+        {
+          "stop_name": "Fac. de Electrotehnică",
+          "arrival_time": "22:55"
+        },
+        {
+          "stop_name": "Univ. de Vest",
+          "arrival_time": "22:57"
+        },
+        {
+          "stop_name": "Complex Studențesc",
+          "arrival_time": "22:58"
+        },
+        {
+          "stop_name": "Cluj",
+          "arrival_time": "23:00"
+        },
+        {
+          "stop_name": "Spitalul Județean",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "Bd. Sudului",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Parc Sudului 1tb",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "Gir.Sudului 1Tb",
+          "arrival_time": "23:07"
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1086": [
+    {
+      "line": "Linia 17 spre Agronomie",
+      "stops": [
+        {
+          "stop_name": "Baader",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "A. Popovici",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Oituz",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "23:10"
+        },
+        {
+          "stop_name": "Remus Răduleț",
+          "arrival_time": "23:12"
+        },
+        {
+          "stop_name": "Liege",
+          "arrival_time": "23:14"
+        },
+        {
+          "stop_name": "U.T.T.",
+          "arrival_time": "23:15"
+        },
+        {
+          "stop_name": "Agronomie",
+          "arrival_time": "23:17"
+        }
+      ]
+    },
+    {
+      "line": "Linia 17 spre Bastion",
+      "stops": [
+        {
+          "stop_name": "Agronomie",
+          "arrival_time": "23:03"
+        },
+        {
+          "stop_name": "U.T.T.",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Liege",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "Dacia Service",
+          "arrival_time": "23:23"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "23:25"
+        },
+        {
+          "stop_name": "P-ța Mărăști",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "Bastion",
+          "arrival_time": "3 min."
+        },
+        {
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "5 min."
+        },
+        {
+          "stop_name": "Baader",
+          "arrival_time": "23:03"
+        }
+      ]
+    }
+  ],
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1166": [
+    {
+      "line": "Linia 18 spre Agronomie",
+      "stops": [
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:06"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:10"
+        },
+        {
+          "stop_name": "P-ța Mărăști",
+          "arrival_time": "23:11"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "23:13"
+        },
+        {
+          "stop_name": "Remus Răduleț",
+          "arrival_time": "23:15"
+        },
+        {
+          "stop_name": "Liege",
+          "arrival_time": "23:18"
+        },
+        {
+          "stop_name": "U.T.T.",
+          "arrival_time": "23:19"
+        },
+        {
+          "stop_name": "Agronomie",
+          "arrival_time": "23:20"
+        }
+      ]
+    },
+    {
+      "line": "Linia 18 spre Ghe. Barițiu",
+      "stops": [
+        {
+          "stop_name": "Agronomie",
+          "arrival_time": "23:02"
+        },
+        {
+          "stop_name": "U.T.T.",
+          "arrival_time": "23:04"
+        },
+        {
+          "stop_name": "P-ța Verde",
+          "arrival_time": "23:05"
+        },
+        {
+          "stop_name": "Cl. Torontalului",
+          "arrival_time": "23:07"
+        },
+        {
+          "stop_name": "Miresei",
+          "arrival_time": "23:08"
+        },
+        {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "23:11"
+        },
+        {
+          "stop_name": "P-ța 700",
+          "arrival_time": "23:14"
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "23:16"
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "23:17"
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "23:19"
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "23:21"
+        },
+        {
+          "stop_name": "Ghe. Barițiu",
+          "arrival_time": "23:51"
+        }
+      ]
+    }
+  ]
+}
