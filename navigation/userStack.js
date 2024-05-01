@@ -16,6 +16,7 @@ import CumparaBilet from '../screens/CumparaBilet.js';
 import PlataCard from '../screens/PlataCard.js';
 import PlataMesaj from '../screens/PlataMesaj.js';
 import VeziBilet from '../screens/VeziBilet.js';
+import VeziLinie from '../screens/VeziLinie.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -141,6 +142,7 @@ export default function UserStack() {
         <Stack.Screen name="PlataCard" component={PlataCard} options={{ headerShown: false }} />
         <Stack.Screen name="PlataMesaj" component={PlataMesaj} options={{ headerShown: false }} />
         <Stack.Screen name="VeziBilet" component={VeziBilet} options={{ headerShown: false }} />
+        <Stack.Screen name="VeziLinie" component={VeziLinie} options={{ headerShown: false }} />
       </Stack.Navigator>
       
       
