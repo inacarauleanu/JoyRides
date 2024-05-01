@@ -5,75 +5,75 @@
       "stops": [
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "23:16"
+          "arrival_time": "13:59"
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "23:18"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:19"
+          "arrival_time": "14:02"
         },
         {
           "stop_name": "P-ța Maria",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Catedrala Mit.",
-          "arrival_time": "23:22"
-        },
-        {
-          "stop_name": "Spitalul de Copii",
           "arrival_time": ""
         },
         {
-          "stop_name": "P-ța 700",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "P-ța Libertății",
+          "stop_name": "Catedrala Mit.",
           "arrival_time": "2 min."
         },
         {
-          "stop_name": "Hotel Continental",
+          "stop_name": "Spitalul de Copii",
           "arrival_time": "4 min."
         },
         {
-          "stop_name": "Prefectură",
+          "stop_name": "P-ța 700",
           "arrival_time": "5 min."
         },
         {
-          "stop_name": "Bd. 3 August 1919",
+          "stop_name": "P-ța Libertății",
+          "arrival_time": "6 min."
+        },
+        {
+          "stop_name": "Hotel Continental",
           "arrival_time": "7 min."
         },
         {
+          "stop_name": "Prefectură",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "Bd. 3 August 1919",
+          "arrival_time": ""
+        },
+        {
           "stop_name": "P-ța Traian",
-          "arrival_time": "8 min."
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Prințul Turcesc",
-          "arrival_time": "10 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "P-ța Sarmisegetusa",
-          "arrival_time": "11 min."
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "Lalelelor",
-          "arrival_time": "12 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "13 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Spitalul V. Babeș",
-          "arrival_time": "15 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Stația Meteo",
-          "arrival_time": "23:16"
+          "arrival_time": "13:59"
         }
       ]
     },
@@ -82,71 +82,71 @@
       "stops": [
         {
           "stop_name": "Stația Meteo",
-          "arrival_time": "23:16"
+          "arrival_time": "13:59"
         },
         {
           "stop_name": "U.M.T.",
-          "arrival_time": "23:17"
+          "arrival_time": "14:00"
         },
         {
           "stop_name": "Arena Electrica",
-          "arrival_time": "23:18"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "Gara de Est",
-          "arrival_time": "23:20"
+          "arrival_time": "14:03"
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:22"
+          "arrival_time": "14:05"
         },
         {
           "stop_name": "P-ța Traian",
-          "arrival_time": "2 min."
+          "arrival_time": "14:07"
         },
         {
           "stop_name": "Bd. 3 August 1919",
-          "arrival_time": "3 min."
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "Prefectură",
-          "arrival_time": "5 min."
+          "arrival_time": "14:10"
         },
         {
           "stop_name": "Hotel Continental",
-          "arrival_time": "6 min."
+          "arrival_time": "14:11"
         },
         {
           "stop_name": "P-ța Libertății",
-          "arrival_time": "8 min."
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "9 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Spitalul de Copii",
-          "arrival_time": "10 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Catedrala Mit.",
-          "arrival_time": "12 min."
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "P-ta Maria 2",
-          "arrival_time": "13 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "15 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "16 min."
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "18 min."
+          "arrival_time": "2 min."
         }
       ]
     }
@@ -157,99 +157,99 @@
       "stops": [
         {
           "stop_name": "City Mall_Tv",
-          "arrival_time": "23:25"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "22:53"
-        },
-        {
-          "stop_name": "Transilvania",
-          "arrival_time": "22:55"
-        },
-        {
-          "stop_name": "Banatul",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:25"
-        },
-        {
-          "stop_name": "Crizantemelor",
-          "arrival_time": "23:27"
-        },
-        {
-          "stop_name": "Mangalia",
-          "arrival_time": "23:27"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Regele Carol",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": ""
-        },
-        {
-          "stop_name": "P-ța Maria",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Catedrala Mit.",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "Spitalul de Copii",
-          "arrival_time": "5 min."
+          "stop_name": "P-ța Veteranilor",
+          "arrival_time": "14:00"
         },
         {
-          "stop_name": "P-ța 700",
+          "stop_name": "Transilvania",
+          "arrival_time": "14:02"
+        },
+        {
+          "stop_name": "Banatul",
+          "arrival_time": "14:04"
+        },
+        {
+          "stop_name": "Bd. Dâmbovița",
+          "arrival_time": "14:05"
+        },
+        {
+          "stop_name": "Crizantemelor",
+          "arrival_time": "14:07"
+        },
+        {
+          "stop_name": "Mangalia",
+          "arrival_time": "14:18"
+        },
+        {
+          "stop_name": "P-ța I. Maniu",
+          "arrival_time": "1 min."
+        },
+        {
+          "stop_name": "Regele Carol",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "P-ța Mocioni",
+          "arrival_time": "3 min."
+        },
+        {
+          "stop_name": "P-ța Maria",
+          "arrival_time": "4 min."
+        },
+        {
+          "stop_name": "Catedrala Mit.",
           "arrival_time": "6 min."
         },
         {
-          "stop_name": "P-ța Libertății",
-          "arrival_time": "7 min."
-        },
-        {
-          "stop_name": "Hotel Continental",
+          "stop_name": "Spitalul de Copii",
           "arrival_time": "8 min."
         },
         {
-          "stop_name": "Prefectură",
+          "stop_name": "P-ța 700",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "P-ța Libertății",
           "arrival_time": "10 min."
         },
         {
-          "stop_name": "Bd. 3 August 1919",
+          "stop_name": "Hotel Continental",
           "arrival_time": "11 min."
         },
         {
+          "stop_name": "Prefectură",
+          "arrival_time": "1 min."
+        },
+        {
+          "stop_name": "Bd. 3 August 1919",
+          "arrival_time": "3 min."
+        },
+        {
           "stop_name": "P-ța Traian",
-          "arrival_time": "13 min."
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "15 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "Gara de Est",
-          "arrival_time": "16 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Arena Electrica",
-          "arrival_time": "18 min."
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "U.M.T.",
-          "arrival_time": "20 min."
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Stația Meteo",
-          "arrival_time": "22:52"
+          "arrival_time": "13:59"
         }
       ]
     },
@@ -258,103 +258,103 @@
       "stops": [
         {
           "stop_name": "Stația Meteo",
-          "arrival_time": "22:52"
+          "arrival_time": "13:59"
         },
         {
           "stop_name": "Spitalul V. Babeș",
-          "arrival_time": "22:53"
+          "arrival_time": "14:00"
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "22:54"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "Lalelelor",
-          "arrival_time": "22:55"
+          "arrival_time": "14:02"
         },
         {
           "stop_name": "P-ța Sarmisegetusa",
-          "arrival_time": "22:57"
+          "arrival_time": "14:04"
         },
         {
           "stop_name": "Prințul Turcesc",
-          "arrival_time": "22:58"
+          "arrival_time": "14:05"
         },
         {
           "stop_name": "P-ța Traian",
-          "arrival_time": "22:59"
+          "arrival_time": "14:06"
         },
         {
           "stop_name": "Bd. 3 August 1919",
-          "arrival_time": "23:01"
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "Prefectură",
-          "arrival_time": "23:02"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Hotel Continental",
-          "arrival_time": "23:03"
+          "arrival_time": "14:10"
         },
         {
           "stop_name": "P-ța Libertății",
-          "arrival_time": "23:05"
+          "arrival_time": ""
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "23:06"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Spitalul de Copii",
-          "arrival_time": "23:07"
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Catedrala Mit.",
-          "arrival_time": "23:09"
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "P-ta Maria 2",
-          "arrival_time": "23:11"
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:12"
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "23:13"
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:14"
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Mangalia",
-          "arrival_time": "23:15"
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Crizantemelor",
-          "arrival_time": "23:16"
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:17"
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Banatul",
-          "arrival_time": "23:19"
+          "arrival_time": "14 min."
         },
         {
           "stop_name": "Transilvania",
-          "arrival_time": "23:21"
+          "arrival_time": "16 min."
         },
         {
           "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:22"
+          "arrival_time": "18 min."
         },
         {
           "stop_name": "City Mall_Tv",
-          "arrival_time": "23:25"
+          "arrival_time": "3 min."
         }
       ]
     }
@@ -365,71 +365,71 @@
       "stops": [
         {
           "stop_name": "Cl. Torontalului",
-          "arrival_time": "23:00"
+          "arrival_time": "14:07"
         },
         {
           "stop_name": "M. Basarab",
-          "arrival_time": "23:01"
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "Amforei",
-          "arrival_time": "23:02"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Bd. Cetății",
-          "arrival_time": "23:03"
+          "arrival_time": "14:10"
         },
         {
           "stop_name": "Balta Verde",
-          "arrival_time": "23:05"
+          "arrival_time": "14:12"
         },
         {
           "stop_name": "Mendeleev",
-          "arrival_time": "23:06"
+          "arrival_time": "14:13"
         },
         {
           "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:07"
+          "arrival_time": ""
         },
         {
           "stop_name": "Brediceanu",
-          "arrival_time": "23:08"
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "Spitalul de Copii",
-          "arrival_time": "23:09"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Catedrala Mit.",
-          "arrival_time": "23:10"
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "P-ța Maria",
-          "arrival_time": "23:12"
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "Parc Doina",
-          "arrival_time": "23:14"
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:15"
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Memorandului",
-          "arrival_time": "23:16"
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "23:18"
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "23:19"
+          "arrival_time": "12 min."
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "1 min."
+          "arrival_time": "14 min."
         },
         {
           "stop_name": "Spitalul Județean",
@@ -437,7 +437,7 @@
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "4 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Ghe. Domășnean",
@@ -450,83 +450,83 @@
       "stops": [
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "23:00"
+          "arrival_time": "14:07"
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "23:02"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "23:05"
+          "arrival_time": "14:12"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "23:05"
+          "arrival_time": "14:12"
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "23:07"
+          "arrival_time": "14:14"
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "23:08"
+          "arrival_time": ""
         },
         {
           "stop_name": "Memorandului",
-          "arrival_time": "23:10"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:11"
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Parc Doina",
-          "arrival_time": "23:12"
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "P-ța Maria",
-          "arrival_time": "23:14"
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "Catedrala Mit.",
-          "arrival_time": "23:16"
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Spitalul de Copii",
-          "arrival_time": "23:18"
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Brediceanu",
-          "arrival_time": "23:18"
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:19"
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Mendeleev",
-          "arrival_time": "23:20"
+          "arrival_time": "12 min."
         },
         {
           "stop_name": "Balta Verde",
-          "arrival_time": "23:21"
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Bd. Cetății",
-          "arrival_time": "23:23"
+          "arrival_time": "15 min."
         },
         {
           "stop_name": "Amforei",
-          "arrival_time": "23:24"
+          "arrival_time": "16 min."
         },
         {
           "stop_name": "M. Basarab",
-          "arrival_time": "23:25"
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "Cl. Torontalului",
-          "arrival_time": "23:27"
+          "arrival_time": "2 min."
         }
       ]
     }
@@ -537,107 +537,107 @@
       "stops": [
         {
           "stop_name": "Dâmbovița (buclă)",
-          "arrival_time": "22:55"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "Banatul",
-          "arrival_time": "22:56"
+          "arrival_time": "14:02"
         },
         {
           "stop_name": "Transilvania",
-          "arrival_time": "22:58"
+          "arrival_time": "14:04"
         },
         {
           "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:00"
+          "arrival_time": "14:06"
         },
         {
           "stop_name": "Chișodei",
-          "arrival_time": "23:01"
+          "arrival_time": "14:07"
         },
         {
           "stop_name": "Izlaz",
-          "arrival_time": "23:02"
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "E. Zola",
-          "arrival_time": "23:03"
+          "arrival_time": ""
         },
         {
           "stop_name": "Progresul",
-          "arrival_time": "23:05"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Pavlov",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "Mureș",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Lidia",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Drubeta",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Memorandului",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "P-ța Bălcescu",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "Parc Doina",
-          "arrival_time": "4 min."
+          "stop_name": "Mureș",
+          "arrival_time": "5 min."
         },
         {
-          "stop_name": "P-ta Maria Tv",
+          "stop_name": "Lidia",
           "arrival_time": "6 min."
         },
         {
-          "stop_name": "Catedrala Mit.",
+          "stop_name": "Drubeta",
           "arrival_time": "7 min."
         },
         {
-          "stop_name": "Spitalul de Copii",
+          "stop_name": "Memorandului",
           "arrival_time": "9 min."
         },
         {
-          "stop_name": "Brediceanu",
-          "arrival_time": "9 min."
+          "stop_name": "P-ța Bălcescu",
+          "arrival_time": "10 min."
         },
         {
-          "stop_name": "Circumvalațiunii",
+          "stop_name": "Parc Doina",
           "arrival_time": "11 min."
         },
         {
-          "stop_name": "Mendeleev",
-          "arrival_time": "11 min."
-        },
-        {
-          "stop_name": "Balta Verde",
+          "stop_name": "P-ta Maria Tv",
           "arrival_time": "13 min."
         },
         {
-          "stop_name": "Bd. Cetății",
-          "arrival_time": "15 min."
+          "stop_name": "Catedrala Mit.",
+          "arrival_time": "14 min."
         },
         {
-          "stop_name": "Amforei",
+          "stop_name": "Spitalul de Copii",
           "arrival_time": "16 min."
         },
         {
-          "stop_name": "M. Basarab",
+          "stop_name": "Brediceanu",
           "arrival_time": "17 min."
         },
         {
+          "stop_name": "Circumvalațiunii",
+          "arrival_time": "1 min."
+        },
+        {
+          "stop_name": "Mendeleev",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "Balta Verde",
+          "arrival_time": "3 min."
+        },
+        {
+          "stop_name": "Bd. Cetății",
+          "arrival_time": "5 min."
+        },
+        {
+          "stop_name": "Amforei",
+          "arrival_time": "6 min."
+        },
+        {
+          "stop_name": "M. Basarab",
+          "arrival_time": "8 min."
+        },
+        {
           "stop_name": "Cl. Torontalului",
-          "arrival_time": "18 min."
+          "arrival_time": "9 min."
         }
       ]
     },
@@ -646,107 +646,107 @@
       "stops": [
         {
           "stop_name": "Cl. Torontalului",
-          "arrival_time": "22:55"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "M. Basarab",
-          "arrival_time": "22:56"
+          "arrival_time": "14:02"
         },
         {
           "stop_name": "Amforei",
-          "arrival_time": "22:57"
+          "arrival_time": "14:03"
         },
         {
           "stop_name": "Bd. Cetății",
-          "arrival_time": "22:58"
+          "arrival_time": "14:04"
         },
         {
           "stop_name": "Balta Verde",
-          "arrival_time": ""
-        },
-        {
-          "stop_name": "Mendeleev",
           "arrival_time": "1 min."
         },
         {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "2 min."
-        },
-        {
-          "stop_name": "Brediceanu",
+          "stop_name": "Mendeleev",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "Spitalul de Copii",
-          "arrival_time": "4 min."
+          "stop_name": "Circumvalațiunii",
+          "arrival_time": "3 min."
         },
         {
-          "stop_name": "Catedrala Mit.",
+          "stop_name": "Brediceanu",
           "arrival_time": "5 min."
         },
         {
-          "stop_name": "P-ta Maria 2",
+          "stop_name": "Spitalul de Copii",
+          "arrival_time": "5 min."
+        },
+        {
+          "stop_name": "Catedrala Mit.",
           "arrival_time": "7 min."
         },
         {
-          "stop_name": "Parc Doina",
-          "arrival_time": "9 min."
+          "stop_name": "P-ta Maria 2",
+          "arrival_time": "8 min."
         },
         {
-          "stop_name": "P-ța Bălcescu",
+          "stop_name": "Parc Doina",
           "arrival_time": "10 min."
         },
         {
-          "stop_name": "Memorandului",
+          "stop_name": "P-ța Bălcescu",
           "arrival_time": "11 min."
         },
         {
-          "stop_name": "Drubeta",
+          "stop_name": "Memorandului",
           "arrival_time": "13 min."
         },
         {
-          "stop_name": "Lidia",
+          "stop_name": "Drubeta",
           "arrival_time": "14 min."
         },
         {
-          "stop_name": "Mureș",
+          "stop_name": "Lidia",
           "arrival_time": "15 min."
         },
         {
+          "stop_name": "Mureș",
+          "arrival_time": "1 min."
+        },
+        {
           "stop_name": "Pavlov",
-          "arrival_time": "17 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Progresul",
-          "arrival_time": "18 min."
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "E.Zola",
-          "arrival_time": "19 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "Izlaz",
-          "arrival_time": "21 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Chișodei",
-          "arrival_time": "22 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23 min."
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Transilvania",
-          "arrival_time": "25 min."
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Banatul",
-          "arrival_time": "27 min."
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Dâmbovița (buclă)",
-          "arrival_time": ""
+          "arrival_time": "14 min."
         }
       ]
     }
@@ -757,67 +757,67 @@
       "stops": [
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "22:53"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "22:55"
+          "arrival_time": "14:03"
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "22:56"
+          "arrival_time": "14:04"
         },
         {
           "stop_name": "P-ța Maria",
-          "arrival_time": "22:57"
+          "arrival_time": "14:05"
         },
         {
           "stop_name": "Parc Doina",
-          "arrival_time": "1 min."
+          "arrival_time": "14:07"
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "2 min."
+          "arrival_time": ""
         },
         {
           "stop_name": "Memorandului",
-          "arrival_time": "3 min."
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "5 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "6 min."
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "8 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "9 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "11 min."
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "14 min."
+          "arrival_time": "12 min."
         },
         {
           "stop_name": "Electrotimiș",
-          "arrival_time": "15 min."
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "I.O.T.",
-          "arrival_time": "16 min."
+          "arrival_time": "14 min."
         },
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "17 min."
+          "arrival_time": "15 min."
         }
       ]
     },
@@ -826,67 +826,67 @@
       "stops": [
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "22:53"
+          "arrival_time": "14:01"
         },
         {
           "stop_name": "I.O.T.",
-          "arrival_time": "22:54"
+          "arrival_time": "14:02"
         },
         {
           "stop_name": "Electrotimiș",
-          "arrival_time": "22:55"
+          "arrival_time": "14:03"
         },
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "22:56"
+          "arrival_time": "14:04"
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "22:58"
+          "arrival_time": "14:06"
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "23:01"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "23:01"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "23:04"
+          "arrival_time": "14:12"
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "1 min."
+          "arrival_time": "14:13"
         },
         {
           "stop_name": "Memorandului",
-          "arrival_time": "3 min."
+          "arrival_time": "14:14"
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "4 min."
+          "arrival_time": "14:15"
         },
         {
           "stop_name": "Parc Doina",
-          "arrival_time": "5 min."
+          "arrival_time": "14:17"
         },
         {
           "stop_name": "P-ta Maria Tv",
-          "arrival_time": "7 min."
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "8 min."
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "9 min."
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "11 min."
+          "arrival_time": "6 min."
         }
       ]
     }
@@ -897,83 +897,83 @@
       "stops": [
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "23:10"
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "23:12"
+          "arrival_time": ""
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:28"
-        },
-        {
-          "stop_name": "Mangalia",
           "arrival_time": "1 min."
         },
         {
-          "stop_name": "Crizantemelor",
+          "stop_name": "Mangalia",
           "arrival_time": "2 min."
         },
         {
-          "stop_name": "Bd. Dâmbovița",
+          "stop_name": "Crizantemelor",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "Banatul",
-          "arrival_time": "5 min."
+          "stop_name": "Bd. Dâmbovița",
+          "arrival_time": "4 min."
         },
         {
-          "stop_name": "Transilvania",
+          "stop_name": "Banatul",
           "arrival_time": "6 min."
         },
         {
+          "stop_name": "Transilvania",
+          "arrival_time": ""
+        },
+        {
           "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "8 min."
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Ghe. Ranetti",
-          "arrival_time": "9 min."
+          "arrival_time": "3 min."
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "11 min."
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "13 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "14 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "16 min."
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "17 min."
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "19 min."
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "22 min."
+          "arrival_time": "16 min."
         },
         {
           "stop_name": "Electrotimiș",
-          "arrival_time": "24 min."
+          "arrival_time": "18 min."
         },
         {
           "stop_name": "I.O.T.",
-          "arrival_time": "25 min."
+          "arrival_time": "19 min."
         },
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "27 min."
+          "arrival_time": "21 min."
         }
       ]
     },
@@ -982,83 +982,83 @@
       "stops": [
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "23:10"
+          "arrival_time": "14:08"
         },
         {
           "stop_name": "I.O.T.",
-          "arrival_time": "23:11"
+          "arrival_time": "14:09"
         },
         {
           "stop_name": "Electrotimiș",
-          "arrival_time": "23:12"
+          "arrival_time": "14:10"
         },
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "23:13"
+          "arrival_time": "14:11"
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "23:15"
+          "arrival_time": "14:13"
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "23:18"
+          "arrival_time": "14:16"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "23:19"
+          "arrival_time": "14:17"
         },
         {
           "stop_name": "Salcâmilor",
-          "arrival_time": "23:21"
+          "arrival_time": "14:19"
         },
         {
           "stop_name": "Drubeta",
-          "arrival_time": "23:22"
+          "arrival_time": "14:20"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "Ghe. Ranetti",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "23:27"
-        },
-        {
-          "stop_name": "Transilvania",
-          "arrival_time": "23:44"
-        },
-        {
-          "stop_name": "Banatul",
           "arrival_time": "2 min."
         },
         {
-          "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "3 min."
-        },
-        {
-          "stop_name": "Crizantemelor",
+          "stop_name": "Ghe. Ranetti",
           "arrival_time": "4 min."
         },
         {
-          "stop_name": "Mangalia",
+          "stop_name": "Bd. L. Rebreanu",
           "arrival_time": "5 min."
         },
         {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "6 min."
-        },
-        {
-          "stop_name": "Regele Carol",
+          "stop_name": "Transilvania",
           "arrival_time": "7 min."
         },
         {
-          "stop_name": "Gara de Nord",
+          "stop_name": "Banatul",
+          "arrival_time": "8 min."
+        },
+        {
+          "stop_name": "Bd. Dâmbovița",
           "arrival_time": "10 min."
+        },
+        {
+          "stop_name": "Crizantemelor",
+          "arrival_time": "11 min."
+        },
+        {
+          "stop_name": "Mangalia",
+          "arrival_time": "12 min."
+        },
+        {
+          "stop_name": "P-ța I. Maniu",
+          "arrival_time": "13 min."
+        },
+        {
+          "stop_name": "Regele Carol",
+          "arrival_time": "14 min."
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "16 min."
         }
       ]
     }

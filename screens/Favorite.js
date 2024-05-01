@@ -52,7 +52,7 @@ const Favorites = () => {
 
             </View>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.line}
         />
       ) : (
         <Text>Nicio stație favorită</Text>

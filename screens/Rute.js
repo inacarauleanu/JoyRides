@@ -16,32 +16,131 @@ const Rute = () => {
   const [favorites, setFavorites] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
 
+  const transformKeys = (data) => {
+    const transformedData = {};
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); // Replace invalid characters with underscores
+        transformedData[transformedKey] = data[key];
+      }
+    }
+    return transformedData;
+  };
+
+
+  const writeToDatabaseTrams = async () => {
+    try {
+      const db = getDatabase();
+      const transformedData = transformKeys(scraped_data_trams)
+      set(ref(db, 'trams/'), {
+        transformedData
+      });
+    } catch (error) {
+      console.error('Error writing to Firebase Realtime Database:', error);
+    }
+  };
+
+  
+  const writeToDatabaseTrols = async () => {
+    try {
+      const db = getDatabase();
+      const transformedData = transformKeys(scraped_data_trols)
+      set(ref(db, 'trols/'), {
+        transformedData
+      });
+    } catch (error) {
+      console.error('Error writing to Firebase Realtime Database:', error);
+    }
+  };
+
+  
+  const writeToDatabaseBuses = async () => {
+    try {
+      const db = getDatabase();
+      const transformedData = transformKeys(scraped_data_buses)
+      set(ref(db, 'buses/'), {
+        transformedData
+      });
+    } catch (error) {
+      console.error('Error writing to Firebase Realtime Database:', error);
+    }
+  };
+  
   useEffect(() => {
     fetchData();
   }, []);
+
+  const scrapeTrams = async () => {
+    try {
+      const response = await fetch('http://192.168.1.102:3001/scrape/trams');
+      const data = await response.json();
+      console.log('Scraping completed successfully for trams', JSON.stringify(data));
+      setBusStops(data);
+      console.log("BUSSTOPS");
+      console.log(busStops);
+      //writeToDatabaseTrams();
+      // Handle scraped data as needed
+    } catch (error) {
+      console.error('Error scraping trams data:', error);
+      // Handle error
+    }
+  };
+  
+  // Function to trigger scraping for trols
+  const scrapeTrols = async () => {
+    try {
+      const response = await fetch('http://192.168.1.102:3001/scrape/trols');
+      const data = await response.json();
+      setBusStops(data);
+      console.log('Scraping completed successfully for trols', JSON.stringify(data));
+      
+      //writeToDatabaseTrols();
+      // Handle scraped data as needed
+    } catch (error) {
+      console.error('Error scraping trols data:', error);
+      // Handle error
+    }
+  };
+
+  const scrapeBuses = async () => {
+    try {
+      const response = await fetch('http://192.168.1.102:3001/scrape/buses');
+      const data = await response.json();
+      console.log('Scraping completed successfully for buses', JSON.stringify(data));
+      setBusStops(data);
+      //writeToDatabaseBuses();
+      // Handle scraped data as needed
+    } catch (error) {
+      console.error('Error scraping buses data:', error);
+      // Handle error
+    }
+  };
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const db = getDatabase();
       let data;
-      switch (selectedIndexes) {
+      /*switch (selectedIndexes) {
         case 0:
+          scrapeTrams();
           const tramsResponse = await get(ref(db, '/trams'));
           data = tramsResponse.val();
           break;
         case 1:
+          scrapeBuses();
           const busesResponse = await get(ref(db, '/buses'));
           data = busesResponse.val();
           break;
         case 2:
+          scrapeTrols();
           const trolsResponse = await get(ref(db, '/trols'));
           data = trolsResponse.val();
           break;
         default:
           data = {};
-      }
-      setBusStops(data);
+      }*/
+      //setBusStops(data);
       setLoading(false);
               // Fetch favorites
               const userId = auth.currentUser.uid;
@@ -86,94 +185,6 @@ const Rute = () => {
     return <Text>Loading...</Text>;
   }
 
-  const scrapeTrams = async () => {
-    try {
-      const response = await fetch('http://192.168.1.101:3001/scrape/trams');
-      const data = await response.json();
-      console.log('Scraping completed successfully for trams', JSON.stringify(data));
-      // Handle scraped data as needed
-    } catch (error) {
-      console.error('Error scraping trams data:', error);
-      // Handle error
-    }
-  };
-  
-  // Function to trigger scraping for trols
-  const scrapeTrols = async () => {
-    try {
-      const response = await fetch('http://192.168.1.101:3001/scrape/trols');
-      const data = await response.json();
-      console.log('Scraping completed successfully for trols', JSON.stringify(data));
-      // Handle scraped data as needed
-    } catch (error) {
-      console.error('Error scraping trols data:', error);
-      // Handle error
-    }
-  };
-
-  const scrapeBuses = async () => {
-    try {
-      const response = await fetch('http://192.168.1.101:3001/scrape/buses');
-      const data = await response.json();
-      console.log('Scraping completed successfully for buses', JSON.stringify(data));
-      // Handle scraped data as needed
-    } catch (error) {
-      console.error('Error scraping buses data:', error);
-      // Handle error
-    }
-  };
-
-  const transformKeys = (data) => {
-    const transformedData = {};
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); // Replace invalid characters with underscores
-        transformedData[transformedKey] = data[key];
-      }
-    }
-    return transformedData;
-  };
-
-  const writeToDatabaseTrams = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_trams)
-      set(ref(db, 'trams/'), {
-        transformedData
-      });
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-
-  
-  const writeToDatabaseTrols = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_trols)
-      set(ref(db, 'trols/'), {
-        transformedData
-      });
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-
-  
-  const writeToDatabaseBuses = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_buses)
-      set(ref(db, 'buses/'), {
-        transformedData
-      });
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-  
-
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rute</Text>
@@ -184,15 +195,15 @@ const Rute = () => {
         switch (index) {
           case 0:
             scrapeTrams();
-            writeToDatabaseTrams();
+            //writeToDatabaseTrams();
             break;
           case 1:
             scrapeBuses();
-            writeToDatabaseBuses();
+           // writeToDatabaseBuses();
             break;
           case 2:
             scrapeTrols();
-            writeToDatabaseTrols();
+            //writeToDatabaseTrols();
             break;
           default:
             break;
@@ -204,13 +215,13 @@ const Rute = () => {
       textStyle = {styles.textStyle}
       
     />
-       <View>
-<FlatList
-  data={Object.entries(busStops.transformedData)}
-  keyExtractor={(item) => item[0]} // Use route key as the key extractor
+ <View>
+ <FlatList
+  data={Object.entries(busStops)}
+  keyExtractor={(item) => item[0]}
   renderItem={({ item }) => (
     <View>
-      {/*<Text>{item[0]}</Text> */}
+      {/*<Text>{item[0]}</Text>*/}
       {Array.isArray(item[1]) ? (
         item[1].map((bus, index) => (
           <View key={index} >
@@ -247,7 +258,6 @@ const Rute = () => {
 
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs/promises');
 
-async function scrapeUrls(urls, filename) {
+async function scrapeUrls(urls) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -47,11 +47,12 @@ async function scrapeUrls(urls, filename) {
                 console.log('Changes detected, scraping data for URL:', url);
                 data.forEach(obj => console.log(obj));
                 previousData[url] = data;
-                await saveDataToJson(allData, filename);
+               // await saveDataToJson(allData, filename);
             } else {
                 console.log('No changes detected for URL:', url);
             }
         }
+        return allData;
     };
 
     function areObjectsEqual(obj1, obj2) {
@@ -65,7 +66,7 @@ async function scrapeUrls(urls, filename) {
         return str1 === str2;
     }
 
-    async function saveDataToJson(data, filename) {
+    /*async function saveDataToJson(data, filename) {
         try {
             const jsonData = JSON.stringify(data, null, 2);
             await fs.writeFile(filename, jsonData);
@@ -73,10 +74,12 @@ async function scrapeUrls(urls, filename) {
         } catch (error) {
             console.error('Error saving data to JSON file:', error);
         }
-    }
+    }*/
 
-    await fetchData();
-    setInterval(fetchData, 30000); // Check for changes every 30 seconds
+    /*await fetchData();
+    setInterval(fetchData, 30000); // Check for changes every 30 seconds*/
+
+    return fetchData();
 }
 
 module.exports = scrapeUrls;

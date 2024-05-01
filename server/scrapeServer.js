@@ -20,8 +20,8 @@ app.get('/scrape/trams', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1558',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2406'
         ];
-        await scrapeUrls(tramUrls, 'scraped_data_trams.json');
-        res.sendFile(__dirname + '/scraped_data_trams.json'); // Send the JSON file as response
+        const data = await scrapeUrls(tramUrls);
+        res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trams data:', error);
         res.status(500).send('Internal server error');
@@ -40,8 +40,8 @@ app.get('/scrape/trols', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1086',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1166'
         ];
-        await scrapeUrls(trolsUrls, 'scraped_data_trols.json');
-        res.sendFile(__dirname + '/scraped_data_trols.json');
+        const data = await scrapeUrls(trolsUrls);
+        res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trols data:', error);
         res.status(500).send('Internal server error');
@@ -90,8 +90,8 @@ app.get('/scrape/buses', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3466',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3546'
         ];
-        await scrapeUrls(busesUrls, 'scraped_data_buses.json');
-        res.sendFile(__dirname + '/scraped_data_buses.json');
+        const data = await scrapeUrls(busesUrls);
+        res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trols data:', error);
         res.status(500).send('Internal server error');
@@ -100,5 +100,5 @@ app.get('/scrape/buses', async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port http://192.168.1.102:${PORT}`);
 });
