@@ -9,13 +9,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import scraped_data_trams from "../server/scraped_data_trams.json"
 import scraped_data_trols from "../server/scraped_data_trols.json"
 import scraped_data_buses from "../server/scraped_data_buses.json"
+import { Line } from 'react-native-svg';
 
-const Rute = () => {
+const Rute = ({navigation}) => {
   const [busStops, setBusStops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
   const [lineNames, setLineNames] = useState([]);
+  const [stops, setStops] = useState([]);
 
  /* const transformKeys = (data) => {
     const transformedData = {};
@@ -113,6 +115,7 @@ console.log("Bus line names:", busLineNames);*/
       setBusStops(data);
       console.log('Scraping completed successfully for trols') ;
       setLineNames(extractLineNames(data));
+      //console.log(busStops);
       //writeToDatabaseTrols();
     } catch (error) {
       console.error('Error scraping trols data:', error);
@@ -177,9 +180,7 @@ console.log("Bus line names:", busLineNames);*/
   };
 
   const toggleFavorite = (line) => {
-    // Extracting values (arrays of objects) from busStops object
     const busStopValues = Object.values(busStops);
-    // Finding the bus object with the specified line
     const busWithLine = busStopValues.find((busArray) =>
       busArray.find((bus) => bus.line === line)
     );
@@ -202,6 +203,24 @@ console.log("Bus line names:", busLineNames);*/
       updateFavoritesInFirebase(updatedFavorites);
     }
   };
+
+  const getLineByName = (lineName) => {
+
+    for (const key in busStops) {
+      if (Object.hasOwnProperty.call(busStops, key)) {
+        const lines = busStops[key];
+        const line = lines.find((bus) => bus.line === lineName);
+        if (line) {
+          return line;
+         
+        }
+      }
+    }
+  
+    return null;
+  };
+  
+  
   
   
   const updateFavoritesInFirebase = (updatedFavorites) => {
@@ -289,7 +308,17 @@ console.log("Bus line names:", busLineNames);*/
   data={lineNames}
   keyExtractor={(item, index) => index.toString()}
   renderItem={({ item }) => (
-    <TouchableOpacity onPress={() => console.log(item)} style={styles.itemContainer}>
+    <TouchableOpacity 
+      onPress={() => {
+       const stops =  getLineByName(item); 
+        //console.log(stops);
+        console.log("ITEM", item);
+        navigation.navigate("VeziLinie", 
+        {  
+          stops
+        });
+      }} 
+      style={styles.itemContainer}>
       <Text style={styles.name}>{item}</Text>
       <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(item)}>
         <Icon name={favorites.some((favItem) => favItem.line === item) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
