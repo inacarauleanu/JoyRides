@@ -49,7 +49,13 @@ const Favorites = () => {
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <Text style={styles.name}>{`${item.line}`}</Text>
-
+              <Text>Stops:</Text>
+              {item.stops.map((stop, idx) => (
+              <View key={idx}>
+                <Text>{stop.stop_name}:<Text>{stop.arrival_time}</Text></Text>
+                
+              </View>
+            ))}
             </View>
           )}
           keyExtractor={(item) => item.line}

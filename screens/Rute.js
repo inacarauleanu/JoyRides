@@ -5,7 +5,7 @@ import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set, get, push } from "firebase/database";
 import { firebase } from "../firebase-config.js";
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
-import Icon from 'react-native-vector-icons/FontAwesome'; // Use the appropriate icon library
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 import scraped_data_trams from "../server/scraped_data_trams.json"
 import scraped_data_trols from "../server/scraped_data_trols.json"
 import scraped_data_buses from "../server/scraped_data_buses.json"
@@ -15,12 +15,13 @@ const Rute = () => {
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
+  const [lineNames, setLineNames] = useState([]);
 
-  const transformKeys = (data) => {
+ /* const transformKeys = (data) => {
     const transformedData = {};
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); // Replace invalid characters with underscores
+        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); 
         transformedData[transformedKey] = data[key];
       }
     }
@@ -64,7 +65,7 @@ const Rute = () => {
     } catch (error) {
       console.error('Error writing to Firebase Realtime Database:', error);
     }
-  };
+  };*/
   
   useEffect(() => {
     fetchData();
@@ -74,31 +75,48 @@ const Rute = () => {
     try {
       const response = await fetch('http://192.168.1.102:3001/scrape/trams');
       const data = await response.json();
-      console.log('Scraping completed successfully for trams', JSON.stringify(data));
-      setBusStops(data);
-      console.log("BUSSTOPS");
-      console.log(busStops);
+      console.log('Scraping completed successfully for trams') ;
+      setBusStops(data); //data
+      
+      //console.log("BUSSTOPS");
+     // console.log(busStops);
       //writeToDatabaseTrams();
-      // Handle scraped data as needed
     } catch (error) {
       console.error('Error scraping trams data:', error);
-      // Handle error
     }
   };
+
+const extractLineNames = (data) => {
+  let lineNames = [];
+
+  Object.values(data).forEach((routes) => {
+    routes.forEach((route) => {
+      lineNames.push(route.line);
+    });
+  });
+
+  return lineNames;
+};
+
+const tramLineNames = extractLineNames(scraped_data_trams);
+const trolLineNames = extractLineNames(scraped_data_trols);
+const busLineNames = extractLineNames(scraped_data_buses);
+
+/*console.log("Tram line names:", tramLineNames);
+console.log("Trol line names:", trolLineNames);
+console.log("Bus line names:", busLineNames);*/
   
-  // Function to trigger scraping for trols
   const scrapeTrols = async () => {
     try {
       const response = await fetch('http://192.168.1.102:3001/scrape/trols');
       const data = await response.json();
       setBusStops(data);
-      console.log('Scraping completed successfully for trols', JSON.stringify(data));
-      
+      console.log('Scraping completed successfully for trols') ;
+      setLineNames(extractLineNames(data));
       //writeToDatabaseTrols();
-      // Handle scraped data as needed
     } catch (error) {
       console.error('Error scraping trols data:', error);
-      // Handle error
+
     }
   };
 
@@ -106,13 +124,12 @@ const Rute = () => {
     try {
       const response = await fetch('http://192.168.1.102:3001/scrape/buses');
       const data = await response.json();
-      console.log('Scraping completed successfully for buses', JSON.stringify(data));
+      console.log('Scraping completed successfully for buses') ;
       setBusStops(data);
+      setLineNames(busLineNames);
       //writeToDatabaseBuses();
-      // Handle scraped data as needed
     } catch (error) {
       console.error('Error scraping buses data:', error);
-      // Handle error
     }
   };
 
@@ -123,19 +140,22 @@ const Rute = () => {
       let data;
       /*switch (selectedIndexes) {
         case 0:
+          setLineNames(tramLineNames);
           scrapeTrams();
           const tramsResponse = await get(ref(db, '/trams'));
           data = tramsResponse.val();
           break;
         case 1:
-          scrapeBuses();
+          /*scrapeBuses();
           const busesResponse = await get(ref(db, '/buses'));
           data = busesResponse.val();
+          setLineNames(busLineNames);
           break;
         case 2:
-          scrapeTrols();
+          /*scrapeTrols();
           const trolsResponse = await get(ref(db, '/trols'));
           data = trolsResponse.val();
+          setLineNames(trolLineNames);
           break;
         default:
           data = {};
@@ -156,25 +176,34 @@ const Rute = () => {
     }
   };
 
-
-
-
-
-  const toggleFavorite = (item) => {
-    const isFavorite = favorites.some((favItem) => favItem.line === item.line);
+  const toggleFavorite = (line) => {
+    // Extracting values (arrays of objects) from busStops object
+    const busStopValues = Object.values(busStops);
+    // Finding the bus object with the specified line
+    const busWithLine = busStopValues.find((busArray) =>
+      busArray.find((bus) => bus.line === line)
+    );
+  
+    if (!busWithLine) {
+      console.error(`No bus stop data found for line ${line}`);
+      return;
+    }
+  
+    const isFavorite = favorites.some((favItem) => favItem.line === line);
     if (isFavorite) {
       // Remove from favorites
-      const updatedFavorites = favorites.filter((favItem) => favItem.line !== item.line);
+      const updatedFavorites = favorites.filter((favItem) => favItem.line !== line);
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
     } else {
       // Add to favorites
-      const updatedFavorites = [...favorites, item];
+      const updatedFavorites = [...favorites, busWithLine.find((bus) => bus.line === line)];
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
     }
   };
-
+  
+  
   const updateFavoritesInFirebase = (updatedFavorites) => {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
@@ -195,14 +224,17 @@ const Rute = () => {
         switch (index) {
           case 0:
             scrapeTrams();
+            setLineNames(tramLineNames);
             //writeToDatabaseTrams();
             break;
           case 1:
             scrapeBuses();
+            setLineNames(busLineNames);
            // writeToDatabaseBuses();
             break;
           case 2:
             scrapeTrols();
+            setLineNames(trolLineNames);
             //writeToDatabaseTrols();
             break;
           default:
@@ -216,12 +248,12 @@ const Rute = () => {
       
     />
  <View>
- <FlatList
+ {/*<FlatList
   data={Object.entries(busStops)}
   keyExtractor={(item) => item[0]}
   renderItem={({ item }) => (
     <View>
-      {/*<Text>{item[0]}</Text>*/}
+      <Text>{item[0]}</Text>
       {Array.isArray(item[1]) ? (
         item[1].map((bus, index) => (
           <View key={index} >
@@ -231,8 +263,8 @@ const Rute = () => {
             <Text>Stops:</Text>
             {bus.stops.map((stop, idx) => (
               <View key={idx}>
-                {/*<Text>Stop Name: {stop.stop_name}</Text>
-                <Text>Arrival Time: {stop.arrival_time}</Text>*/}
+                <Text>Stop Name: {stop.stop_name}</Text>
+                <Text>Arrival Time: {stop.arrival_time}</Text>
               </View>
             ))}
                 <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(bus)}>
@@ -251,7 +283,21 @@ const Rute = () => {
 
     
   )}
+/>*/}
+
+<FlatList
+  data={lineNames}
+  keyExtractor={(item, index) => index.toString()}
+  renderItem={({ item }) => (
+    <TouchableOpacity onPress={() => console.log(item)} style={styles.itemContainer}>
+      <Text style={styles.name}>{item}</Text>
+      <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(item)}>
+        <Icon name={favorites.some((favItem) => favItem.line === item) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
+      </TouchableOpacity>
+    </TouchableOpacity>
+  )}
 />
+
 
 </View>
   </View>
