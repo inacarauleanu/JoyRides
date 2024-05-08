@@ -61,7 +61,9 @@
     "socket.io-client": "^4.7.3",
     "stripe": "^14.19.0",
     "styled-components": "^6.1.1",
-    "validate.js": "^0.13.1"
+    "validate.js": "^0.13.1",
+    "expo-notifications": "~0.20.1",
+    "expo-device": "~5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

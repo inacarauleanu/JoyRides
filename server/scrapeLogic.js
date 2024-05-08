@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs/promises');
 
-async function scrapeUrls(urls) {
+async function scrapeUrls(urls, sendDataToServer) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -47,6 +47,7 @@ async function scrapeUrls(urls) {
                 console.log('Changes detected, scraping data for URL:', url);
                 data.forEach(obj => console.log(obj));
                 previousData[url] = data;
+                sendDataToServer(data); // Send scraped data to server
                // await saveDataToJson(allData, filename);
             } else {
                 console.log('No changes detected for URL:', url);
@@ -76,8 +77,8 @@ async function scrapeUrls(urls) {
         }
     }*/
 
-    /*await fetchData();
-    setInterval(fetchData, 30000); // Check for changes every 30 seconds*/
+   // await fetchData();
+    //setInterval(fetchData, 30000); // Check for changes every 30 seconds
 
     return fetchData();
 }
