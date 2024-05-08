@@ -19,7 +19,7 @@ const Rute = ({navigation}) => {
   const [lineNames, setLineNames] = useState([]);
   const [stops, setStops] = useState([]);
 
- /* const transformKeys = (data) => {
+  const transformKeys = (data) => {
     const transformedData = {};
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -67,7 +67,7 @@ const Rute = ({navigation}) => {
     } catch (error) {
       console.error('Error writing to Firebase Realtime Database:', error);
     }
-  };*/
+  };
   
   useEffect(() => {
     fetchData();
@@ -75,16 +75,71 @@ const Rute = ({navigation}) => {
 
   const scrapeTrams = async () => {
     try {
-      const response = await fetch('http://192.168.1.102:3001/scrape/trams');
-      const data = await response.json();
-      console.log('Scraping completed successfully for trams') ;
-      setBusStops(data); //data
-      
-      //console.log("BUSSTOPS");
-     // console.log(busStops);
-      //writeToDatabaseTrams();
+      const fetchData = async () => {
+        const response = await fetch('http://192.168.1.102:3001/scrape/trams');
+        const data = await response.json();
+        setBusStops(data);
+        console.log('Scraping completed successfully for trams');
+        //console.log(data);
+        //setLineNames(extractLineNames(data));
+      };
+  
+      // Initial scraping
+      await fetchData();
+  
+      // Schedule scraping every 30 seconds
+      const interval = setInterval(fetchData, 30000);
+  
+      // Return cleanup function to clear the interval on component unmount
+      return () => clearInterval(interval);
     } catch (error) {
       console.error('Error scraping trams data:', error);
+    }
+  };
+
+  const scrapeTrols = async () => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch('http://192.168.1.102:3001/scrape/trols');
+        const data = await response.json();
+        setBusStops(data);
+        console.log('Scraping completed successfully for trols');
+        setLineNames(extractLineNames(data));
+      };
+  
+      // Initial scraping
+      await fetchData();
+  
+      // Schedule scraping every 30 seconds
+      const interval = setInterval(fetchData, 30000);
+  
+      // Return cleanup function to clear the interval on component unmount
+      return () => clearInterval(interval);
+    } catch (error) {
+      console.error('Error scraping trols data:', error);
+    }
+  };
+
+  const scrapeBuses = async () => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch('http://192.168.1.102:3001/scrape/buses');
+        const data = await response.json();
+        setBusStops(data);
+        console.log('Scraping completed successfully for buses', data);
+        setLineNames(extractLineNames(data));
+      };
+  
+      // Initial scraping
+      await fetchData();
+  
+      // Schedule scraping every 30 seconds
+      const interval = setInterval(fetchData, 30000);
+  
+      // Return cleanup function to clear the interval on component unmount
+      return () => clearInterval(interval);
+    } catch (error) {
+      console.error('Error scraping buses data:', error);
     }
   };
 
@@ -107,34 +162,7 @@ const busLineNames = extractLineNames(scraped_data_buses);
 /*console.log("Tram line names:", tramLineNames);
 console.log("Trol line names:", trolLineNames);
 console.log("Bus line names:", busLineNames);*/
-  
-  const scrapeTrols = async () => {
-    try {
-      const response = await fetch('http://192.168.1.102:3001/scrape/trols');
-      const data = await response.json();
-      setBusStops(data);
-      console.log('Scraping completed successfully for trols') ;
-      setLineNames(extractLineNames(data));
-      //console.log(busStops);
-      //writeToDatabaseTrols();
-    } catch (error) {
-      console.error('Error scraping trols data:', error);
 
-    }
-  };
-
-  const scrapeBuses = async () => {
-    try {
-      const response = await fetch('http://192.168.1.102:3001/scrape/buses');
-      const data = await response.json();
-      console.log('Scraping completed successfully for buses') ;
-      setBusStops(data);
-      setLineNames(busLineNames);
-      //writeToDatabaseBuses();
-    } catch (error) {
-      console.error('Error scraping buses data:', error);
-    }
-  };
 
   const fetchData = async () => {
     try {
@@ -310,12 +338,13 @@ console.log("Bus line names:", busLineNames);*/
   renderItem={({ item }) => (
     <TouchableOpacity 
       onPress={() => {
-       const stops =  getLineByName(item); 
+       const lineDetails =  getLineByName(item); 
+       setStops(lineDetails);
         //console.log(stops);
         console.log("ITEM", item);
         navigation.navigate("VeziLinie", 
         {  
-          stops
+          stops: lineDetails
         });
       }} 
       style={styles.itemContainer}>

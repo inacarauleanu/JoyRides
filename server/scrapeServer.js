@@ -9,6 +9,11 @@ let tramData = {}; // Object to store scraped tram data
 let trolsData = {}; // Object to store scraped trols data
 let busesData = {}; // Object to store scraped buses data
 
+const updateServerData = (data) => {
+    // Update server's data here
+    console.log('Updating server data with scraped data:');
+};
+
 // Endpoint to scrape tram data
 app.get('/scrape/trams', async (req, res) => {
     try {
@@ -20,7 +25,7 @@ app.get('/scrape/trams', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1558',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2406'
         ];
-        const data = await scrapeUrls(tramUrls);
+        const data = await scrapeUrls(tramUrls, updateServerData);
         res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trams data:', error);
@@ -40,7 +45,7 @@ app.get('/scrape/trols', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1086',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1166'
         ];
-        const data = await scrapeUrls(trolsUrls);
+        const data = await scrapeUrls(trolsUrls, updateServerData);
         res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trols data:', error);
@@ -90,7 +95,7 @@ app.get('/scrape/buses', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3466',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3546'
         ];
-        const data = await scrapeUrls(busesUrls);
+        const data = await scrapeUrls(busesUrls, updateServerData);
         res.json(data); // Send the JSON file as response
     } catch (error) {
         console.error('Error scraping trols data:', error);

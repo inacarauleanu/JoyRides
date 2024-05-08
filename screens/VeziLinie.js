@@ -6,6 +6,7 @@ import * as Location from "expo-location";
 const VeziLinie = ({ route }) => {
   // Extract stops data from route parameters
   const lineParams = route.params.stops;
+  console.log("LINE PARAMS",lineParams);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
 
