@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 //import Button from '../components/Button.js';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
@@ -7,35 +7,8 @@ import { color, fonts } from '@rneui/base';
 import { Dropdown } from 'react-native-element-dropdown';
 import PlataCard from './PlataCard.js';
 import PlataMesaj from './PlataMesaj.js';
-
-const tramvaie = [
-    { label: 'Tramvai 8', value: '1' },
-    { label: 'Tramvai 9', value: '2' },
-    { label: 'Tramvai 7', value: '3' },
-    { label: 'Tramvai 4', value: '4' },
-  ];
-
-  const autobuze = [
-    { label: 'E2', value: '1' },
-    { label: 'E3', value: '2' },
-    { label: 'E7', value: '3' },
-  ];
-
-  const troleibuze = [
-    { label: 'M15', value: '1' },
-    { label: 'M16', value: '2' },
-  ];
-
-  const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-  ];
+import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, equalTo } from "firebase/database";
+import { auth } from "../firebase-config.js";
 
 const CumparaBilet = ({navigation}) =>{
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -43,6 +16,84 @@ const CumparaBilet = ({navigation}) =>{
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [linie, setLinie] = useState(0);
+  const [trams, setTrams] = useState([]);
+  const [stops, setStops] = useState([]);
+  const [mijloc, setMijloc] = useState(0);
+
+  useEffect(() => {
+
+    const db = getDatabase();
+    const tramsRef = ref(db, `${mijloc}/transformedData`);
+    const queryRef = query(tramsRef);
+  
+    try {
+      const snapshot = onValue(queryRef, (snapshot) => {
+        const lineNames = [];
+        let index = 1; // Starting index
+        snapshot.forEach((childSnapshot) => {
+          childSnapshot.forEach((grandChildSnapshot) => {
+            const line = grandChildSnapshot.val().line;
+           // const value = lineNames.line + 1; // Generating value based on array length
+            if (!lineNames.includes(line)) {
+              lineNames.push({ label: line, value: index.toString() });
+              index++;
+            }
+          });
+        });
+  
+        //console.log('Line names extracted:', lineNames);
+        setTrams(lineNames);
+        return lineNames;
+      });
+  
+      return snapshot;
+    } catch (error) {
+      console.error('Error extracting line names:', error);
+      return [];
+    }
+  
+}, [mijloc]);
+
+
+const extractStopsForLine = async (line, mijloc) => {
+    const db = getDatabase();
+    const tramsRef = ref(db, `${mijloc}/transformedData`);
+    const queryRef = query(tramsRef);
+  
+    try {
+      let stops = [];
+      
+       onValue(queryRef, (snapshot) => {
+        let index = 0;
+        snapshot.forEach((childSnapshot) => {
+          childSnapshot.forEach((grandChildSnapshot) => {
+            const data = grandChildSnapshot.val();
+            if (data.line === line) {
+                const stopsData = data.stops.map(stop => ({ label: stop.stop_name, value: (index++).toString()}));
+              stops = [...stops, ...stopsData];
+            }
+          });
+        });
+      });
+  
+    //  console.log('Stops for line', line, ':', stops);
+      return stops;
+    } catch (error) {
+      console.error('Error extracting stops for line', line, ':', error);
+      return [];
+    }
+  }
+  
+          // Update stops when the line is changed
+          useEffect(() => {
+            if (linie !== 0) {
+              extractStopsForLine(linie, mijloc).then((stops) => {
+                // Do something with the extracted stops
+                //console.log('Stops for line', linie, ':', stops);
+                setStops(stops);
+              });
+            }
+          }, [linie, mijloc]);
 
 
     return ( 
@@ -69,6 +120,7 @@ const CumparaBilet = ({navigation}) =>{
       selectedIndex={selectedIndexes}
       onPress={(value) => {
         setSelectedIndexes(value);
+        value == 0 ? setMijloc("trams") : (value == 1 ? setMijloc("buses") : setMijloc("trols"));
         
       }}
       containerStyle={styles.butonContainer}
@@ -84,7 +136,7 @@ const CumparaBilet = ({navigation}) =>{
          selectedTextStyle={styles.selectedTextStyle}
          inputSearchStyle={styles.inputSearchStyle}
          itemTextStyle = {styles.textStyle}
-          data={selectedIndexes == 0 ? tramvaie : (selectedIndexes == 1 ? autobuze : troleibuze)}
+          data={trams}
           search
           maxHeight={300}
           labelField="label"
