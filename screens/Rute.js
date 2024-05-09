@@ -78,6 +78,7 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/trams');
         const data = await response.json();
+        writeToDatabaseTrams();
         setBusStops(data);
         console.log('Scraping completed successfully for trams');
         //console.log(data);
@@ -87,8 +88,8 @@ const Rute = ({navigation}) => {
       // Initial scraping
       await fetchData();
   
-      // Schedule scraping every 30 seconds
-      const interval = setInterval(fetchData, 30000);
+      // Schedule scraping every 60 seconds
+      const interval = setInterval(fetchData, 60000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);
@@ -102,6 +103,7 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/trols');
         const data = await response.json();
+        writeToDatabaseTrols();
         setBusStops(data);
         console.log('Scraping completed successfully for trols');
         setLineNames(extractLineNames(data));
@@ -110,8 +112,8 @@ const Rute = ({navigation}) => {
       // Initial scraping
       await fetchData();
   
-      // Schedule scraping every 30 seconds
-      const interval = setInterval(fetchData, 30000);
+      // Schedule scraping every 60 seconds
+      const interval = setInterval(fetchData, 60000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);
@@ -125,6 +127,7 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/buses');
         const data = await response.json();
+        writeToDatabaseBuses();
         setBusStops(data);
         console.log('Scraping completed successfully for buses', data);
         setLineNames(extractLineNames(data));
@@ -133,8 +136,8 @@ const Rute = ({navigation}) => {
       // Initial scraping
       await fetchData();
   
-      // Schedule scraping every 30 seconds
-      const interval = setInterval(fetchData, 30000);
+      // Schedule scraping every 60 seconds
+      const interval = setInterval(fetchData, 60000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);

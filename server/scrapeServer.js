@@ -25,8 +25,9 @@ app.get('/scrape/trams', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1558',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2406'
         ];
-        const data = await scrapeUrls(tramUrls, updateServerData);
+        const data = await scrapeUrls(tramUrls, updateServerData, 'scraped_data_trams.json');
         res.json(data); // Send the JSON file as response
+        //res.sendFile(__dirname + '/scraped_data_trams.json');
     } catch (error) {
         console.error('Error scraping trams data:', error);
         res.status(500).send('Internal server error');
@@ -45,8 +46,9 @@ app.get('/scrape/trols', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1086',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1166'
         ];
-        const data = await scrapeUrls(trolsUrls, updateServerData);
+        const data = await scrapeUrls(trolsUrls, updateServerData, 'scraped_data_trols.json');
         res.json(data); // Send the JSON file as response
+       // res.sendFile(__dirname + '/scraped_data_trols.json');
     } catch (error) {
         console.error('Error scraping trols data:', error);
         res.status(500).send('Internal server error');
@@ -56,18 +58,6 @@ app.get('/scrape/trols', async (req, res) => {
 app.get('/scrape/buses', async (req, res) => {
     try {
         const busesUrls = [
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2246',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2226',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1066',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1146',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3066',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1226',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1546',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1046',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=886',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1406',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1550',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1551',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1552',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1926',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1928',
@@ -80,23 +70,11 @@ app.get('/scrape/buses', async (req, res) => {
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1746',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1986',
             'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2006',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3606',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3646',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3306',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3307',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2646',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2506',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2606',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3326',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3366',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3406',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3426',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3486',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3466',
-            'http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3546'
+
         ];
-        const data = await scrapeUrls(busesUrls, updateServerData);
+        const data = await scrapeUrls(busesUrls, updateServerData, 'scraped_data_buses.json');
         res.json(data); // Send the JSON file as response
+        //res.sendFile(__dirname + '/scraped_data_buses.json');
     } catch (error) {
         console.error('Error scraping trols data:', error);
         res.status(500).send('Internal server error');
