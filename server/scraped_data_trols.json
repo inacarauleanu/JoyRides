@@ -5,59 +5,59 @@
       "stops": [
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "14:45"
+          "arrival_time": "22:07"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "14:45"
+          "arrival_time": "22:07"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "14:47"
+          "arrival_time": "22:09"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "14:49"
+          "arrival_time": "22:11"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "14:51"
+          "arrival_time": "22:13"
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "14:53"
+          "arrival_time": "22:15"
         },
         {
           "stop_name": "P-ța Mărăști",
-          "arrival_time": "14:54"
+          "arrival_time": "22:38"
         },
         {
           "stop_name": "Bastion",
-          "arrival_time": "14:56"
+          "arrival_time": "22:40"
         },
         {
           "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "14:58"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "15:00"
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "Samuil Micu",
-          "arrival_time": "15:01"
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "Renașterii",
-          "arrival_time": "15:02"
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "15:03"
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Arena Aqua",
-          "arrival_time": "15:06"
+          "arrival_time": "10 min."
         }
       ]
     },
@@ -66,59 +66,59 @@
       "stops": [
         {
           "stop_name": "Arena Aqua",
-          "arrival_time": "14:45"
+          "arrival_time": "22:07"
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "14:48"
+          "arrival_time": "22:10"
         },
         {
           "stop_name": "Renașterii",
-          "arrival_time": "14:49"
+          "arrival_time": "22:11"
         },
         {
           "stop_name": "Samuil Micu",
-          "arrival_time": "14:50"
+          "arrival_time": "22:12"
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "14:52"
+          "arrival_time": "22:14"
         },
         {
           "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "14:53"
+          "arrival_time": "22:15"
         },
         {
           "stop_name": "A. Popovici",
-          "arrival_time": "14:54"
+          "arrival_time": "22:16"
         },
         {
           "stop_name": "Oituz",
-          "arrival_time": "1 min."
+          "arrival_time": "22:18"
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "4 min."
+          "arrival_time": "22:21"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "6 min."
+          "arrival_time": "22:23"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "7 min."
+          "arrival_time": "22:24"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "9 min."
+          "arrival_time": "22:26"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "11 min."
+          "arrival_time": "22:28"
         },
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "12 min."
+          "arrival_time": "22:29"
         }
       ]
     }
@@ -129,87 +129,87 @@
       "stops": [
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "15:41"
+          "arrival_time": "22:25"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "15:41"
+          "arrival_time": "22:25"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "15:43"
+          "arrival_time": "22:27"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "15:45"
+          "arrival_time": "22:29"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "15:47"
+          "arrival_time": "22:31"
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "15:49"
+          "arrival_time": "22:33"
         },
         {
           "stop_name": "P-ța Mărăști",
-          "arrival_time": "15:50"
+          "arrival_time": "22:34"
         },
         {
           "stop_name": "Bastion",
-          "arrival_time": "15:52"
+          "arrival_time": "22:36"
         },
         {
           "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "15:54"
+          "arrival_time": "22:38"
         },
         {
           "stop_name": "RATT",
-          "arrival_time": "15:56"
+          "arrival_time": "22:40"
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "15:56"
+          "arrival_time": "22:40"
         },
         {
           "stop_name": "Samuil Micu",
-          "arrival_time": "15:57"
+          "arrival_time": "22:41"
         },
         {
           "stop_name": "Renașterii",
-          "arrival_time": "15:58"
+          "arrival_time": "22:42"
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "15:59"
+          "arrival_time": "22:43"
         },
         {
           "stop_name": "Arena Aqua",
-          "arrival_time": "16:02"
+          "arrival_time": "22:46"
         },
         {
           "stop_name": "Moticica",
-          "arrival_time": "16:04"
+          "arrival_time": "22:48"
         },
         {
           "stop_name": "ROMTRANS",
-          "arrival_time": "16:06"
+          "arrival_time": "22:50"
         },
         {
           "stop_name": "Banat Car",
-          "arrival_time": "16:08"
+          "arrival_time": "22:52"
         },
         {
           "stop_name": "Lugojului",
-          "arrival_time": "16:11"
+          "arrival_time": "22:55"
         },
         {
           "stop_name": "Primăria Ghiroda",
-          "arrival_time": "16:13"
+          "arrival_time": "22:57"
         },
         {
           "stop_name": "Ialomița",
-          "arrival_time": "15:41"
+          "arrival_time": "22:25"
         }
       ]
     },
@@ -218,99 +218,99 @@
       "stops": [
         {
           "stop_name": "Ialomița",
-          "arrival_time": "15:41"
+          "arrival_time": "22:25"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "15:42"
+          "arrival_time": "22:26"
         },
         {
           "stop_name": "Ialomița 19",
-          "arrival_time": "15:43"
+          "arrival_time": "22:27"
         },
         {
           "stop_name": "Câmpului",
-          "arrival_time": "15:43"
+          "arrival_time": "22:27"
         },
         {
           "stop_name": "Moldovei",
-          "arrival_time": "15:45"
+          "arrival_time": "22:29"
         },
         {
           "stop_name": "Prieteniei",
-          "arrival_time": "15:46"
-        },
-        {
-          "stop_name": "Spartacus",
-          "arrival_time": "15:47"
-        },
-        {
-          "stop_name": "Bobâlna",
-          "arrival_time": "15:48"
-        },
-        {
-          "stop_name": "Cometei",
-          "arrival_time": "15:50"
-        },
-        {
-          "stop_name": "Arena Aqua",
-          "arrival_time": "15:52"
-        },
-        {
-          "stop_name": "Camping",
-          "arrival_time": "15:53"
-        },
-        {
-          "stop_name": "P-ța V. Economu",
           "arrival_time": "1 min."
         },
         {
-          "stop_name": "Renașterii",
+          "stop_name": "Spartacus",
+          "arrival_time": "2 min."
+        },
+        {
+          "stop_name": "Bobâlna",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "Samuil Micu",
+          "stop_name": "Cometei",
           "arrival_time": "4 min."
         },
         {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "5 min."
+          "stop_name": "Arena Aqua",
+          "arrival_time": "7 min."
         },
         {
-          "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "6 min."
-        },
-        {
-          "stop_name": "A. Popovici",
+          "stop_name": "Camping",
           "arrival_time": "8 min."
         },
         {
-          "stop_name": "Oituz",
-          "arrival_time": "9 min."
+          "stop_name": "P-ța V. Economu",
+          "arrival_time": "11 min."
         },
         {
-          "stop_name": "P-ța 700",
+          "stop_name": "Renașterii",
           "arrival_time": "12 min."
         },
         {
-          "stop_name": "P-ța R. Maria",
-          "arrival_time": "14 min."
+          "stop_name": "Samuil Micu",
+          "arrival_time": "13 min."
         },
         {
-          "stop_name": "Jiul",
+          "stop_name": "P-ța Badea Cârțan",
           "arrival_time": "15 min."
         },
         {
-          "stop_name": "Gara de Nord",
-          "arrival_time": "18 min."
+          "stop_name": "Poliția Jud. Timiș",
+          "arrival_time": "16 min."
         },
         {
-          "stop_name": "Pop de Băsești",
+          "stop_name": "A. Popovici",
+          "arrival_time": "17 min."
+        },
+        {
+          "stop_name": "Oituz",
           "arrival_time": "19 min."
         },
         {
+          "stop_name": "P-ța 700",
+          "arrival_time": "22 min."
+        },
+        {
+          "stop_name": "P-ța R. Maria",
+          "arrival_time": "24 min."
+        },
+        {
+          "stop_name": "Jiul",
+          "arrival_time": "25 min."
+        },
+        {
+          "stop_name": "Gara de Nord",
+          "arrival_time": "27 min."
+        },
+        {
+          "stop_name": "Pop de Băsești",
+          "arrival_time": "29 min."
+        },
+        {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "20 min."
+          "arrival_time": "29 min."
         }
       ]
     }
@@ -321,55 +321,55 @@
       "stops": [
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "14:37"
+          "arrival_time": "22:09"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "14:37"
+          "arrival_time": "22:09"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "14:39"
+          "arrival_time": "22:11"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "14:41"
+          "arrival_time": "22:13"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "14:43"
+          "arrival_time": "22:15"
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "14:44"
+          "arrival_time": "22:16"
         },
         {
           "stop_name": "P-ța Mărăști",
-          "arrival_time": "14:46"
+          "arrival_time": "22:18"
         },
         {
           "stop_name": "P-ța C. Europei",
-          "arrival_time": "14:48"
+          "arrival_time": "22:29"
         },
         {
           "stop_name": "Cimitirul Eroilor",
-          "arrival_time": "14:50"
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
           "arrival_time": "1 min."
         },
         {
-          "stop_name": "Pomiculturii",
-          "arrival_time": "2 min."
+          "stop_name": "Div 9 Cavalerie",
+          "arrival_time": "3 min."
         },
         {
-          "stop_name": "Ap. Petru și Pavel",
+          "stop_name": "Pomiculturii",
           "arrival_time": "4 min."
         },
         {
+          "stop_name": "Ap. Petru și Pavel",
+          "arrival_time": "6 min."
+        },
+        {
           "stop_name": "I.I.de la Brad",
-          "arrival_time": "5 min."
+          "arrival_time": "7 min."
         }
       ]
     },
@@ -378,51 +378,51 @@
       "stops": [
         {
           "stop_name": "I.I.de la Brad",
-          "arrival_time": "14:37"
+          "arrival_time": "22:09"
         },
         {
           "stop_name": "Ap. Petru și Pavel",
-          "arrival_time": "14:38"
+          "arrival_time": "22:10"
         },
         {
           "stop_name": "Pomiculturii",
-          "arrival_time": "14:39"
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "Div 9 Cavalerie",
-          "arrival_time": ""
-        },
-        {
-          "stop_name": "Cimitirul Eroilor",
           "arrival_time": "2 min."
         },
         {
-          "stop_name": "P-ța C. Europei",
+          "stop_name": "Cimitirul Eroilor",
           "arrival_time": "4 min."
         },
         {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "2 min."
+        },
+        {
           "stop_name": "P-ța 700",
-          "arrival_time": "7 min."
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "9 min."
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "10 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "12 min."
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "14 min."
+          "arrival_time": "12 min."
         },
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "15 min."
+          "arrival_time": "13 min."
         }
       ]
     }
@@ -432,40 +432,40 @@
       "line": "Linia 15 spre T. Grozăvescu",
       "stops": [
         {
-          "stop_name": "Gir.Sudului 2tb",
-          "arrival_time": "2 min."
+          "stop_name": "Girație Sudului",
+          "arrival_time": "6 min."
         },
         {
-          "stop_name": "Parc Sudului 2tb",
-          "arrival_time": "14:51"
+          "stop_name": "Parc Sudului",
+          "arrival_time": "22:13"
         },
         {
-          "stop_name": "Bv.Sudului 2tb",
-          "arrival_time": "14:54"
+          "stop_name": "Bd. Sudului",
+          "arrival_time": ""
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "14:56"
-        },
-        {
-          "stop_name": "Casa Tineretului",
-          "arrival_time": "14:58"
-        },
-        {
-          "stop_name": "Sala Olimpia",
-          "arrival_time": "15:00"
-        },
-        {
-          "stop_name": "Comp.Stud_3Tb",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Parcul Copiilor",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "T. Grozăvescu",
+          "stop_name": "Casa Tineretului",
           "arrival_time": "4 min."
+        },
+        {
+          "stop_name": "Sala Olimpia",
+          "arrival_time": "6 min."
+        },
+        {
+          "stop_name": "Complex Studențesc",
+          "arrival_time": "8 min."
+        },
+        {
+          "stop_name": "Parcul Copiilor",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "T. Grozăvescu",
+          "arrival_time": "11 min."
         }
       ]
     },
@@ -474,35 +474,35 @@
       "stops": [
         {
           "stop_name": "T. Grozăvescu",
-          "arrival_time": "14:50"
+          "arrival_time": "22:12"
         },
         {
           "stop_name": "Parcul Copiilor",
-          "arrival_time": "14:51"
+          "arrival_time": "22:13"
         },
         {
           "stop_name": "Complex Studențesc",
-          "arrival_time": "14:52"
+          "arrival_time": "22:14"
         },
         {
           "stop_name": "Cluj",
-          "arrival_time": "14:56"
+          "arrival_time": "22:16"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "14:58"
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "Martir I. Stanciu",
-          "arrival_time": "15:00"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "M-șal C-tin Prezan",
-          "arrival_time": "15:01"
+          "arrival_time": "3 min."
         },
         {
-          "stop_name": "Gir.Sudului 2tb",
-          "arrival_time": "2 min."
+          "stop_name": "Girație Sudului",
+          "arrival_time": "6 min."
         }
       ]
     }
@@ -512,44 +512,44 @@
       "line": "Linia 16 spre T. Grozăvescu",
       "stops": [
         {
-          "stop_name": "Gir.Sudului 1Tb",
-          "arrival_time": "15:09"
+          "stop_name": "Girație Sudului",
+          "arrival_time": "22:40"
         },
         {
           "stop_name": "M-șal C-tin Prezan",
-          "arrival_time": "14:55"
-        },
-        {
-          "stop_name": "Martir I. Stanciu",
           "arrival_time": ""
         },
         {
-          "stop_name": "Cl. Martirilor",
-          "arrival_time": "2 min."
+          "stop_name": "Martir I. Stanciu",
+          "arrival_time": "1 min."
         },
         {
-          "stop_name": "Casa Tineretului",
+          "stop_name": "Cl. Martirilor",
           "arrival_time": "3 min."
         },
         {
+          "stop_name": "Casa Tineretului",
+          "arrival_time": "4 min."
+        },
+        {
           "stop_name": "Sala Olimpia",
-          "arrival_time": "5 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "7 min."
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "8 min."
-        },
-        {
-          "stop_name": "A Șaguna",
           "arrival_time": "10 min."
         },
         {
+          "stop_name": "A Șaguna",
+          "arrival_time": "11 min."
+        },
+        {
           "stop_name": "I.C. Brătianu",
-          "arrival_time": "12 min."
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "T. Grozăvescu",
@@ -558,51 +558,51 @@
       ]
     },
     {
-      "line": "Linia 16 spre Gir.Sudului 1Tb",
+      "line": "Linia 16 spre Girație Sudului",
       "stops": [
         {
           "stop_name": "T. Grozăvescu",
-          "arrival_time": "14:53"
+          "arrival_time": "22:24"
         },
         {
           "stop_name": "P-ța Huniade",
-          "arrival_time": "14:55"
+          "arrival_time": "22:26"
         },
         {
           "stop_name": "Pod A. Șaguna",
-          "arrival_time": "14:57"
+          "arrival_time": "22:28"
         },
         {
           "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "14:57"
+          "arrival_time": "22:28"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "14:59"
+          "arrival_time": "22:30"
         },
         {
           "stop_name": "Complex Studențesc",
-          "arrival_time": "15:02"
+          "arrival_time": "22:31"
         },
         {
           "stop_name": "Cluj",
-          "arrival_time": "15:04"
+          "arrival_time": "22:33"
         },
         {
           "stop_name": "Spitalul Județean",
-          "arrival_time": "15:07"
+          "arrival_time": "22:36"
         },
         {
           "stop_name": "Bd. Sudului",
-          "arrival_time": "15:09"
+          "arrival_time": "22:38"
         },
         {
-          "stop_name": "Parc Sudului 1tb",
-          "arrival_time": "15:10"
+          "stop_name": "Parc Sudului",
+          "arrival_time": "22:39"
         },
         {
-          "stop_name": "Gir.Sudului 1Tb",
-          "arrival_time": "15:09"
+          "stop_name": "Girație Sudului",
+          "arrival_time": "22:40"
         }
       ]
     }
@@ -613,39 +613,39 @@
       "stops": [
         {
           "stop_name": "Baader",
-          "arrival_time": "14:40"
+          "arrival_time": "22:20"
         },
         {
           "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "14:41"
+          "arrival_time": "22:21"
         },
         {
           "stop_name": "A. Popovici",
-          "arrival_time": "14:42"
+          "arrival_time": "22:22"
         },
         {
           "stop_name": "Oituz",
-          "arrival_time": "14:44"
+          "arrival_time": "22:24"
         },
         {
           "stop_name": "P-ța C. Europei",
-          "arrival_time": "14:47"
+          "arrival_time": "22:48"
         },
         {
           "stop_name": "Remus Răduleț",
-          "arrival_time": "14:49"
+          "arrival_time": "22:50"
         },
         {
           "stop_name": "Liege",
-          "arrival_time": "14:51"
+          "arrival_time": "22:52"
         },
         {
           "stop_name": "U.T.T.",
-          "arrival_time": "14:52"
+          "arrival_time": "22:53"
         },
         {
           "stop_name": "Agronomie",
-          "arrival_time": "14:54"
+          "arrival_time": "22:55"
         }
       ]
     },
@@ -654,39 +654,39 @@
       "stops": [
         {
           "stop_name": "Agronomie",
-          "arrival_time": "14:40"
+          "arrival_time": "22:20"
         },
         {
           "stop_name": "U.T.T.",
-          "arrival_time": "14:42"
+          "arrival_time": "22:22"
         },
         {
           "stop_name": "Liege",
-          "arrival_time": "14:43"
+          "arrival_time": "22:23"
         },
         {
           "stop_name": "Dacia Service",
-          "arrival_time": "14:45"
+          "arrival_time": "22:25"
         },
         {
           "stop_name": "P-ța C. Europei",
-          "arrival_time": "14:47"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "P-ța Mărăști",
-          "arrival_time": "14:49"
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "Bastion",
-          "arrival_time": "14:51"
+          "arrival_time": "5 min."
         },
         {
           "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "14:53"
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Baader",
-          "arrival_time": "14:40"
+          "arrival_time": "22:20"
         }
       ]
     }
@@ -697,51 +697,51 @@
       "stops": [
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "14:47"
+          "arrival_time": "22:05"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "14:47"
+          "arrival_time": "22:05"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "14:49"
+          "arrival_time": "22:07"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "14:51"
+          "arrival_time": "22:09"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "14:53"
+          "arrival_time": "22:11"
         },
         {
           "stop_name": "P-ța 700",
-          "arrival_time": "2 min."
+          "arrival_time": "22:13"
         },
         {
           "stop_name": "P-ța Mărăști",
-          "arrival_time": "3 min."
+          "arrival_time": "22:14"
         },
         {
           "stop_name": "P-ța C. Europei",
-          "arrival_time": "6 min."
+          "arrival_time": "22:16"
         },
         {
           "stop_name": "Remus Răduleț",
-          "arrival_time": "8 min."
+          "arrival_time": "22:18"
         },
         {
           "stop_name": "Liege",
-          "arrival_time": "10 min."
+          "arrival_time": "22:34"
         },
         {
           "stop_name": "U.T.T.",
-          "arrival_time": "11 min."
+          "arrival_time": "22:35"
         },
         {
           "stop_name": "Agronomie",
-          "arrival_time": "13 min."
+          "arrival_time": "22:36"
         }
       ]
     },
@@ -750,51 +750,51 @@
       "stops": [
         {
           "stop_name": "Agronomie",
-          "arrival_time": "14:47"
+          "arrival_time": "22:05"
         },
         {
           "stop_name": "U.T.T.",
-          "arrival_time": "14:49"
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "P-ța Verde",
-          "arrival_time": "14:50"
-        },
-        {
-          "stop_name": "Cl. Torontalului",
-          "arrival_time": "2 min."
-        },
-        {
-          "stop_name": "Miresei",
           "arrival_time": "3 min."
         },
         {
-          "stop_name": "P-ța C. Europei",
+          "stop_name": "Cl. Torontalului",
+          "arrival_time": "4 min."
+        },
+        {
+          "stop_name": "Miresei",
           "arrival_time": "6 min."
         },
         {
+          "stop_name": "P-ța C. Europei",
+          "arrival_time": "2 min."
+        },
+        {
           "stop_name": "P-ța 700",
-          "arrival_time": "9 min."
+          "arrival_time": "6 min."
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "11 min."
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "12 min."
+          "arrival_time": "9 min."
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "14 min."
+          "arrival_time": "11 min."
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "16 min."
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Ghe. Barițiu",
-          "arrival_time": "17 min."
+          "arrival_time": "13 min."
         }
       ]
     }
