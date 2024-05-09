@@ -25,11 +25,10 @@ const Bilete = ({navigation}) =>{
         setBilete(bilete); 
 
       } else { 
-        // cazul in care nu exista niciun favorit
         setBilete([]); 
       }
       setLoading(false);
-      console.log(bilete);
+      //console.log(bilete);
 
     };
 
@@ -51,7 +50,7 @@ const Bilete = ({navigation}) =>{
   useEffect(() => {
     bilete.forEach(ticket => {
       const creationDate = new Date(ticket.data_efectuare);
-      console.log("creation date", creationDate);
+     // console.log("creation date", creationDate);
       let validityMilliseconds;
       
       if (ticket.valabilitate === '"1h"') {
@@ -61,7 +60,7 @@ const Bilete = ({navigation}) =>{
       }
   
       const expiryDate = new Date(creationDate.getTime() + validityMilliseconds);
-      console.log("expiry date", expiryDate);
+      //console.log("expiry date", expiryDate);
 
       const timer = setInterval(() => {
         const now = new Date();

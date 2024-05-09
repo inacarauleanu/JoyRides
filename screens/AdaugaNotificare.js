@@ -1,13 +1,15 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
+import {Alert} from 'react-native';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { Dropdown } from 'react-native-element-dropdown';
 import { ButtonGroup, Button, Image } from 'react-native-elements';
-import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, equalTo } from "firebase/database";
+import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, equalTo, set } from "firebase/database";
 import { auth } from "../firebase-config.js";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import uuid from 'react-native-uuid';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -17,7 +19,7 @@ Notifications.setNotificationHandler({
     }),
   });
 
-const AdaugaNotififcare = () =>{
+const AdaugaNotififcare = ({navigation}) =>{
 
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [selectedIndexes, setSelectedIndexes] = useState(0);
@@ -97,12 +99,16 @@ const AdaugaNotififcare = () =>{
     return token;
   }
 
-  async function schedulePushNotification() {
+  async function schedulePushNotification(/*statie, linie*/) {
     console.log("s-a trimis notificarea");
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "You've got mail! 📬",
-        body: 'o notificare scheduled',
+        body: 'o notificare scheduled pentru un user',
+        /*body: {
+          statie: `${statie}`,
+          linie: `${linie}`,
+        },*/
         data: { data: 'goes here', test: { test1: 'more data' } },
       },
       trigger: { seconds: minute * 60 },
@@ -122,7 +128,6 @@ useEffect(() => {
         snapshot.forEach((childSnapshot) => {
           childSnapshot.forEach((grandChildSnapshot) => {
             const line = grandChildSnapshot.val().line;
-           // const value = lineNames.line + 1; // Generating value based on array length
             if (!lineNames.includes(line)) {
               lineNames.push({ label: line, value: index.toString() });
               index++;
@@ -172,18 +177,49 @@ const extractStopsForLine = async (line, mijloc) => {
       return [];
     }
   }
-  
-          // Update stops when the line is changed
+
           useEffect(() => {
             if (linie !== 0) {
               extractStopsForLine(linie, mijloc).then((stops) => {
-                // Do something with the extracted stops
                 //console.log('Stops for line', linie, ':', stops);
                 setStops(stops);
               });
             }
           }, [linie, mijloc]);
 
+
+          function writeUserNotificari(userId, linie, statie, timp) {
+            const db = getDatabase();
+        
+            try{
+            set(ref(db, 'users/' + userId + '/notificari/' + uuid.v4()), {
+              linie: linie,
+              statie: statie,
+              linie: linie,
+              timp: timp
+            });
+          }    
+        catch (error) {
+          console.error('Eroare la salvarea in Firebase:', error); 
+        }
+      }
+
+          const handleNotificarePress = async () => {
+
+            if (mijloc && linie && statie && minute) {
+                schedulePushNotification(/*statie, linie*/);
+                const userId = auth.currentUser.uid;
+                writeUserNotificari(userId, linie, statie, minute);
+                Alert.alert('Notificare programată cu succes!', 'Vei fi redirecționat la Notificări',[
+                  {
+                    onPress: ()=>navigation.navigate("Notificari")
+                  }
+                ]);
+            } else {
+
+              Alert.alert('Completează toate câmpurile!');
+            }
+          };
          // console.log(mijloc);
     return (
         <View style={styles.container}>
@@ -274,18 +310,18 @@ const extractStopsForLine = async (line, mijloc) => {
             />
                   <Button
                 buttonStyle={styles.btn}
-                title="Salvează notificare   "
-                onPress = {schedulePushNotification}
+                title="Salvează notificare  "
+                onPress = {handleNotificarePress}
                 titleStyle = {styles.titlu}
                 icon = {
                     <Image
                     source={require('../assets/icons/notification.png')}
-                    style={{ width: 20, height: 20}}
+                    style={{ width: 30, height: 30}}
                   />
                   
                 }
                 iconRight = 'true'
-                
+        
             
         />
 

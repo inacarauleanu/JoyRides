@@ -1,10 +1,13 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import {Image, Button} from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
-import Button from '../components/Button.js';
+//import Button from '../components/Button.js';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, remove } from "firebase/database";
+import { auth } from "../firebase-config.js";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -16,7 +19,7 @@ Notifications.setNotificationHandler({
 
 const Notificari = ({navigation}) =>{
 
-  const [expoPushToken, setExpoPushToken] = useState('');
+  /*const [expoPushToken, setExpoPushToken] = useState('');
 
   useEffect (() => {
     console.log("Registering for push notifications");
@@ -112,15 +115,106 @@ const Notificari = ({navigation}) =>{
       trigger: { seconds: 10 },
     });
   }
+*/
+  const [loading, setLoading] = useState(true);
+  const [notificari, setNotificari] = useState([]);
 
+  useEffect(() => {
+    const userId = auth.currentUser.uid;
+    const db = getDatabase();
+    const userRef = query(ref(db, `users/${userId}/notificari`));
+
+    const handleData = (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const notificari = Object.entries(data).map(([id, notify]) => ({ id, ...notify }));;
+        setNotificari(notificari); 
+
+      } else { 
+        setNotificari([]); 
+      }
+      setLoading(false);
+      //console.log(bilete);
+
+    };
+
+    const handleError = (error) => {
+      console.error('Error fetching notificari from Firebase:', error);
+      setLoading(false);
+    };
+
+    // cauta schimbari in baza de date
+    const unsubscribe = onValue(userRef, handleData, handleError);
+
+    // goleste listenerul
+    return () => off(userRef, 'value', handleData);
+
+    
+  }, []);
+
+  
+  const deleteNotification = (id) => {
+    const userId = auth.currentUser.uid;
+    const db = getDatabase();
+    const notificationRef = ref(db, `users/${userId}/notificari/${id}`);
+    
+    remove(notificationRef)
+      .then(() => console.log("Notification deleted successfully"))
+      .catch((error) => console.error("Error deleting notification:", error));
+  };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
     return (
         <View style={styles.container}>
           <Text style={styles.title}>Notificări</Text>
-          <Button title='Send push notifictaions' onPress={sendNotification}></Button>
-          <Button title='Schedule push notifictaions' onPress={schedulePushNotification}></Button>
+          {notificari.length ? ( 
+        <FlatList
+          data={notificari}
+          renderItem={({ item }) => (
+            <TouchableOpacity /*onPress={()=>navigation.navigate("VeziBilet",{
+              valabilitate: `${item.valabilitate}`,
+              data_efectuare: `${item.data_efectuare}`,
+              ora_efectuare: `${item.ora_efectuare}`,
+              linie: `${item.linie}`, 
+              total: `${item.total}`,
+              id: `${item.id}`
+            })}*/
+              style={styles.itemContainer}>
+            <View style={{ padding: 10 }}>
+              {/*<Text style={styles.name}>{`${item.data_efectuare}`}</Text>*/}
+              {/*<Text style={styles.name}>{`${item.ora_efectuare}`}</Text>*/} 
+              <Text style={styles.name}>{`${item.linie}`}</Text>
+              <Text>{`Statie: ${item.statie}`}</Text>
+              <Text>{`Timp: ${item.timp} minute`}</Text>
+            </View>
+              <TouchableOpacity 
+              style={styles.favoriteButton}
+              onPress={() => deleteNotification(item.id)}
+              >
+                  <Image source={require('../assets/icons/delete.png')} style={{ width: 30, height: 30}}/>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <Text>Nicio notificare personalizata</Text>
+      )}
+          {/*<Button title='Send push notifictaions' onPress={sendNotification}></Button>
+          <Button title='Schedule push notifictaions' onPress={schedulePushNotification}></Button>*/}
           <Button
-                style={styles.btn}
-                title="Crează Notificare Nouă"
+                buttonStyle={styles.btn}
+                title="Creează Notificare Nouă "
+                titleStyle = {styles.titlu}
+                icon = {
+                  <Image
+                  source={require('../assets/icons/notification.png')}
+                  style={{ width: 30, height: 30}}
+                />
+                }
+                iconRight = 'true'
                 onPress = {()=>navigation.navigate('AdaugaNotififcare')}
           />
         </View>
@@ -142,6 +236,10 @@ const Notificari = ({navigation}) =>{
         marginBottom: 20,
         alignItems: 'center'
       },
+      titlu:{
+        ...Fonts.screenTitle,
+        color: Colors.white, fontSize: 18
+    },
       itemContainer: {
         backgroundColor: '#fff',
         borderRadius: 8,
