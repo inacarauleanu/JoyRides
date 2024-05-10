@@ -1,687 +1,10 @@
 {
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2246": [
+  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1552": [
     {
-      "line": "Linia 5 spre I.M.L.",
+      "line": "Linia E3 spre Elba",
       "stops": [
         {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "Mendeleev",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Balta Verde",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Macilor",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "A. Lăpușneanu",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Tacit_",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "I.M.L.",
-          "arrival_time": "23:05"
-        }
-      ]
-    },
-    {
-      "line": "Linia 5 spre P-ța 700",
-      "stops": [
-        {
-          "stop_name": "I.M.L.",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Ciresului_1",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "C.A.Rosseti",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Banul Severinului",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Grigore Ureche",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Rarau",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Ciocârliei",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Ronaț",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "Tacit",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:38"
-        },
-        {
-          "stop_name": "A. Lăpușneanu",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "Macilor",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "Zalău",
-          "arrival_time": "23:40"
-        },
-        {
-          "stop_name": "Balta Verde",
-          "arrival_time": ""
-        },
-        {
-          "stop_name": "Mendeleev",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "2 min."
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "4 min."
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:05"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2226": [
-    {
-      "line": "Linia Tv6 spre Cerna",
-      "stops": [
-        {
-          "stop_name": "P-ta P-ța Bălcescu",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "P-ța Crucii",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Cluj",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "Olimpia",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "Deliblata",
-          "arrival_time": "23:03"
-        },
-        {
-          "stop_name": "Cerna",
-          "arrival_time": "22:56"
-        }
-      ]
-    },
-    {
-      "line": "Linia Tv6 spre P-ta P-ța Bălcescu",
-      "stops": [
-        {
-          "stop_name": "Cerna",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Deliblata",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Olimpia",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Cluj",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "P-ța Crucii",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "P-ta P-ța Bălcescu",
-          "arrival_time": "22:56"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1066": [
-    {
-      "line": "Linia 13 spre Pasaj C.F.",
-      "stops": [
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:27"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Timiș",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Bd. Cetății",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "P-ța A. Iancu",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Vuk Karadjic",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "P-ța de Gros",
-          "arrival_time": "23:21"
-        },
-        {
-          "stop_name": "Pasaj C.F.",
-          "arrival_time": "23:12"
-        }
-      ]
-    },
-    {
-      "line": "Linia 13 spre P-ța 700",
-      "stops": [
-        {
-          "stop_name": "Pasaj C.F.",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "P-ța de Gros",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Vuk Karadjic",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "P-ța A. Iancu",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Bd. Cetății",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Timiș",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:22"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "23:27"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1146": [
-    {
-      "line": "Linia 21 spre Școala Plopi",
-      "stops": [
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "V Parvan 2a",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Lic. Calderon",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "Iepurelui",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Prințul Turcesc",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Iosif Vulcan",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "Rudolf Walter",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Albăstrelelor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Iokai Mor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "C. Popescu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Parcului",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cocorilor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Calistrat Hogas",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Școala Plopi",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Albăstrelelor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Rudolf Walter",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "V. Cârlova",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Iosif Vulcan",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Uzinei 3a",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Pod Uzina de Apă",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vălișoara",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Țițeica",
-          "arrival_time": "23:35"
-        }
-      ]
-    },
-    {
-      "line": "Linia 21 spre T. Grozăvescu",
-      "stops": [
-        {
-          "stop_name": "Țițeica",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Ismail",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Luncani",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Pod Uzina de Apa",
-          "arrival_time": "23:03"
-        },
-        {
-          "stop_name": "Uzinei",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Baba Dochia",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "Iepurelui",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Lic. Calderon",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Pestalozzi",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "23:15"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3066": [
-    {
-      "line": "Linia 23 spre Gara Est bucla",
-      "stops": [
-        {
-          "stop_name": "Ghe. Domășnean",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Mecatim",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "F-ca de Bere",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "P-ța Traian",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Gara Est bucla",
-          "arrival_time": "23:19"
-        }
-      ]
-    },
-    {
-      "line": "Linia 23 spre Ghe. Domășnean",
-      "stops": [
-        {
-          "stop_name": "Gara Est bucla",
-          "arrival_time": "23:19"
-        },
-        {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "P-ța Traian",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "F-ca de Bere",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Mecatim",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ghe. Domășnean",
-          "arrival_time": "23:18"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1226": [
-    {
-      "line": "Linia 28 spre Țițeica",
-      "stops": [
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "Samuil Micu",
-          "arrival_time": "23:03"
-        },
-        {
-          "stop_name": "Renașterii",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "P-ța V. Economu",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Mătăsarilor",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Uzinei",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Pod Uzina de Apă",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Cometei",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Vălișoara",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Țițeica",
-          "arrival_time": "23:15"
-        }
-      ]
-    },
-    {
-      "line": "Linia 28 spre Bastion",
-      "stops": [
-        {
-          "stop_name": "Țițeica",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Ismail",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Luncani",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "Vălișoara",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Pod Uzina de Apa",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Uzinei",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "P-ța V. Economu",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Renașterii",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Samuil Micu",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "A. Popovici",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "22:58"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1546": [
-    {
-      "line": "Linia 32 spre Catedrala Mit.",
-      "stops": [
-        {
-          "stop_name": "Gara de Sud",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Eternității",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "E. Zola",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Prefatim",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hateganu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Chișodei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Herculane",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Victor Hugo",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Mureș1",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Porumbescu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Catedrala Mit.",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia 32 spre Gara de Sud",
-      "stops": [
-        {
-          "stop_name": "Catedrala Mit.",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Snagov",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
+          "stop_name": "Apicultorilor",
           "arrival_time": "**:**"
         },
         {
@@ -689,715 +12,120 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Victor Hugo",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Herculane",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Chișodei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hateganu_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Prefatim",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bujorilor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Eternității",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gara de Sud",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1046": [
-    {
-      "line": "Linia 33 spre Pod Cl. Șagului",
-      "stops": [
-        {
-          "stop_name": "Catedrala Mit.",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Shopping City",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "22:57"
-        }
-      ]
-    },
-    {
-      "line": "Linia 33 spre Catedrala Mit.",
-      "stops": [
-        {
-          "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Shopping City",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Catedrala Mit.",
-          "arrival_time": "22:57"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=886": [
-    {
-      "line": "Linia 40 spre Stuparilor",
-      "stops": [
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "12 min."
-        },
-        {
-          "stop_name": "Popa Șapcă",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Galeria 1",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Dedeman",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Gara de Est",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Stuparilor",
-          "arrival_time": "23:03"
-        }
-      ]
-    },
-    {
-      "line": "Linia 40 spre T. Grozăvescu",
-      "stops": [
-        {
-          "stop_name": "Stuparilor",
-          "arrival_time": "23:03"
-        },
-        {
-          "stop_name": "Holdelor",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Ap. Petru și Pavel",
-          "arrival_time": "2 min."
-        },
-        {
-          "stop_name": "Pomiculturii",
-          "arrival_time": "4 min."
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
-          "arrival_time": "5 min."
-        },
-        {
-          "stop_name": "Iulius Mall",
-          "arrival_time": "7 min."
-        },
-        {
-          "stop_name": "Popa Șapcă",
-          "arrival_time": "9 min."
-        },
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "12 min."
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1406": [
-    {
-      "line": "Linia 46 spre Muzeul Satului",
-      "stops": [
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Telegrafului",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Gara de Est",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "U.M.T.",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Cvartal U.M.T.",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "Muzeul Satului",
-          "arrival_time": "23:17"
-        }
-      ]
-    },
-    {
-      "line": "Linia 46 spre Bastion",
-      "stops": [
-        {
-          "stop_name": "Muzeul Satului",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Cvartal U.M.T.",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "U.M.T.",
-          "arrival_time": "23:08"
-        },
-        {
-          "stop_name": "Gara de Est",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Poliția Jud. Timiș",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "A. Popovici",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "23:18"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1550": [
-    {
-      "line": "Linia E1 spre Tzara",
-      "stops": [
-        {
-          "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "22:54"
-        },
-        {
-          "stop_name": "Shopping City",
-          "arrival_time": "22:55"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "Regele Carol",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "Pop de Băsești",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Gara de Nord",
-          "arrival_time": "3 min."
-        },
-        {
-          "stop_name": "Ghe. Lazăr",
-          "arrival_time": "8 min."
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "9 min."
-        },
-        {
-          "stop_name": "Ab_C.Europei 2",
-          "arrival_time": "11 min."
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "13 min."
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "14 min."
-        },
-        {
-          "stop_name": "Vox Park",
-          "arrival_time": "16 min."
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "16 min."
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "21 min."
-        },
-        {
-          "stop_name": "Selgros",
-          "arrival_time": "22 min."
-        },
-        {
-          "stop_name": "Tzara",
-          "arrival_time": "24 min."
-        },
-        {
-          "stop_name": "Ikea",
-          "arrival_time": "22:54"
-        }
-      ]
-    },
-    {
-      "line": "Linia E1 spre Pod Cl. Șagului",
-      "stops": [
-        {
-          "stop_name": "Ikea",
-          "arrival_time": "22:54"
-        },
-        {
-          "stop_name": "Tzara",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Vox Park_",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Cl. Torontalului",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Gh.Lazar",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Gara de Nord",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Pop de Băsești",
-          "arrival_time": "23:21"
-        },
-        {
-          "stop_name": "Regele Carol",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "23:28"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:30"
-        },
-        {
-          "stop_name": "Shopping City",
-          "arrival_time": "23:31"
-        },
-        {
-          "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "23:32"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1551": [
-    {
-      "line": "Linia E2 spre Holdelor_ab",
-      "stops": [
-        {
-          "stop_name": "Continental",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Ghe. Domășnean",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Venus 1",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Gir.Sudului 2tb",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Parc Sudului 2tb",
-          "arrival_time": "23:21"
-        },
-        {
-          "stop_name": "Bv.Sudului 2tb",
-          "arrival_time": "23:22"
-        },
-        {
-          "stop_name": "Spitalul Județean",
-          "arrival_time": "23:25"
-        },
-        {
-          "stop_name": "Casa Tineretului",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Sala Olimpia",
-          "arrival_time": "23:29"
-        },
-        {
-          "stop_name": "Comp.Stud_3Tb",
-          "arrival_time": "23:30"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "23:32"
-        },
-        {
-          "stop_name": "Hector",
-          "arrival_time": "23:34"
-        },
-        {
-          "stop_name": "Oituz",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "23:38"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "23:40"
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
-          "arrival_time": "23:42"
-        },
-        {
-          "stop_name": "Pomiculturii",
-          "arrival_time": "23:43"
-        },
-        {
-          "stop_name": "Ap. Petru și Pavel",
-          "arrival_time": "23:45"
-        },
-        {
-          "stop_name": "Holdelor_ab",
-          "arrival_time": "23:13"
-        }
-      ]
-    },
-    {
-      "line": "Linia E2 spre Continental",
-      "stops": [
-        {
-          "stop_name": "Holdelor_ab",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Stuparilor",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Gara de Est",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Dedeman",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "23:28"
-        },
-        {
-          "stop_name": "Hotel Continental",
-          "arrival_time": "23:30"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "23:32"
-        },
-        {
-          "stop_name": "Complex Studențesc",
-          "arrival_time": "23:33"
-        },
-        {
-          "stop_name": "Cluj",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Spitalul Județean",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "Bd. Sudului",
-          "arrival_time": "3 min."
-        },
-        {
-          "stop_name": "Parc Sudului 1tb",
-          "arrival_time": "4 min."
-        },
-        {
-          "stop_name": "Gir.Sudului 1Tb",
-          "arrival_time": "5 min."
-        },
-        {
-          "stop_name": "Venus",
-          "arrival_time": "7 min."
-        },
-        {
-          "stop_name": "Electrotimiș",
-          "arrival_time": "9 min."
-        },
-        {
-          "stop_name": "Ciarda Roșie",
-          "arrival_time": "12 min."
-        },
-        {
-          "stop_name": "Elbromplast",
-          "arrival_time": "14 min."
-        },
-        {
-          "stop_name": "Continental",
-          "arrival_time": "23:13"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1552": [
-    {
-      "line": "Linia E3 spre Elba",
-      "stops": [
-        {
-          "stop_name": "Apicultorilor",
-          "arrival_time": "00:00"
-        },
-        {
-          "stop_name": "Mureș2",
-          "arrival_time": "23:17"
-        },
-        {
           "stop_name": "M-șal C-tin Prezan",
-          "arrival_time": "23:18"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Martir I. Stanciu",
-          "arrival_time": "23:19"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "23:21"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Casa Tineretului",
-          "arrival_time": "23:22"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Sala Olimpia",
-          "arrival_time": "23:25"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "23:27"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "23:28"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pod Mit. Șaguna",
-          "arrival_time": "23:29"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Bis.Piarista",
-          "arrival_time": "23:32"
+          "stop_name": "Biserica Piaristă",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "23:33"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "23:34"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "1 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "3 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "5 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "7 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Crizantemelor",
-          "arrival_time": "9 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "10 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Dâmbovița (buclă)",
-          "arrival_time": "11 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Baba Novac",
-          "arrival_time": "13 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Opre Gogu",
-          "arrival_time": "14 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Păcii",
-          "arrival_time": "15 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Canton C.F.R.",
-          "arrival_time": "16 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Liceul Auto",
-          "arrival_time": "18 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Podgoriei",
-          "arrival_time": "19 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "C.I. Nottara",
-          "arrival_time": "20 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Răscoala din 1907",
-          "arrival_time": "21 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Polonă",
-          "arrival_time": "23 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Kromberg",
-          "arrival_time": "26 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Elba",
-          "arrival_time": "00:03"
+          "arrival_time": "**:**"
         }
       ]
     },
@@ -1406,115 +134,115 @@
       "stops": [
         {
           "stop_name": "Elba",
-          "arrival_time": "00:03"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Kromberg_",
-          "arrival_time": "23:16"
+          "stop_name": "Kromberg",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Polonă",
-          "arrival_time": "23:18"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Răscoala din 1907",
-          "arrival_time": "23:21"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "C.I. Nottara",
-          "arrival_time": "23:22"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Podgoriei",
-          "arrival_time": "23:23"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Liceul Auto",
-          "arrival_time": "23:24"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Canton C.F.R.",
-          "arrival_time": "23:26"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Păcii",
-          "arrival_time": "23:27"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Opre Gogu",
-          "arrival_time": "23:28"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Dâmbovița (buclă)",
-          "arrival_time": "23:31"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:32"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Transilvania",
-          "arrival_time": "23:33"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:35"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Regele Carol",
-          "arrival_time": "23:37"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pop de Băsești",
-          "arrival_time": "23:40"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Gara de Nord",
-          "arrival_time": "23:41"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Jiul",
-          "arrival_time": "23:43"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța R. Maria",
-          "arrival_time": "23:45"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Catedrala Mit.",
-          "arrival_time": "23:46"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "23:47"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "23:49"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Complex Studențesc",
-          "arrival_time": "23:50"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cluj",
-          "arrival_time": "23:52"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cl. Martirilor",
-          "arrival_time": "23:54"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Martir I. Stanciu",
-          "arrival_time": "23:55"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Mureș",
-          "arrival_time": "23:57"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Apicultorilor",
-          "arrival_time": "00:00"
+          "arrival_time": "**:**"
         }
       ]
     }
@@ -1585,7 +313,7 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Swoboda_",
+          "stop_name": "Swoboda",
           "arrival_time": "**:**"
         },
         {
@@ -1637,35 +365,35 @@
       "stops": [
         {
           "stop_name": "Oituz",
-          "arrival_time": "23:10"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Ab_C.Europei 2",
-          "arrival_time": "23:13"
+          "stop_name": "C. Europei",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Miresei",
-          "arrival_time": "23:15"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Liege",
-          "arrival_time": "23:17"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Vox Park",
-          "arrival_time": "23:18"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:19"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Metro",
-          "arrival_time": "23:29"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "PITT",
-          "arrival_time": "23:36"
+          "arrival_time": "**:**"
         }
       ]
     },
@@ -1674,22 +402,22 @@
       "stops": [
         {
           "stop_name": "PITT",
-          "arrival_time": "23:36"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Metro",
-          "arrival_time": "23:17"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Scalini",
-          "arrival_time": "23:24"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "G. Alexandrescu",
-          "arrival_time": "23:28"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Vox Park_",
+          "stop_name": "Vox Park",
           "arrival_time": "**:**"
         },
         {
@@ -1710,7 +438,7 @@
         },
         {
           "stop_name": "Oituz",
-          "arrival_time": "23:10"
+          "arrival_time": "**:**"
         }
       ]
     }
@@ -1721,83 +449,83 @@
       "stops": [
         {
           "stop_name": "T. Grozăvescu",
-          "arrival_time": "23:10"
+          "arrival_time": "00:01"
         },
         {
           "stop_name": "Parcul Copiilor",
-          "arrival_time": "23:12"
+          "arrival_time": "00:03"
         },
         {
           "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "23:13"
+          "arrival_time": "00:04"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "23:14"
+          "arrival_time": "00:05"
         },
         {
           "stop_name": "Pod Mit. Șaguna",
-          "arrival_time": "23:16"
+          "arrival_time": "00:07"
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:19"
+          "arrival_time": "00:10"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "23:20"
+          "arrival_time": "00:11"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:22"
+          "arrival_time": "00:13"
         },
         {
           "stop_name": "Crizantemelor",
-          "arrival_time": "23:23"
+          "arrival_time": "00:14"
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:25"
+          "arrival_time": "00:16"
         },
         {
           "stop_name": "Opre Gogu",
-          "arrival_time": "23:26"
+          "arrival_time": "00:17"
         },
         {
           "stop_name": "Păcii",
-          "arrival_time": "23:27"
+          "arrival_time": "00:18"
         },
         {
           "stop_name": "V. Simionescu",
-          "arrival_time": "23:28"
+          "arrival_time": "00:19"
         },
         {
           "stop_name": "Liceul Auto",
-          "arrival_time": "23:29"
+          "arrival_time": "00:20"
         },
         {
           "stop_name": "Podgoriei",
-          "arrival_time": "23:30"
+          "arrival_time": "00:21"
         },
         {
           "stop_name": "C.I. Nottara",
-          "arrival_time": "23:31"
+          "arrival_time": "00:22"
         },
         {
           "stop_name": "Răscoala din 1907",
-          "arrival_time": "23:32"
+          "arrival_time": "00:23"
         },
         {
           "stop_name": "Polonă",
-          "arrival_time": "23:34"
+          "arrival_time": "00:25"
         },
         {
           "stop_name": "F.Z.B.",
-          "arrival_time": "23:35"
+          "arrival_time": "00:26"
         },
         {
-          "stop_name": "Comtim s",
-          "arrival_time": "23:36"
+          "stop_name": "Comtim",
+          "arrival_time": "00:27"
         }
       ]
     },
@@ -1805,80 +533,80 @@
       "line": "Linia E7 spre T. Grozăvescu",
       "stops": [
         {
-          "stop_name": "Comtim p",
-          "arrival_time": "23:09"
+          "stop_name": "Comtim",
+          "arrival_time": "00:00"
         },
         {
           "stop_name": "F.Z.B.",
-          "arrival_time": "23:10"
+          "arrival_time": "00:01"
         },
         {
           "stop_name": "Polonă",
-          "arrival_time": "23:11"
+          "arrival_time": "00:02"
         },
         {
           "stop_name": "Răscoala din 1907",
-          "arrival_time": "23:13"
+          "arrival_time": "00:04"
         },
         {
           "stop_name": "C.I. Nottara",
-          "arrival_time": "23:14"
+          "arrival_time": "00:05"
         },
         {
           "stop_name": "Podgoriei",
-          "arrival_time": "23:15"
+          "arrival_time": "00:06"
         },
         {
           "stop_name": "Liceul Auto",
-          "arrival_time": "23:16"
+          "arrival_time": "00:07"
         },
         {
           "stop_name": "V. Simionescu",
-          "arrival_time": "23:42"
+          "arrival_time": "00:08"
         },
         {
           "stop_name": "Păcii",
-          "arrival_time": "23:43"
+          "arrival_time": "00:09"
         },
         {
           "stop_name": "Opre Gogu",
-          "arrival_time": "23:44"
+          "arrival_time": "00:10"
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "1 min."
+          "arrival_time": "00:11"
         },
         {
           "stop_name": "Transilvania",
-          "arrival_time": "3 min."
+          "arrival_time": "00:13"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "4 min."
+          "arrival_time": "00:14"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "5 min."
+          "arrival_time": "00:15"
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "6 min."
+          "arrival_time": "00:16"
         },
         {
           "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "8 min."
+          "arrival_time": "00:18"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "10 min."
+          "arrival_time": "00:20"
         },
         {
           "stop_name": "Parcul Copiilor",
-          "arrival_time": "14 min."
+          "arrival_time": "00:24"
         },
         {
           "stop_name": "T. Grozăvescu",
-          "arrival_time": "16 min."
+          "arrival_time": "00:26"
         }
       ]
     }
@@ -1889,103 +617,103 @@
       "stops": [
         {
           "stop_name": "Școala Plopi",
-          "arrival_time": "2 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "T.Demetrescu",
-          "arrival_time": "23:23"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Drumul Boilor",
-          "arrival_time": "23:24"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Plastique Forme",
-          "arrival_time": "23:26"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Apateu",
-          "arrival_time": "23:29"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Levănțica",
-          "arrival_time": "23:31"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Căprioarei",
-          "arrival_time": "23:31"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "V. Cârlova",
-          "arrival_time": "23:32"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Iosif Vulcan",
-          "arrival_time": "23:34"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Baba Dochia",
-          "arrival_time": "23:36"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Iepurelui",
-          "arrival_time": "23:37"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Lic. Calderon",
-          "arrival_time": "23:39"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pestalozzi",
-          "arrival_time": "23:40"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "23:42"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "23:43"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Mihai Viteazu",
-          "arrival_time": "23:45"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Fac. de Mecanică",
-          "arrival_time": "23:46"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ta P-ța Bălcescu",
-          "arrival_time": "23:47"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Corbului",
-          "arrival_time": "23:49"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "23:50"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:52"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "23:55"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:56"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Shopping City",
-          "arrival_time": "23:58"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "23:59"
+          "arrival_time": "**:**"
         }
       ]
     },
@@ -1994,119 +722,119 @@
       "stops": [
         {
           "stop_name": "Pod Cl. Șagului",
-          "arrival_time": "23:59"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Izlaz",
-          "arrival_time": "23:24"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Bujorilor",
-          "arrival_time": "23:25"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:27"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "23:29"
+          "stop_name": "Bd. L. Rebreanu",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "C.Brâncoveanu",
-          "arrival_time": "23:32"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Porumbescu",
-          "arrival_time": "23:33"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:35"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Fac. de Mecanică",
-          "arrival_time": "23:37"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "23:37"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Univ. de Vest",
-          "arrival_time": "23:39"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "23:41"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Bd. V. Pârvan",
-          "arrival_time": "23:43"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Lic. Calderon",
-          "arrival_time": "23:43"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Iepurelui",
-          "arrival_time": "23:45"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Prințul Turcesc",
-          "arrival_time": "23:47"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Iosif Vulcan",
-          "arrival_time": "23:48"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "V. Cârlova",
-          "arrival_time": "23:49"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Căprioarei",
-          "arrival_time": "23:51"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Levănțica",
-          "arrival_time": "23:51"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Apateu",
-          "arrival_time": "23:53"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Azur",
-          "arrival_time": "23:55"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Plastique Forme",
-          "arrival_time": "23:56"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Drumul Boilor_",
-          "arrival_time": "23:58"
+          "stop_name": "Drumul Boilor",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "T.Demetrescu",
-          "arrival_time": "00:00"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Albăstrelelor",
-          "arrival_time": "00:02"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Iokai Mor",
-          "arrival_time": "00:03"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "C. Popescu",
-          "arrival_time": "1 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Școala Plopi",
-          "arrival_time": "2 min."
+          "arrival_time": "**:**"
         }
       ]
     }
@@ -2117,39 +845,39 @@
       "stops": [
         {
           "stop_name": "I.I. de la Brad",
-          "arrival_time": "23:11"
+          "arrival_time": "13 min."
         },
         {
           "stop_name": "Kaufland",
-          "arrival_time": "22:59"
+          "arrival_time": "23:45"
         },
         {
           "stop_name": "Fropin",
-          "arrival_time": "23:01"
+          "arrival_time": "23:47"
         },
         {
-          "stop_name": "Crisan1",
-          "arrival_time": "23:02"
+          "stop_name": "Crișan",
+          "arrival_time": "23:48"
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:03"
+          "arrival_time": "23:49"
         },
         {
           "stop_name": "Zoltan",
-          "arrival_time": "23:05"
+          "arrival_time": "23:51"
         },
         {
           "stop_name": "I. Attila",
-          "arrival_time": "23:07"
+          "arrival_time": "23:53"
         },
         {
           "stop_name": "Girație Dumbrăvița",
-          "arrival_time": "23:08"
+          "arrival_time": "23:54"
         },
         {
           "stop_name": "Belvedere",
-          "arrival_time": "22:57"
+          "arrival_time": "23:43"
         }
       ]
     },
@@ -2158,39 +886,39 @@
       "stops": [
         {
           "stop_name": "Belvedere",
-          "arrival_time": "22:57"
+          "arrival_time": "23:43"
         },
         {
-          "stop_name": "Girație Dumbrăvița_",
-          "arrival_time": "22:59"
+          "stop_name": "Girație Dumbrăvița",
+          "arrival_time": "1 min."
         },
         {
           "stop_name": "I. Attila",
-          "arrival_time": "23:00"
+          "arrival_time": "2 min."
         },
         {
           "stop_name": "Zoltan",
-          "arrival_time": "23:02"
+          "arrival_time": "4 min."
         },
         {
           "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:04"
+          "arrival_time": "6 min."
         },
         {
-          "stop_name": "Crisan2",
-          "arrival_time": "23:05"
+          "stop_name": "Crișan",
+          "arrival_time": "7 min."
         },
         {
           "stop_name": "Fropin",
-          "arrival_time": "23:07"
+          "arrival_time": "8 min."
         },
         {
           "stop_name": "Kaufland",
-          "arrival_time": "23:08"
+          "arrival_time": "10 min."
         },
         {
           "stop_name": "I.I. de la Brad",
-          "arrival_time": "23:11"
+          "arrival_time": "13 min."
         }
       ]
     }
@@ -2200,72 +928,72 @@
       "line": "Linia M22 spre Cartier Tineret",
       "stops": [
         {
-          "stop_name": "Gir.Sudului",
-          "arrival_time": "19 min."
+          "stop_name": "Girație Sudului",
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Parc Sudului 2tb",
-          "arrival_time": "23:03"
+          "stop_name": "Parc Sudului",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Electrotimiș",
-          "arrival_time": "23:07"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "I.O.T.",
-          "arrival_time": "23:09"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "23:10"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Moteletul",
-          "arrival_time": "23:18"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Castel",
-          "arrival_time": "23:19"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Monica",
-          "arrival_time": "23:20"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Otniel",
-          "arrival_time": "23:21"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Parc Moșnița Nouă",
-          "arrival_time": "23:24"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Capăt Urseni",
-          "arrival_time": "17 min."
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Tineret_",
-          "arrival_time": "37 min."
+          "stop_name": "Tineret",
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Lisitei",
-          "arrival_time": "00:07"
+          "stop_name": "Lișiței",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "I.A.S.",
-          "arrival_time": "00:09"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cartier Armonia",
-          "arrival_time": "00:16"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Albina dj",
-          "arrival_time": "00:18"
+          "stop_name": "Albina",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cămin Albina",
-          "arrival_time": "23:04"
+          "arrival_time": "**:**"
         }
       ]
     },
@@ -2274,67 +1002,67 @@
       "stops": [
         {
           "stop_name": "Cămin Albina",
-          "arrival_time": "23:04"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Albina",
-          "arrival_time": "23:07"
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Cartier Armania_",
-          "arrival_time": "23:09"
+          "stop_name": "Cartier Armonia",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "I.A.S.",
-          "arrival_time": "23:15"
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Lișiței",
-          "arrival_time": "2 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Capăt Urseni",
-          "arrival_time": "17 min."
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Tineret_",
-          "arrival_time": "37 min."
+          "stop_name": "Tineret",
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Parc Moșnița Nouă",
-          "arrival_time": "45 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Cova Ghera",
-          "arrival_time": "46 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Otniel",
-          "arrival_time": "1 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Monica",
-          "arrival_time": "2 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Castel",
-          "arrival_time": "3 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Moteletul",
-          "arrival_time": "4 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Ciarda Roșie",
-          "arrival_time": "13 min."
+          "arrival_time": "**:**"
         },
         {
           "stop_name": "Ghe. Domășnean",
-          "arrival_time": "15 min."
+          "arrival_time": "**:**"
         },
         {
-          "stop_name": "Gir.Sudului",
-          "arrival_time": "19 min."
+          "stop_name": "Girație Sudului",
+          "arrival_time": "**:**"
         }
       ]
     }
@@ -2376,15 +1104,15 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Primarie RM",
+          "stop_name": "Primărie Remetea",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Politie RM",
+          "stop_name": "Poliție Remetea",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Strada III RM",
+          "stop_name": "Strada III Remetea",
           "arrival_time": "**:**"
         },
         {
@@ -2405,23 +1133,23 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Ianova Cruce_",
+          "stop_name": "Ianova Cruce",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Strada III_RM",
+          "stop_name": "Strada III Remetea",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Strada I RM",
+          "stop_name": "Strada I Remetea",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Primarie_RM",
+          "stop_name": "Primărie Remetea",
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Privighetoarea_RM",
+          "stop_name": "Privighetoarea",
           "arrival_time": "**:**"
         },
         {
@@ -2464,7 +1192,7 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Cometei 2",
+          "stop_name": "Cometei",
           "arrival_time": "**:**"
         },
         {
@@ -2509,7 +1237,7 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Câmpului__",
+          "stop_name": "Câmpului",
           "arrival_time": "**:**"
         },
         {
@@ -2576,7 +1304,7 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Cometei 2",
+          "stop_name": "Cometei",
           "arrival_time": "**:**"
         },
         {
@@ -2629,7 +1357,7 @@
           "arrival_time": "**:**"
         },
         {
-          "stop_name": "Busteni",
+          "stop_name": "Bușteni",
           "arrival_time": "**:**"
         },
         {
@@ -2677,83 +1405,83 @@
   ],
   "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=1986": [
     {
-      "line": "Linia M35 spre Biserică G.Vii2",
+      "line": "Linia M35 spre Biserică Giarmata Vii",
       "stops": [
         {
           "stop_name": "Bastion",
-          "arrival_time": "23:00"
+          "arrival_time": "23:32"
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:04"
+          "arrival_time": "23:36"
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "23:07"
+          "arrival_time": "23:39"
         },
         {
           "stop_name": "Al. Pădurea Verde",
-          "arrival_time": "23:12"
+          "arrival_time": "23:44"
         },
         {
           "stop_name": "Macilor",
-          "arrival_time": "23:16"
+          "arrival_time": "23:48"
         },
         {
           "stop_name": "Macilor",
-          "arrival_time": "23:16"
+          "arrival_time": "23:48"
         },
         {
           "stop_name": "Viticultorilor",
           "arrival_time": "23:49"
         },
         {
-          "stop_name": "G.Vii Timisorii",
+          "stop_name": "Timișorii",
           "arrival_time": "23:55"
         },
         {
           "stop_name": "Parcului 160",
-          "arrival_time": "1 min."
+          "arrival_time": "23:57"
         },
         {
           "stop_name": "Parcului 200",
-          "arrival_time": "2 min."
+          "arrival_time": "23:58"
         },
         {
           "stop_name": "Albatrosului I",
-          "arrival_time": "3 min."
+          "arrival_time": "23:58"
         },
         {
           "stop_name": "Albatrosului II",
-          "arrival_time": "3 min."
+          "arrival_time": "23:59"
         },
         {
           "stop_name": "Teilor",
-          "arrival_time": "4 min."
+          "arrival_time": "00:00"
         },
         {
           "stop_name": "Teilor 183",
-          "arrival_time": "5 min."
+          "arrival_time": "00:01"
         },
         {
           "stop_name": "Teilor 153",
-          "arrival_time": "7 min."
+          "arrival_time": "00:03"
         },
         {
-          "stop_name": "IzlazG.Vii",
-          "arrival_time": "8 min."
+          "stop_name": "Izlaz",
+          "arrival_time": "00:04"
         },
         {
           "stop_name": "Carpenului",
-          "arrival_time": "9 min."
+          "arrival_time": "00:05"
         },
         {
-          "stop_name": "Teilor G.Vii1",
-          "arrival_time": "10 min."
+          "stop_name": "Teilor",
+          "arrival_time": "00:06"
         },
         {
-          "stop_name": "Cimitir G.Vii",
-          "arrival_time": "23:00"
+          "stop_name": "Cimitir Giarmata Vii",
+          "arrival_time": "23:32"
         }
       ]
     },
@@ -2761,44 +1489,44 @@
       "line": "Linia M35 spre Bastion",
       "stops": [
         {
-          "stop_name": "Cimitir G.Vii",
-          "arrival_time": "23:00"
+          "stop_name": "Cimitir Giarmata Vii",
+          "arrival_time": "23:32"
         },
         {
-          "stop_name": "Teilor G.Vii2",
-          "arrival_time": "23:01"
+          "stop_name": "Teilor",
+          "arrival_time": "23:33"
         },
         {
-          "stop_name": "Biserică G.Vii2",
-          "arrival_time": "23:02"
+          "stop_name": "Biserică Giarmata Vii",
+          "arrival_time": "23:34"
         },
         {
-          "stop_name": "G Vii Complex_",
-          "arrival_time": "23:04"
+          "stop_name": "Complex Giarmata Vii",
+          "arrival_time": "23:36"
         },
         {
-          "stop_name": "Stadion G.Vii",
-          "arrival_time": "23:05"
+          "stop_name": "Stadion",
+          "arrival_time": "23:37"
         },
         {
-          "stop_name": "G.Vii_Timisorii",
-          "arrival_time": "23:05"
+          "stop_name": "Timișorii",
+          "arrival_time": "23:37"
         },
         {
           "stop_name": "Al. Pădurea Verde",
-          "arrival_time": "23:17"
+          "arrival_time": "23:49"
         },
         {
           "stop_name": "P-ța V. Economu",
-          "arrival_time": "23:22"
+          "arrival_time": "23:54"
         },
         {
           "stop_name": "P-ța Badea Cârțan",
-          "arrival_time": "23:26"
+          "arrival_time": "23:58"
         },
         {
           "stop_name": "Bastion",
-          "arrival_time": "23:30"
+          "arrival_time": "00:02"
         }
       ]
     }
@@ -2809,107 +1537,107 @@
       "stops": [
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "22:57"
+          "arrival_time": "23:33"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "22:58"
+          "arrival_time": "23:34"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:00"
+          "arrival_time": "23:36"
         },
         {
           "stop_name": "Crizantemelor",
-          "arrival_time": "23:01"
+          "arrival_time": "23:37"
         },
         {
           "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:03"
+          "arrival_time": "23:39"
         },
         {
           "stop_name": "Opre Gogu",
-          "arrival_time": "23:05"
+          "arrival_time": "23:41"
         },
         {
           "stop_name": "Păcii",
-          "arrival_time": "23:06"
+          "arrival_time": "23:42"
         },
         {
           "stop_name": "V. Simionescu",
-          "arrival_time": "23:07"
+          "arrival_time": "23:43"
         },
         {
           "stop_name": "Liceul Auto",
-          "arrival_time": "23:08"
+          "arrival_time": "23:44"
         },
         {
           "stop_name": "Podgoriei",
-          "arrival_time": "23:09"
+          "arrival_time": "23:45"
         },
         {
           "stop_name": "C.I. Nottara",
-          "arrival_time": "23:10"
+          "arrival_time": "23:46"
         },
         {
           "stop_name": "Răscoala din 1907",
-          "arrival_time": "23:12"
+          "arrival_time": "23:48"
         },
         {
           "stop_name": "F.Z.B.",
-          "arrival_time": "23:17"
+          "arrival_time": "23:53"
         },
         {
           "stop_name": "Abator",
-          "arrival_time": "23:18"
+          "arrival_time": "23:54"
         },
         {
-          "stop_name": "Comtim p",
-          "arrival_time": "23:19"
+          "stop_name": "Comtim",
+          "arrival_time": "23:55"
         },
         {
           "stop_name": "Intrare Utvin",
-          "arrival_time": "23:22"
+          "arrival_time": "23:58"
         },
         {
           "stop_name": "Centru Utvin",
-          "arrival_time": "23:25"
-        },
-        {
-          "stop_name": "Balta Utvin",
-          "arrival_time": "23:28"
-        },
-        {
-          "stop_name": "Pod Sânmihaiu R.",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Sânmihai R. Peco_",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Benzinarie S.R.",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Primarie S.Roman",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Livada S.G.",
-          "arrival_time": "23:47"
-        },
-        {
-          "stop_name": "Strandul Termal_",
-          "arrival_time": "23:59"
-        },
-        {
-          "stop_name": "Scoala Sânmihaiu G.",
           "arrival_time": "00:01"
         },
         {
+          "stop_name": "Balta Utvin",
+          "arrival_time": "00:04"
+        },
+        {
+          "stop_name": "Pod Sânmihaiu R.",
+          "arrival_time": "**:**"
+        },
+        {
+          "stop_name": "Sânmihai R. Peco",
+          "arrival_time": "00:15"
+        },
+        {
+          "stop_name": "Benzinărie Sânmihai R.",
+          "arrival_time": "00:16"
+        },
+        {
+          "stop_name": "Primărie Sânmihai R.",
+          "arrival_time": "00:21"
+        },
+        {
+          "stop_name": "Livada Sânmihai G.",
+          "arrival_time": "**:**"
+        },
+        {
+          "stop_name": "Ștrandul Termal",
+          "arrival_time": "9 min."
+        },
+        {
+          "stop_name": "Școala Sânmihai G.",
+          "arrival_time": "11 min."
+        },
+        {
           "stop_name": "Drumul cimitirului",
-          "arrival_time": "22:57"
+          "arrival_time": "00:38"
         }
       ]
     },
@@ -2918,1727 +1646,103 @@
       "stops": [
         {
           "stop_name": "Drumul cimitirului",
-          "arrival_time": "22:57"
+          "arrival_time": "00:38"
         },
         {
-          "stop_name": "Scoala S.G._",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Strandul Termal",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "Livada S.G._",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Primarie S.Roman",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Benzinarie S.R.",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Sânmihai R. Peco_",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Pod Sânmihaiu R._",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "Balta Utvin_",
-          "arrival_time": "23:31"
-        },
-        {
-          "stop_name": "Centru Utvin_",
+          "stop_name": "Școala Sânmihai G.",
           "arrival_time": "23:33"
         },
         {
-          "stop_name": "Intrare Utvin_",
+          "stop_name": "Ștrandul Termal",
           "arrival_time": "23:36"
         },
         {
-          "stop_name": "Comtim s",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "Abatorlecare",
-          "arrival_time": "23:40"
-        },
-        {
-          "stop_name": "F.Z.B.",
-          "arrival_time": "23:42"
-        },
-        {
-          "stop_name": "Răscoala din 1907",
-          "arrival_time": "23:46"
-        },
-        {
-          "stop_name": "C.I. Nottara",
-          "arrival_time": "23:48"
-        },
-        {
-          "stop_name": "Podgoriei",
-          "arrival_time": "23:48"
-        },
-        {
-          "stop_name": "Liceul Auto",
-          "arrival_time": "23:49"
-        },
-        {
-          "stop_name": "V. Simionescu",
-          "arrival_time": "23:51"
-        },
-        {
-          "stop_name": "Păcii",
-          "arrival_time": "23:52"
-        },
-        {
-          "stop_name": "Bd. Dâmbovița",
-          "arrival_time": "23:55"
-        },
-        {
-          "stop_name": "Transilvania",
-          "arrival_time": "23:56"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:59"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "00:00"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "00:01"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3606": [
-    {
-      "line": "Linia M37 spre T. Grozăvescu",
-      "stops": [
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "23:33"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "23:34"
-        },
-        {
-          "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Univ. de Vest",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "Pod Mit. Șaguna",
-          "arrival_time": "1 min."
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "5 min."
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "6 min."
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "8 min."
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "10 min."
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "12 min."
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "16 min."
-        },
-        {
-          "stop_name": "Linar",
-          "arrival_time": "17 min."
-        },
-        {
-          "stop_name": "O.Cotrus 1a",
-          "arrival_time": "18 min."
-        },
-        {
-          "stop_name": "Leroy Merlin",
-          "arrival_time": "22 min."
-        },
-        {
-          "stop_name": "Depozit Profi",
-          "arrival_time": "35 min."
-        },
-        {
-          "stop_name": "Frigoglass_",
-          "arrival_time": "52 min."
-        },
-        {
-          "stop_name": "Biserică Penticostala",
-          "arrival_time": "66 min."
-        },
-        {
-          "stop_name": "Pod Parta",
-          "arrival_time": "67 min."
-        },
-        {
-          "stop_name": "C.Cultural Parta",
-          "arrival_time": "71 min."
-        },
-        {
-          "stop_name": "Cartier Nou P",
-          "arrival_time": "74 min."
-        },
-        {
-          "stop_name": "Drumul Mare P",
-          "arrival_time": "00:55"
-        }
-      ]
-    },
-    {
-      "line": "Linia M37 spre T. Grozăvescu",
-      "stops": [
-        {
-          "stop_name": "Drumul Mare P",
-          "arrival_time": "00:55"
-        },
-        {
-          "stop_name": "Cartier Nou_P",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "C.Cultural_Parta",
-          "arrival_time": "23:42"
-        },
-        {
-          "stop_name": "Primarie_Parta",
-          "arrival_time": "23:44"
-        },
-        {
-          "stop_name": "Pod_Parta",
-          "arrival_time": "23:46"
-        },
-        {
-          "stop_name": "Biserică_Penticostala",
+          "stop_name": "Livada Sânmihai G.",
           "arrival_time": "23:47"
         },
         {
-          "stop_name": "Frigoglass",
-          "arrival_time": "00:01"
-        },
-        {
-          "stop_name": "Depozit_Profi",
-          "arrival_time": "00:18"
-        },
-        {
-          "stop_name": "Incontro ISR",
-          "arrival_time": "00:29"
-        },
-        {
-          "stop_name": "Brico Depot",
-          "arrival_time": "00:32"
-        },
-        {
-          "stop_name": "O.Cotrus 2a",
-          "arrival_time": "00:35"
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "00:37"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "00:43"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "00:46"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "00:47"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "00:49"
-        },
-        {
-          "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "00:52"
-        },
-        {
-          "stop_name": "Univ. de Vest",
-          "arrival_time": "00:53"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "00:56"
-        },
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "00:57"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3646": [
-    {
-      "line": "Linia M38 spre Capat Jebel",
-      "stops": [
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "O.Cotrus 1a",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Leroy Merlin",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Metro 59",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Primaria Jebel",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Capat Jebel",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M38 spre P-ța Mocioni",
-      "stops": [
-        {
-          "stop_name": "Capat Jebel",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Centru Jebel",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Primaria Jebel_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Incontro DN59",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Brico Depot",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "O.Cotrus 2a",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3306": [
-    {
-      "line": "Linia M41 spre Darson Carani",
-      "stops": [
-        {
-          "stop_name": "Pestalozzi",
+          "stop_name": "Primărie Sânmihai R.",
           "arrival_time": "00:21"
         },
         {
-          "stop_name": "Bastion",
-          "arrival_time": "23:15"
+          "stop_name": "Benzinărie Sânmihai R.",
+          "arrival_time": "00:16"
         },
         {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "23:19"
+          "stop_name": "Sânmihai R. Peco",
+          "arrival_time": "00:15"
         },
         {
-          "stop_name": "Remus Răduleț",
-          "arrival_time": "23:21"
+          "stop_name": "Pod Sânmihai R.",
+          "arrival_time": "23:59"
         },
         {
-          "stop_name": "Liege",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "U.T.T.",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Bujorilor S",
-          "arrival_time": "23:54"
-        },
-        {
-          "stop_name": "Flora Sanandrei",
-          "arrival_time": "23:54"
-        },
-        {
-          "stop_name": "Centru Sanandrei",
-          "arrival_time": "23:56"
-        },
-        {
-          "stop_name": "Maslinului",
-          "arrival_time": "23:58"
-        },
-        {
-          "stop_name": "Centru Carani",
-          "arrival_time": "00:17"
-        },
-        {
-          "stop_name": "Darson Carani",
-          "arrival_time": "23:10"
-        }
-      ]
-    },
-    {
-      "line": "Linia M41 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Darson Carani",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Centru Carani_",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Maslinului_",
-          "arrival_time": "23:31"
-        },
-        {
-          "stop_name": "Centru Sanandrei_",
-          "arrival_time": "23:33"
-        },
-        {
-          "stop_name": "Flora Sanandrei_",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Lalelelor S",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "00:03"
-        },
-        {
-          "stop_name": "U.T.T.",
-          "arrival_time": "00:05"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "00:06"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "00:08"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "00:11"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "00:13"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "00:14"
-        },
-        {
-          "stop_name": "Pestalozzi",
-          "arrival_time": "00:21"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3307": [
-    {
-      "line": "Linia M42 spre Gradinita Covaci",
-      "stops": [
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hector",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gradinita Covaci",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M42 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Gradinita Covaci",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2646": [
-    {
-      "line": "Linia M43 spre B.Mic capat",
-      "stops": [
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Circumvalațiunii",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Timiș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. Cetății",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța A. Iancu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vuk Karadjic",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Europa_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Moara",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dispensar",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liliacului_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Balta",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vest",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Comtur",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică BM",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vest Tract",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "B.Mic_camin_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "B.Mic capat",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M43 spre Bastion",
-      "stops": [
-        {
-          "stop_name": "B.Mic capat",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "B.Mic_camin",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vest Tract_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Profi",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Strada_VI",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Class",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liliacului",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Europa",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "G. Alexandrescu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Vuk Karadjic",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța A. Iancu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bd. Cetății",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Timiș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ghe. Lazăr",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2506": [
-    {
-      "line": "Linia M44 spre Biserica Catolică",
-      "stops": [
-        {
-          "stop_name": "Hector",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța 700",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ghe. Lazăr",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserica Catolică",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Primărie B.Mic",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "C.Dudesti(B.M)",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M44 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "C.Dudesti(B.M)",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dudești Primărie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "C.Timisoarei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Camin D.Noi",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Rus Savitar",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hector",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=2606": [
-    {
-      "line": "Linia M45 spre Parc Central",
-      "stops": [
-        {
-          "stop_name": "Oituz",
-          "arrival_time": "23:43"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Remus Răduleț",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "U.T.T.",
-          "arrival_time": "23:03"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Praga",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Bucuresti",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Ferventia",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Liiceanu",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "I.Creanga",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Sadoveanu",
-          "arrival_time": "23:19"
-        },
-        {
-          "stop_name": "Tutea II",
-          "arrival_time": "23:21"
-        },
-        {
-          "stop_name": "Rebreanu",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "Crisurilor",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "Caragiale",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Bistrita",
-          "arrival_time": "23:27"
-        },
-        {
-          "stop_name": "Andersen",
-          "arrival_time": "23:29"
-        },
-        {
-          "stop_name": "Motilor",
-          "arrival_time": "23:31"
-        },
-        {
-          "stop_name": "Arieseni",
-          "arrival_time": "23:32"
-        },
-        {
-          "stop_name": "Grigorescu",
-          "arrival_time": "23:34"
-        },
-        {
-          "stop_name": "T.Vladimirescu",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "Parc Central",
-          "arrival_time": "22:55"
-        }
-      ]
-    },
-    {
-      "line": "Linia M45 spre Bastion",
-      "stops": [
-        {
-          "stop_name": "Parc Central",
-          "arrival_time": "22:55"
-        },
-        {
-          "stop_name": "T.Vladimirescu_",
-          "arrival_time": "23:00"
-        },
-        {
-          "stop_name": "Grigorescu_",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "Arieseni_",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Motilor_",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Andersen_",
-          "arrival_time": "23:06"
-        },
-        {
-          "stop_name": "Bistrita_",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "Caragiale",
-          "arrival_time": "23:26"
-        },
-        {
-          "stop_name": "Crisurilor_",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Rebreanu_",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Tutea II_",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Simfoniei_",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "Sadoveanu_",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "I.Creanga_",
-          "arrival_time": "23:18"
-        },
-        {
-          "stop_name": "Liiceanu_",
-          "arrival_time": "23:20"
-        },
-        {
-          "stop_name": "Ferventia",
-          "arrival_time": "23:22"
-        },
-        {
-          "stop_name": "Bucuresti_",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "Praga_",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "23:31"
-        },
-        {
-          "stop_name": "U.T.T.",
-          "arrival_time": "23:33"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "23:35"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "23:41"
-        },
-        {
-          "stop_name": "Oituz",
-          "arrival_time": "23:43"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3326": [
-    {
-      "line": "Linia M46 spre Strada IV_CXI",
-      "stops": [
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:49"
-        },
-        {
-          "stop_name": "O.Cotrus 1a",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Leroy Merlin",
-          "arrival_time": "23:04"
-        },
-        {
-          "stop_name": "Teren sport_",
-          "arrival_time": "23:52"
-        },
-        {
-          "stop_name": "Primarie Sag_",
-          "arrival_time": "23:54"
-        },
-        {
-          "stop_name": "Strada IV_II_",
-          "arrival_time": ""
-        },
-        {
-          "stop_name": "Strada IV_CXI",
-          "arrival_time": "22:55"
-        }
-      ]
-    },
-    {
-      "line": "Linia M46 spre P-ța Veteranilor",
-      "stops": [
-        {
-          "stop_name": "Strada IV_CXI",
-          "arrival_time": "22:55"
-        },
-        {
-          "stop_name": "Strada V_II",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Primarie Sag",
-          "arrival_time": "22:58"
-        },
-        {
-          "stop_name": "Teren sport",
-          "arrival_time": "23:01"
-        },
-        {
-          "stop_name": "Strada XXIV",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "Strada XXiV_",
-          "arrival_time": "23:12"
-        },
-        {
-          "stop_name": "Strada XXVII",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Strada XX",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Incontro ISR",
-          "arrival_time": "23:36"
-        },
-        {
-          "stop_name": "Brico Depot",
-          "arrival_time": "23:39"
-        },
-        {
-          "stop_name": "O.Cotrus 2a",
-          "arrival_time": "23:42"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:49"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3366": [
-    {
-      "line": "Linia M47 spre Hodoni",
-      "stops": [
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Barateaz",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Satchinez1",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Stachinez2",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hodoni",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M47 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Hodoni",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Satchinez2_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Satchinez1_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Barateaz_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3406": [
-    {
-      "line": "Linia M48 spre Seceani2",
-      "stops": [
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hector",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cornesti_cap",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Calacea",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ortisoara2",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Seceani2",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M48 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Seceani2",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ortisoara2_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Calacea",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cornesti_cap",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3426": [
-    {
-      "line": "Linia M49 spre Gir.Giarmata",
-      "stops": [
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "23:10"
-        },
-        {
-          "stop_name": "Popa Șapcă",
-          "arrival_time": "23:11"
-        },
-        {
-          "stop_name": "Galeria 1",
-          "arrival_time": "23:13"
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Pomiculturii",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "Ap. Petru și Pavel",
-          "arrival_time": "23:17"
-        },
-        {
-          "stop_name": "Kaufland",
-          "arrival_time": "23:21"
-        },
-        {
-          "stop_name": "Fropin",
-          "arrival_time": "23:23"
-        },
-        {
-          "stop_name": "Crisan1",
-          "arrival_time": "23:24"
-        },
-        {
-          "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:25"
-        },
-        {
-          "stop_name": "Zoltan",
-          "arrival_time": "23:28"
-        },
-        {
-          "stop_name": "I. Attila",
-          "arrival_time": "23:29"
-        },
-        {
-          "stop_name": "Bodoni G",
-          "arrival_time": "23:52"
-        },
-        {
-          "stop_name": "PricighetoriiG",
-          "arrival_time": "23:54"
-        },
-        {
-          "stop_name": "ArtezaG",
-          "arrival_time": "23:56"
-        },
-        {
-          "stop_name": "C.CulturalCz",
-          "arrival_time": "23:58"
-        },
-        {
-          "stop_name": "Industriilor",
+          "stop_name": "Balta Utvin",
           "arrival_time": "00:07"
         },
         {
-          "stop_name": "Centr.Giarmata",
+          "stop_name": "Centru Utvin",
+          "arrival_time": "00:09"
+        },
+        {
+          "stop_name": "Intrare Utvin",
           "arrival_time": "00:12"
         },
         {
-          "stop_name": "Batrana",
-          "arrival_time": "00:14"
+          "stop_name": "Comtim",
+          "arrival_time": "00:15"
         },
         {
-          "stop_name": "Calea Bencecului",
-          "arrival_time": "00:17"
+          "stop_name": "Abator",
+          "arrival_time": "00:16"
         },
         {
-          "stop_name": "Gir.Giarmata",
-          "arrival_time": "23:10"
-        }
-      ]
-    },
-    {
-      "line": "Linia M49 spre I.I. de la Brad",
-      "stops": [
-        {
-          "stop_name": "Gir.Giarmata",
-          "arrival_time": "23:10"
+          "stop_name": "F.Z.B.",
+          "arrival_time": "00:18"
         },
         {
-          "stop_name": "B.Catolica G",
-          "arrival_time": "23:12"
+          "stop_name": "Răscoala din 1907",
+          "arrival_time": "00:22"
         },
         {
-          "stop_name": "I. Attila",
-          "arrival_time": "23:36"
+          "stop_name": "C.I. Nottara",
+          "arrival_time": "00:24"
         },
         {
-          "stop_name": "Zoltan",
-          "arrival_time": "23:38"
+          "stop_name": "Podgoriei",
+          "arrival_time": "00:24"
         },
         {
-          "stop_name": "P-ța Bălcescu",
-          "arrival_time": "23:40"
+          "stop_name": "Liceul Auto",
+          "arrival_time": "00:25"
         },
         {
-          "stop_name": "Crisan2",
-          "arrival_time": "23:41"
+          "stop_name": "V. Simionescu",
+          "arrival_time": "00:27"
         },
         {
-          "stop_name": "Fropin",
-          "arrival_time": "23:42"
+          "stop_name": "Păcii",
+          "arrival_time": "00:28"
         },
         {
-          "stop_name": "Kaufland",
-          "arrival_time": "23:44"
+          "stop_name": "Bd. Dâmbovița",
+          "arrival_time": "00:31"
         },
         {
-          "stop_name": "Ap. Petru și Pavel",
-          "arrival_time": "23:48"
-        },
-        {
-          "stop_name": "Pomiculturii",
-          "arrival_time": "23:50"
-        },
-        {
-          "stop_name": "Div 9 Cavalerie",
-          "arrival_time": "23:51"
-        },
-        {
-          "stop_name": "Iulius Mall",
-          "arrival_time": "23:53"
-        },
-        {
-          "stop_name": "Popa Șapcă",
-          "arrival_time": "23:55"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "23:56"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3486": [
-    {
-      "line": "Linia M50 spre Biserică Uihei",
-      "stops": [
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Prefectură",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Ab_C.Europei 2",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biled",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică Sandra",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică Uihei",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M50 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Biserică Uihei_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică Sandra_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biled_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Miresei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Filipescu",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3466": [
-    {
-      "line": "Linia M51 spre Primarie Pad",
-      "stops": [
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "22:54"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "22:55"
-        },
-        {
-          "stop_name": "Pasaj Michelangelo",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Univ. de Vest",
-          "arrival_time": "22:57"
-        },
-        {
-          "stop_name": "Pod Mit. Șaguna",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "P-ța Mocioni",
-          "arrival_time": "23:02"
-        },
-        {
-          "stop_name": "Brâncoveanu",
-          "arrival_time": "23:03"
+          "stop_name": "Transilvania",
+          "arrival_time": "00:32"
         },
         {
           "stop_name": "P-ța I. Maniu",
-          "arrival_time": "23:05"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu",
-          "arrival_time": "23:07"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "23:09"
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "23:14"
-        },
-        {
-          "stop_name": "Linar",
-          "arrival_time": "23:15"
-        },
-        {
-          "stop_name": "O.Cotrus 1a",
-          "arrival_time": "23:16"
-        },
-        {
-          "stop_name": "Leroy Merlin",
-          "arrival_time": "23:19"
-        },
-        {
-          "stop_name": "Primarie Pad",
-          "arrival_time": "22:54"
-        }
-      ]
-    },
-    {
-      "line": "Linia M51 spre T. Grozăvescu",
-      "stops": [
-        {
-          "stop_name": "Primarie Pad",
-          "arrival_time": "22:54"
-        },
-        {
-          "stop_name": "Parc Pad",
-          "arrival_time": "22:56"
-        },
-        {
-          "stop_name": "Purice Pad",
-          "arrival_time": "22:59"
-        },
-        {
-          "stop_name": "Incontro ISR",
-          "arrival_time": "23:38"
-        },
-        {
-          "stop_name": "Brico Depot",
-          "arrival_time": "23:41"
-        },
-        {
-          "stop_name": "O.Cotrus 2a",
-          "arrival_time": "23:44"
-        },
-        {
-          "stop_name": "B.A.T.M.A.",
-          "arrival_time": "23:45"
-        },
-        {
-          "stop_name": "P-ța Veteranilor",
-          "arrival_time": "00:39"
-        },
-        {
-          "stop_name": "Bd. L. Rebreanu_",
-          "arrival_time": "00:41"
-        },
-        {
-          "stop_name": "P-ța I. Maniu",
-          "arrival_time": "00:44"
+          "arrival_time": "00:35"
         },
         {
           "stop_name": "Brâncoveanu",
-          "arrival_time": "00:45"
+          "arrival_time": "00:36"
         },
         {
           "stop_name": "P-ța Mocioni",
-          "arrival_time": "00:46"
-        },
-        {
-          "stop_name": "Fac. de Electrotehnică",
-          "arrival_time": "00:50"
-        },
-        {
-          "stop_name": "Univ. de Vest",
-          "arrival_time": "00:51"
-        },
-        {
-          "stop_name": "Parcul Copiilor",
-          "arrival_time": "00:54"
-        },
-        {
-          "stop_name": "T. Grozăvescu",
-          "arrival_time": "00:55"
-        }
-      ]
-    }
-  ],
-  "http://sys.ratt.ro:41979/s_timpi/trasee.php?param1=3546": [
-    {
-      "line": "Linia M52 spre Varias_primarie",
-      "stops": [
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Hector",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gelu_Chistelec",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gelu_scoala",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică_S.Mic",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Varias_peco",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Varias_primarie",
-          "arrival_time": "**:**"
-        }
-      ]
-    },
-    {
-      "line": "Linia M52 spre Cimitir Buziaș",
-      "stops": [
-        {
-          "stop_name": "Varias_primarie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Varias_peco_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Biserică_S.Mic",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gelu_scoaa_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Gelu_Chiselec_",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Agronomie",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Liege",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Dacia Service",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța C. Europei",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "P-ța Mărăști",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Bastion",
-          "arrival_time": "**:**"
-        },
-        {
-          "stop_name": "Cimitir Buziaș",
-          "arrival_time": "**:**"
+          "arrival_time": "00:37"
         }
       ]
     }

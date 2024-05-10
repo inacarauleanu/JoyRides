@@ -126,7 +126,11 @@ function MainStack(){
             tabBarLabel: 'Profil',
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="ios-body" color={Colors.babyOrange} size={size} />
+             // <Icon name="ios-heart" color={Colors.babyOrange} size={size} />
+             <Image
+              source={require('../assets/icons/resume.png')}
+              style={{ width: size, height: size}}
+            />
             ),
           }}
         />

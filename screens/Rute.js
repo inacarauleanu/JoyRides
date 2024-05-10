@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { ButtonGroup, Button, Image } from 'react-native-elements';
 import { auth } from "../firebase-config.js";
-import { getDatabase, ref, set, get, push } from "firebase/database";
+import { getDatabase, ref, set, get, push, update } from "firebase/database";
 import { firebase } from "../firebase-config.js";
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import Icon from 'react-native-vector-icons/FontAwesome'; 
@@ -35,9 +35,10 @@ const Rute = ({navigation}) => {
     try {
       const db = getDatabase();
       const transformedData = transformKeys(scraped_data_trams)
-      set(ref(db, 'trams/'), {
+      await set(ref(db, 'trams/'), {
         transformedData
       });
+      console.log("s-a scris pentru trams");
     } catch (error) {
       console.error('Error writing to Firebase Realtime Database:', error);
     }
@@ -51,6 +52,7 @@ const Rute = ({navigation}) => {
       set(ref(db, 'trols/'), {
         transformedData
       });
+      console.log("s-a scris pentru trols");
     } catch (error) {
       console.error('Error writing to Firebase Realtime Database:', error);
     }
@@ -64,6 +66,7 @@ const Rute = ({navigation}) => {
       set(ref(db, 'buses/'), {
         transformedData
       });
+      console.log("s-a scris pentru buses");
     } catch (error) {
       console.error('Error writing to Firebase Realtime Database:', error);
     }
@@ -78,18 +81,19 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/trams');
         const data = await response.json();
-        writeToDatabaseTrams();
+        //await writeToDatabaseTrams();
         setBusStops(data);
         console.log('Scraping completed successfully for trams');
+        await writeToDatabaseTrams();
         //console.log(data);
         //setLineNames(extractLineNames(data));
       };
   
       // Initial scraping
       await fetchData();
-  
+      //await writeToDatabaseTrams();
       // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 60000);
+      const interval = setInterval(fetchData, 30000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);
@@ -103,17 +107,18 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/trols');
         const data = await response.json();
-        writeToDatabaseTrols();
+        //writeToDatabaseTrols();
         setBusStops(data);
         console.log('Scraping completed successfully for trols');
         setLineNames(extractLineNames(data));
+        writeToDatabaseTrols();
       };
   
       // Initial scraping
       await fetchData();
   
       // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 60000);
+      const interval = setInterval(fetchData, 30000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);
@@ -127,17 +132,18 @@ const Rute = ({navigation}) => {
       const fetchData = async () => {
         const response = await fetch('http://192.168.1.102:3001/scrape/buses');
         const data = await response.json();
-        writeToDatabaseBuses();
+        //writeToDatabaseBuses();
         setBusStops(data);
         console.log('Scraping completed successfully for buses', data);
         setLineNames(extractLineNames(data));
+        writeToDatabaseBuses();
       };
   
       // Initial scraping
       await fetchData();
   
       // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 60000);
+      const interval = setInterval(fetchData, 30000);
   
       // Return cleanup function to clear the interval on component unmount
       return () => clearInterval(interval);
@@ -275,12 +281,12 @@ console.log("Bus line names:", busLineNames);*/
           case 0:
             scrapeTrams();
             setLineNames(tramLineNames);
-            //writeToDatabaseTrams();
+           // writeToDatabaseTrams();
             break;
           case 1:
             scrapeBuses();
             setLineNames(busLineNames);
-           // writeToDatabaseBuses();
+            //writeToDatabaseBuses();
             break;
           case 2:
             scrapeTrols();

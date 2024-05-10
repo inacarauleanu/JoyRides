@@ -25,6 +25,11 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyANusx15v_PhIIfm5wUOchee7ayMMqkYcs"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
