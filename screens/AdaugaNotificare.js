@@ -1,6 +1,6 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
 import {Alert} from 'react-native';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Platform} from 'react-native';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { Dropdown } from 'react-native-element-dropdown';
 import { ButtonGroup, Button, Image } from 'react-native-elements';
