@@ -79,7 +79,7 @@ const Rute = ({navigation}) => {
   const scrapeTrams = async () => {
     try {
       const fetchData = async () => {
-        const response = await fetch('http://192.168.1.102:3001/scrape/trams');
+        const response = await fetch('http://192.168.100.20:3001/scrape/trams');
         const data = await response.json();
         //await writeToDatabaseTrams();
         setBusStops(data);
@@ -105,7 +105,7 @@ const Rute = ({navigation}) => {
   const scrapeTrols = async () => {
     try {
       const fetchData = async () => {
-        const response = await fetch('http://192.168.1.102:3001/scrape/trols');
+        const response = await fetch('http://192.168.100.20:3001/scrape/trols');
         const data = await response.json();
         //writeToDatabaseTrols();
         setBusStops(data);
@@ -130,7 +130,7 @@ const Rute = ({navigation}) => {
   const scrapeBuses = async () => {
     try {
       const fetchData = async () => {
-        const response = await fetch('http://192.168.1.102:3001/scrape/buses');
+        const response = await fetch('http://192.168.100.20:3001/scrape/buses');
         const data = await response.json();
         //writeToDatabaseBuses();
         setBusStops(data);

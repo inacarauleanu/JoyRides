@@ -1,4 +1,4 @@
-import {Text, View, Button, StyleSheet, Image} from 'react-native';
+import {Text, View, Button, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity}  from 'react-native';
 import { auth } from '../firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
@@ -7,7 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import DestinationButton from '../components/DestinationButton';
-import axios from 'axios';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {decode} from "@mapbox/polyline";
 
 const LandingPage = (navigation) => {
 
@@ -15,6 +16,11 @@ const LandingPage = (navigation) => {
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
+  const [showSecondAutocomplete, setShowSecondAutocomplete] = useState(false);
+  const [originAddress, setOriginAddress] = useState("");
+  const [destinationAddress, setDestinationAddress] = useState("");
+  const [directions, setDirections] = useState(null);
+  const [coordsPoints, setCoordsPoints] = useState([]);
 
 
   useEffect(() => {
@@ -79,11 +85,108 @@ const LandingPage = (navigation) => {
   
     return () => clearInterval(intervalId);
   }, [currentCoordinate, coordinates]);
+  const handleGetDirections = async () => {
+    if (!currentLocation) {
+      console.log("Current location not available");
+      return;
+    }
+
+    const apiKey = "AIzaSyANusx15v_PhIIfm5wUOchee7ayMMqkYcs";
+    const origin = encodeURIComponent(originAddress);
+    const destination = encodeURIComponent(destinationAddress);
+
+    const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&departure_time=now&mode=transit&key=${apiKey}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      setDirections(data);
+      console.log(data);
+      console.log("Legs:", data.routes[0].legs); // Log the legs array
+
+      data.routes[0].legs.forEach((leg, index) => {
+        console.log(`Steps for leg ${index + 1}:`);
+        leg.steps.forEach((step, stepIndex) => {
+          console.log(`Step ${stepIndex + 1}:`, step);
+        });
+      });
+      let points = decode(data.routes[0].overview_polyline.points);
+      console.log(points);
+      let coordsPoints = points.map((point, index) => {
+        return {
+          latitude: point[0],
+          longitude: point[1]
+        };
+      });
+      setCoordsPoints(coordsPoints);
+      return coordsPoints;
+    } catch (error) {
+      console.error("Error fetching directions:", error);
+    }
+  };
+
   
   return (   
     <View style={styles.container}>
-      <DestinationButton/>
+     
+     <GooglePlacesAutocomplete
+      placeholder='Adresă Plecare'
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        console.log(data, details);
+        setShowSecondAutocomplete(true);
+        setOriginAddress(data.description);
+      }}
+      query={{
+        key: 'AIzaSyANusx15v_PhIIfm5wUOchee7ayMMqkYcs',
+        language: 'en',
+      }}
+      styles={{
+        container: {
+          position: 'absolute',
+          top: 100,
+          left: 20,
+          zIndex: 1,
+          width: '90%',
+         /* borderColor: 'black',
+          borderWidth: 1, // Match the border width of the search input
+          borderRadius: 5, // Match the border radius of the search input*/
+
+        },
+        listView: {
+          backgroundColor: 'white',
+          zIndex: 1,
+        },
+      }}
+    />
+    {showSecondAutocomplete && (
+      <View style={styles.autocompleteContainer}>
+        <GooglePlacesAutocomplete
+        placeholder='Destinație'
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+          setDestinationAddress(data.description);
+        }}
+        query={{
+          key: 'AIzaSyANusx15v_PhIIfm5wUOchee7ayMMqkYcs',
+          language: 'en',
+        }}
+        styles={{
+          container: styles.autocompleteInputContainer,
+          textInput: styles.autocompleteInput,
+        }}
+      />
+      <TouchableOpacity onPress={handleGetDirections} style={styles.directionsIcon}>
+        <Image
+          source={require('../assets/icons/search.png')}
+          style={styles.icon}
+        />
+      </TouchableOpacity>
+      </View>
       
+      )}
+
     <MapView 
           initialRegion={{
             latitude: coordinates[0].latitude,
@@ -105,7 +208,8 @@ const LandingPage = (navigation) => {
               title="Your Location"
             />
           )}
-      <Polyline
+        
+      {/*<Polyline
         coordinates={coordinates}
         strokeColor="#FFC66C" 
         strokeWidth={3}
@@ -120,10 +224,36 @@ const LandingPage = (navigation) => {
           width:32,
           height:42
       }}/>
-      </Marker>
+    </Marker>*/}
+      {/* Display polyline for directions */}
+      {coordsPoints.length > 0 && <Polyline coordinates={coordsPoints}  strokeColor="#FFC66C" 
+        strokeWidth={3}/>}
 
+    
+  {directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
+    <Marker
+      coordinate={{
+        latitude: directions.routes[0].legs[0].start_location.lat,
+        longitude: directions.routes[0].legs[0].start_location.lng,
+      }}
+      title="Start"
+      pinColor="blue"
+    />
+  )}
+  {directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
+    <Marker
+      coordinate={{
+        latitude: directions.routes[0].legs[0].end_location.lat,
+        longitude: directions.routes[0].legs[0].end_location.lng,
+      }}
+      title="End"
+      pinColor="green"
+    />
+  )}
+  
   </MapView>
   </View>
+  
   );
 };
 
@@ -135,6 +265,45 @@ const styles = StyleSheet.create(
     map: {
       width: '100%',
       height: '100%',
+    },
+
+    favoriteButton: {
+      position: 'absolute',
+      bottom: 20,
+      alignSelf: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      backgroundColor: 'blue',
+      borderRadius: 5,
+
+    },
+
+    autocompleteContainer: {
+      position: 'absolute',
+      top: 100,
+      left: 20,
+      zIndex: 1,
+      width: '90%',
+      marginTop: 50,
+      flexDirection: 'row', // Arrange children horizontally
+      alignItems: 'center', // Center children vertically
+      backgroundColor: 'white', // Optional: background color for the container
+      borderRadius: 5,
+    },
+    autocompleteInputContainer: {
+      flex: 1, // Take remaining space in the container
+      paddingHorizontal: 10, // Add some padding
+    },
+    autocompleteInput: {
+      flex: 1, // Take remaining space in the container
+      paddingHorizontal: 10, // Add some padding
+    },
+    directionsIcon: {
+      padding: 10, // Add some padding to the icon
+    },
+    icon: {
+      width: 20,
+      height: 20,
     },
   }
 )
