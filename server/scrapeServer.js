@@ -83,5 +83,5 @@ app.get('/scrape/buses', async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on port http://192.168.1.102:${PORT}`);
+    console.log(`Server is running on port http://192.168.100.20:${PORT}`);
 });
