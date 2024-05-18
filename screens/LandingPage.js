@@ -1,4 +1,4 @@
-import {Text, View, Button, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity}  from 'react-native';
+import {Text, ScrollView, FlatList, View, Button, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity, Linking}  from 'react-native';
 import { auth } from '../firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import DestinationButton from '../components/DestinationButton';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {decode} from "@mapbox/polyline";
+import RenderHtml from 'react-native-render-html';
 
 const LandingPage = (navigation) => {
 
@@ -21,7 +22,23 @@ const LandingPage = (navigation) => {
   const [destinationAddress, setDestinationAddress] = useState("");
   const [directions, setDirections] = useState(null);
   const [coordsPoints, setCoordsPoints] = useState([]);
+  const [stepDetails, setStepDetails] = useState([]);
+  const [searchPressed, setSearchPressed] = useState(false); 
 
+  const openGoogleMapsDirections = () => {
+    const origin = encodeURIComponent(originAddress);
+    const destination = encodeURIComponent(destinationAddress);
+    // Construiește URL-ul Google Maps cu indicațiile de transport
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+  
+    // Deschide Google Maps cu URL-ul construit
+    Linking.openURL(mapsUrl)
+      .catch(error => console.error('Eroare la deschiderea Google Maps:', error));
+  };
+  
+  // Exemplu de utilizare
+
+  //openGoogleMapsDirections();
 
   useEffect(() => {
     const getLocation = async () => {
@@ -85,6 +102,8 @@ const LandingPage = (navigation) => {
   
     return () => clearInterval(intervalId);
   }, [currentCoordinate, coordinates]);
+
+
   const handleGetDirections = async () => {
     if (!currentLocation) {
       console.log("Current location not available");
@@ -95,7 +114,7 @@ const LandingPage = (navigation) => {
     const origin = encodeURIComponent(originAddress);
     const destination = encodeURIComponent(destinationAddress);
 
-    const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&departure_time=now&mode=transit&key=${apiKey}`;
+    const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&departure_time=now&mode=transit&alternatives=true&key=${apiKey}`;
 
     try {
       const response = await fetch(apiUrl);
@@ -104,20 +123,54 @@ const LandingPage = (navigation) => {
       console.log(data);
       console.log("Legs:", data.routes[0].legs); // Log the legs array
 
-      data.routes[0].legs.forEach((leg, index) => {
-        console.log(`Steps for leg ${index + 1}:`);
-        leg.steps.forEach((step, stepIndex) => {
-          console.log(`Step ${stepIndex + 1}:`, step);
-        });
-      });
+      const stepsDetails = data.routes[0].legs.map((leg, legIndex) => ({
+        legIndex,
+        startAddress: leg.start_address,
+        endAddress: leg.end_address,
+        departureTime: leg.departure_time ? leg.departure_time.text : "N/A",
+        arrivalTime: leg.arrival_time ? leg.arrival_time.text : "N/A",
+        distance: leg.distance.text,
+        duration: leg.duration.text,
+        steps: leg.steps.map((step, stepIndex) => ({
+          stepIndex,
+          html_instructions: step.html_instructions,
+          distance: step.distance.text,
+          duration: step.duration.text,
+          startLocation: {
+            lat: step.start_location.lat,
+            lng: step.start_location.lng,
+          },
+          endLocation: {
+            lat: step.end_location.lat,
+            lng: step.end_location.lng,
+          },
+          transitDetails: step.transit_details || null,
+          subSteps: step.steps ? step.steps.map((subStep, subStepIndex) => ({
+            subStepIndex,
+            html_instructions: subStep.html_instructions,
+            distance: subStep.distance.text,
+            duration: subStep.duration.text,
+            startLocation: {
+              lat: subStep.start_location.lat,
+              lng: subStep.start_location.lng,
+            },
+            endLocation: {
+              lat: subStep.end_location.lat,
+              lng: subStep.end_location.lng,
+            },
+          })) : [],
+        })),
+      }));
+      setStepDetails(stepsDetails);
+
+
       let points = decode(data.routes[0].overview_polyline.points);
       console.log(points);
-      let coordsPoints = points.map((point, index) => {
-        return {
-          latitude: point[0],
-          longitude: point[1]
-        };
-      });
+      let coordsPoints = points.map(point => ({
+        latitude: point[0],
+        longitude: point[1]
+      }));
+
       setCoordsPoints(coordsPoints);
       return coordsPoints;
     } catch (error) {
@@ -125,6 +178,71 @@ const LandingPage = (navigation) => {
     }
   };
 
+  const renderSubSteps = ({ item }) => (
+    <View style={styles.subStepContainer}>
+      <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
+      <Text>Distance: {item.distance}</Text>
+      <Text>Duration: {item.duration}</Text>
+      <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
+      <Text>End Location: {item.endLocation.lat}, {item.endLocation.lng}</Text>
+    </View>
+  );
+
+  const renderStepInstructions = ({ item }) => (
+    <View style={styles.stepContainer}>
+      <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
+      <Text>Distance: {item.distance}</Text>
+      <Text>Duration: {item.duration}</Text>
+      <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
+      <Text>End Location: {item.endLocation.lat}, {item.endLocation.lng}</Text>
+      {item.transitDetails && (
+        <View style={styles.transitDetails}>
+          <Text>Bus Line: {item.transitDetails.line.short_name}</Text>
+          <Text>Departure Stop: {item.transitDetails.departure_stop.name}</Text>
+          <Text>Departure Time: {item.transitDetails.departure_time.text}</Text>
+          <Text>Arrival Stop: {item.transitDetails.arrival_stop.name}</Text>
+          <Text>Arrival Time: {item.transitDetails.arrival_time.text}</Text>
+          <Text>Number of Stops: {item.transitDetails.num_stops}</Text>
+        </View>
+      )}
+      {item.subSteps.length > 0 && (
+        <View>
+        <FlatList
+          data={item.subSteps}
+          renderItem={renderSubSteps}
+          keyExtractor={(subStep) => `subStep-${item.stepIndex}-${subStep.subStepIndex}`}
+        />
+        </View>
+      )}
+    </View>
+  );
+
+
+  const renderLegInstructions = ({ item }) => (
+    <View style={styles.legContainer}>
+        <Button
+        title="Deschide Google Maps"
+        onPress={openGoogleMapsDirections}
+      />
+      <Text>Leg {item.legIndex + 1}:</Text>
+      <Text>From: {item.startAddress}</Text>
+      <Text>To: {item.endAddress}</Text>
+      <Text>Departure Time: {item.departureTime}</Text>
+      <Text>Arrival Time: {item.arrivalTime}</Text>
+      <Text>Distance: {item.distance}</Text>
+      <Text>Duration: {item.duration}</Text>
+      <FlatList
+        data={item.steps}
+        renderItem={renderStepInstructions}
+        keyExtractor={(step) => `step-${item.legIndex}-${step.stepIndex}`}
+      />
+    </View>
+  );
+  
+  const handleSearchButtonPress = async () => {
+    setSearchPressed(true); 
+    await handleGetDirections(); 
+  };
   
   return (   
     <View style={styles.container}>
@@ -177,7 +295,7 @@ const LandingPage = (navigation) => {
           textInput: styles.autocompleteInput,
         }}
       />
-      <TouchableOpacity onPress={handleGetDirections} style={styles.directionsIcon}>
+      <TouchableOpacity onPress={handleSearchButtonPress} style={styles.directionsIcon}>
         <Image
           source={require('../assets/icons/search.png')}
           style={styles.icon}
@@ -198,7 +316,7 @@ const LandingPage = (navigation) => {
     showsUserLocation = {true}
     showsCompass = {true}
     rotateEnabled = {true}
-    style={styles.map} >
+    style={searchPressed == false ? styles.mapUnPressed : styles.mapPressed} >
     {currentLocation && (
             <Marker
               coordinate={{
@@ -226,11 +344,11 @@ const LandingPage = (navigation) => {
       }}/>
     </Marker>*/}
       {/* Display polyline for directions */}
-      {coordsPoints.length > 0 && <Polyline coordinates={coordsPoints}  strokeColor="#FFC66C" 
-        strokeWidth={3}/>}
+     
+      {coordsPoints.length > 0 && <Polyline coordinates={coordsPoints} strokeColor="#FFC66C" strokeWidth={3} />}
 
-    
-  {directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
+{directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
+  <>
     <Marker
       coordinate={{
         latitude: directions.routes[0].legs[0].start_location.lat,
@@ -239,8 +357,6 @@ const LandingPage = (navigation) => {
       title="Start"
       pinColor="blue"
     />
-  )}
-  {directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
     <Marker
       coordinate={{
         latitude: directions.routes[0].legs[0].end_location.lat,
@@ -249,63 +365,109 @@ const LandingPage = (navigation) => {
       title="End"
       pinColor="green"
     />
-  )}
-  
-  </MapView>
-  </View>
-  
+  </>
+)}
+</MapView>
+
+{searchPressed && stepDetails.length > 0 && (
+  <View style={styles.instructionsContainer}>
+  <FlatList
+    data={stepDetails}
+    renderItem={renderLegInstructions}
+    keyExtractor={(leg) => `leg-${leg.legIndex}`}
+  />
+</View>
+      )}
+      
+    </View>
+    
   );
-};
+  };
 
-const styles = StyleSheet.create(
-  {
-    container:{
-      flex:1,
+  const styles = StyleSheet.create(
+    {
+      container:{
+        flex:1,
+      },
+      mapPressed: {
+        width: '100%',
+        height: '60%',
+      },
+  
+      mapUnPressed: {
+        width: '100%',
+        height: '100%',
+      },
+  
+      favoriteButton: {
+        position: 'absolute',
+        bottom: 20,
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: 'blue',
+        borderRadius: 5,
+  
+      },
+  
+      autocompleteContainer: {
+        position: 'absolute',
+        top: 100,
+        left: 20,
+        zIndex: 1,
+        width: '90%',
+        marginTop: 50,
+        flexDirection: 'row', // Arrange children horizontally
+        alignItems: 'center', // Center children vertically
+        backgroundColor: 'white', // Optional: background color for the container
+        borderRadius: 5,
+      },
+      autocompleteInputContainer: {
+        flex: 1, // Take remaining space in the container
+        paddingHorizontal: 10, // Add some padding
+      },
+      autocompleteInput: {
+        flex: 1, // Take remaining space in the container
+        paddingHorizontal: 10, // Add some padding
+      },
+      directionsIcon: {
+        padding: 10, // Add some padding to the icon
+      },
+      icon: {
+        width: 20,
+        height: 20,
+      },
+  
+      instructionsContainer: {
+      flex: 1, // Takes the remaining space
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 10,
     },
-    map: {
-      width: '100%',
-      height: '100%',
+    legContainer: {
+      marginBottom: 20,
+      backgroundColor: '#f0f0f0',
+      padding: 10,
+      borderRadius: 10,
     },
-
-    favoriteButton: {
-      position: 'absolute',
-      bottom: 20,
-      alignSelf: 'center',
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      backgroundColor: 'blue',
-      borderRadius: 5,
-
+    stepContainer: {
+      marginBottom: 10,
+      backgroundColor: '#e0e0e0',
+      padding: 10,
+      borderRadius: 10,
     },
-
-    autocompleteContainer: {
-      position: 'absolute',
-      top: 100,
-      left: 20,
-      zIndex: 1,
-      width: '90%',
-      marginTop: 50,
-      flexDirection: 'row', // Arrange children horizontally
-      alignItems: 'center', // Center children vertically
-      backgroundColor: 'white', // Optional: background color for the container
-      borderRadius: 5,
+    subStepContainer: {
+      marginLeft: 20,
+      marginBottom: 10,
+      backgroundColor: '#d0d0d0',
+      padding: 10,
+      borderRadius: 10,
     },
-    autocompleteInputContainer: {
-      flex: 1, // Take remaining space in the container
-      paddingHorizontal: 10, // Add some padding
+    transitDetails: {
+      marginLeft: 20,
+      marginTop: 10,
     },
-    autocompleteInput: {
-      flex: 1, // Take remaining space in the container
-      paddingHorizontal: 10, // Add some padding
-    },
-    directionsIcon: {
-      padding: 10, // Add some padding to the icon
-    },
-    icon: {
-      width: 20,
-      height: 20,
-    },
-  }
-)
+  });
+  
 
 export default LandingPage;
