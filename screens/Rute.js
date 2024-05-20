@@ -18,11 +18,13 @@ const Rute = ({navigation}) => {
   const [selectedIndexes, setSelectedIndexes] = useState(0);
   const [lineNames, setLineNames] = useState([]);
   const [stops, setStops] = useState([]);
+  const [mijloc, setMijloc] = useState(0);
+  const [routes, setRoutes] = useState([]);
 
 
-  const tryAPITranzy = async () => {
+  const tryAPITranzy = async (mijloc) => {
 
-    const url = 'https://api.tranzy.ai/v1/opendata/stop_times';
+    const url = 'https://api.tranzy.ai/v1/opendata/routes';
     const options = {
       method: 'GET',
       headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
@@ -31,14 +33,23 @@ const Rute = ({navigation}) => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log(data);
+      let rute = [];
+      if (mijloc == "trams") { rute = data.filter(obj => obj.route_type === 0);}
+      if(mijloc == "trols") { rute = data.filter(obj => obj.route_type === 11); }
+      if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
+
+      console.log(rute);
+      setRoutes(rute);
+     // console.log(data);
     } catch (error) {
       console.error(error);
     }
 
   };
 
-
+  useEffect (() => {
+      tryAPITranzy(mijloc)
+  }, [mijloc]);
 
   const transformKeys = (data) => {
     const transformedData = {};
@@ -173,55 +184,11 @@ const Rute = ({navigation}) => {
     }
   };
 
-const extractLineNames = (data) => {
-  let lineNames = [];
-
-  Object.values(data).forEach((routes) => {
-    routes.forEach((route) => {
-      lineNames.push(route.line);
-    });
-  });
-
-  return lineNames;
-};
-
-const tramLineNames = extractLineNames(scraped_data_trams);
-const trolLineNames = extractLineNames(scraped_data_trols);
-const busLineNames = extractLineNames(scraped_data_buses);
-
-/*console.log("Tram line names:", tramLineNames);
-console.log("Trol line names:", trolLineNames);
-console.log("Bus line names:", busLineNames);*/
-
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const db = getDatabase();
-      let data;
-      /*switch (selectedIndexes) {
-        case 0:
-          setLineNames(tramLineNames);
-          scrapeTrams();
-          const tramsResponse = await get(ref(db, '/trams'));
-          data = tramsResponse.val();
-          break;
-        case 1:
-          /*scrapeBuses();
-          const busesResponse = await get(ref(db, '/buses'));
-          data = busesResponse.val();
-          setLineNames(busLineNames);
-          break;
-        case 2:
-          /*scrapeTrols();
-          const trolsResponse = await get(ref(db, '/trols'));
-          data = trolsResponse.val();
-          setLineNames(trolLineNames);
-          break;
-        default:
-          data = {};
-      }*/
-      //setBusStops(data);
       setLoading(false);
               // Fetch favorites
               const userId = auth.currentUser.uid;
@@ -238,47 +205,26 @@ console.log("Bus line names:", busLineNames);*/
   };
 
   const toggleFavorite = (line) => {
-    const busStopValues = Object.values(busStops);
-    const busWithLine = busStopValues.find((busArray) =>
-      busArray.find((bus) => bus.line === line)
-    );
+    const busWithLine = routes.find((route) => route.route_id === line.route_id);
   
     if (!busWithLine) {
-      console.error(`No bus stop data found for line ${line}`);
+      console.error(`No route found for route_id ${line.route_id}`);
       return;
     }
   
-    const isFavorite = favorites.some((favItem) => favItem.line === line);
+    const isFavorite = favorites.some((favItem) => favItem.route_id === line.route_id);
     if (isFavorite) {
       // Remove from favorites
-      const updatedFavorites = favorites.filter((favItem) => favItem.line !== line);
+      const updatedFavorites = favorites.filter((favItem) => favItem.route_id !== line.route_id);
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
     } else {
       // Add to favorites
-      const updatedFavorites = [...favorites, busWithLine.find((bus) => bus.line === line)];
+      const updatedFavorites = [...favorites, busWithLine];
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
     }
   };
-
-  const getLineByName = (lineName) => {
-
-    for (const key in busStops) {
-      if (Object.hasOwnProperty.call(busStops, key)) {
-        const lines = busStops[key];
-        const line = lines.find((bus) => bus.line === lineName);
-        if (line) {
-          return line;
-         
-        }
-      }
-    }
-  
-    return null;
-  };
-  
-  
   
   
   const updateFavoritesInFirebase = (updatedFavorites) => {
@@ -297,28 +243,9 @@ console.log("Bus line names:", busLineNames);*/
       <ButtonGroup
       buttons={['Tramvaie', 'Autobuze', 'Troleibuze']}
       selectedIndex={selectedIndexes}
-      onPress={(index) => {
-        switch (index) {
-          case 0:
-            tryAPITranzy();
-            //scrapeTrams();
-           // setLineNames(tramLineNames);
-           // writeToDatabaseTrams();
-            break;
-          case 1:
-            //scrapeBuses();
-           // setLineNames(busLineNames);
-            //writeToDatabaseBuses();
-            break;
-          case 2:
-           // scrapeTrols();
-           // setLineNames(trolLineNames);
-            //writeToDatabaseTrols();
-            break;
-          default:
-            break;
-        }
-        setSelectedIndexes(index);
+      onPress={(value) => {
+        setSelectedIndexes(value);
+        value == 0 ? setMijloc("trams") : (value == 1 ? setMijloc("buses") : setMijloc("trols"));
       }}
       containerStyle={styles.butonContainer}
       selectedButtonStyle = {styles.selectedButtonStyle}
@@ -364,24 +291,26 @@ console.log("Bus line names:", busLineNames);*/
 />*/}
 
 <FlatList
-  data={lineNames}
-  keyExtractor={(item, index) => index.toString()}
+  data={routes}
+  keyExtractor={(item) => item.route_id}
   renderItem={({ item }) => (
     <TouchableOpacity 
       onPress={() => {
-       const lineDetails =  getLineByName(item); 
-       setStops(lineDetails);
+       //const lineDetails =  getLineByName(item); 
+       //setStops(lineDetails);
         //console.log(stops);
-        console.log("ITEM", item);
+        //console.log("ITEM", item);
         navigation.navigate("VeziLinie", 
         {  
-          stops: lineDetails
+          //stops: lineDetails
+          route_id: item.route_id
         });
       }} 
       style={styles.itemContainer}>
-      <Text style={styles.name}>{item}</Text>
+      <Text style={styles.name}>{item.route_short_name}</Text>
+      <Text style={styles.longName}>{item.route_long_name}</Text>
       <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(item)}>
-        <Icon name={favorites.some((favItem) => favItem.line === item) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
+        <Icon name={favorites.some((favItem) => favItem.route_id === item.route_id) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
       </TouchableOpacity>
     </TouchableOpacity>
   )}
@@ -411,9 +340,12 @@ const styles = StyleSheet.create({
   itemContainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: 15,
-    marginBottom: 15,
+    padding: 3,
     elevation: 3,
+  },
+  longName: {
+    fontSize: 16,
+    color: 'gray', // Adjust color as needed
   },
   name: {
     fontSize: 18,
@@ -438,6 +370,7 @@ selectedButtonStyle:{
         ...Fonts.basicText,
         color: Colors.black
         },
+
 });
 
 export default Rute;
