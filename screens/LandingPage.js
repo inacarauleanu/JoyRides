@@ -24,6 +24,8 @@ const LandingPage = (navigation) => {
   const [coordsPoints, setCoordsPoints] = useState([]);
   const [stepDetails, setStepDetails] = useState([]);
   const [searchPressed, setSearchPressed] = useState(false); 
+  const [coordsPointsArray, setCoordsPointsArray] = useState([]);
+  const [routeColors, setRouteColors] = useState(["#FFC66C", "#FF5733", "#33FF57", "#337DFF", "#7F33FF"]); 
 
   const openGoogleMapsDirections = () => {
     const origin = encodeURIComponent(originAddress);
@@ -123,56 +125,59 @@ const LandingPage = (navigation) => {
       console.log(data);
       console.log("Legs:", data.routes[0].legs); // Log the legs array
 
-      const stepsDetails = data.routes[0].legs.map((leg, legIndex) => ({
-        legIndex,
-        startAddress: leg.start_address,
-        endAddress: leg.end_address,
-        departureTime: leg.departure_time ? leg.departure_time.text : "N/A",
-        arrivalTime: leg.arrival_time ? leg.arrival_time.text : "N/A",
-        distance: leg.distance.text,
-        duration: leg.duration.text,
-        steps: leg.steps.map((step, stepIndex) => ({
-          stepIndex,
-          html_instructions: step.html_instructions,
-          distance: step.distance.text,
-          duration: step.duration.text,
-          startLocation: {
-            lat: step.start_location.lat,
-            lng: step.start_location.lng,
-          },
-          endLocation: {
-            lat: step.end_location.lat,
-            lng: step.end_location.lng,
-          },
-          transitDetails: step.transit_details || null,
-          subSteps: step.steps ? step.steps.map((subStep, subStepIndex) => ({
-            subStepIndex,
-            html_instructions: subStep.html_instructions,
-            distance: subStep.distance.text,
-            duration: subStep.duration.text,
+      const stepsDetails = data.routes.map((route, routeIndex) => ({
+        routeIndex,
+        legs: route.legs.map((leg, legIndex) => ({
+          legIndex,
+          startAddress: leg.start_address,
+          endAddress: leg.end_address,
+          departureTime: leg.departure_time ? leg.departure_time.text : "N/A",
+          arrivalTime: leg.arrival_time ? leg.arrival_time.text : "N/A",
+          distance: leg.distance.text,
+          duration: leg.duration.text,
+          steps: leg.steps.map((step, stepIndex) => ({
+            stepIndex,
+            html_instructions: step.html_instructions,
+            distance: step.distance.text,
+            duration: step.duration.text,
             startLocation: {
-              lat: subStep.start_location.lat,
-              lng: subStep.start_location.lng,
+              lat: step.start_location.lat,
+              lng: step.start_location.lng,
             },
             endLocation: {
-              lat: subStep.end_location.lat,
-              lng: subStep.end_location.lng,
+              lat: step.end_location.lat,
+              lng: step.end_location.lng,
             },
-          })) : [],
+            transitDetails: step.transit_details || null,
+            subSteps: step.steps ? step.steps.map((subStep, subStepIndex) => ({
+              subStepIndex,
+              html_instructions: subStep.html_instructions,
+              distance: subStep.distance.text,
+              duration: subStep.duration.text,
+              startLocation: {
+                lat: subStep.start_location.lat,
+                lng: subStep.start_location.lng,
+              },
+              endLocation: {
+                lat: subStep.end_location.lat,
+                lng: subStep.end_location.lng,
+              },
+            })) : [],
+          })),
         })),
       }));
       setStepDetails(stepsDetails);
 
 
-      let points = decode(data.routes[0].overview_polyline.points);
-      console.log(points);
-      let coordsPoints = points.map(point => ({
-        latitude: point[0],
-        longitude: point[1]
-      }));
+      const routesCoords = data.routes.map(route => {
+        let points = decode(route.overview_polyline.points);
+        return points.map(point => ({
+          latitude: point[0],
+          longitude: point[1]
+        }));
+      });
+      setCoordsPointsArray(routesCoords);
 
-      setCoordsPoints(coordsPoints);
-      return coordsPoints;
     } catch (error) {
       console.error("Error fetching directions:", error);
     }
@@ -206,24 +211,17 @@ const LandingPage = (navigation) => {
         </View>
       )}
       {item.subSteps.length > 0 && (
-        <View>
         <FlatList
           data={item.subSteps}
           renderItem={renderSubSteps}
-          keyExtractor={(subStep) => `subStep-${item.stepIndex}-${subStep.subStepIndex}`}
+          keyExtractor={(subStep, index) => `subStep-${index}`} // Unique key for subStep
         />
-        </View>
       )}
     </View>
   );
 
-
   const renderLegInstructions = ({ item }) => (
     <View style={styles.legContainer}>
-        <Button
-        title="Deschide Google Maps"
-        onPress={openGoogleMapsDirections}
-      />
       <Text>Leg {item.legIndex + 1}:</Text>
       <Text>From: {item.startAddress}</Text>
       <Text>To: {item.endAddress}</Text>
@@ -234,10 +232,22 @@ const LandingPage = (navigation) => {
       <FlatList
         data={item.steps}
         renderItem={renderStepInstructions}
-        keyExtractor={(step) => `step-${item.legIndex}-${step.stepIndex}`}
+        keyExtractor={(step, index) => `step-${item.legIndex}-${index}`} // Unique key for step
       />
     </View>
   );
+
+  const renderRouteInstructions = ({ item }) => (
+    <View style={styles.routeContainer}>
+      <Text>Route {item.routeIndex + 1}:</Text>
+      <FlatList
+        data={item.legs}
+        renderItem={renderLegInstructions}
+        keyExtractor={(leg, index) => `leg-${item.routeIndex}-${index}`} // Unique key for leg
+      />
+    </View>
+  );
+
   
   const handleSearchButtonPress = async () => {
     setSearchPressed(true); 
@@ -345,7 +355,16 @@ const LandingPage = (navigation) => {
     </Marker>*/}
       {/* Display polyline for directions */}
      
-      {coordsPoints.length > 0 && <Polyline coordinates={coordsPoints} strokeColor="#FFC66C" strokeWidth={3} />}
+      {/*coordsPoints.length > 0 && <Polyline coordinates={coordsPoints} strokeColor="#FFC66C" strokeWidth={3} />*/}
+
+      {coordsPointsArray.map((coords, index) => (
+              <Polyline
+                key={index}
+                coordinates={coords}
+                strokeColor={routeColors[index % routeColors.length]}
+                strokeWidth={6}
+              />
+            ))}
 
 {directions && directions.routes && directions.routes.length > 0 && directions.routes[0].legs && (
   <>
@@ -371,10 +390,14 @@ const LandingPage = (navigation) => {
 
 {searchPressed && stepDetails.length > 0 && (
   <View style={styles.instructionsContainer}>
-  <FlatList
-    data={stepDetails}
-    renderItem={renderLegInstructions}
-    keyExtractor={(leg) => `leg-${leg.legIndex}`}
+          <Button
+        title="Open Google Maps"
+        onPress={openGoogleMapsDirections} // Define openGoogleMapsDirections function
+      />
+<FlatList
+    data={stepDetails} // The data contains the details of each route
+    renderItem={renderRouteInstructions} // Function to render each route
+    keyExtractor={(route, index) => `route-${index}`} // Unique key for each route
   />
 </View>
       )}
