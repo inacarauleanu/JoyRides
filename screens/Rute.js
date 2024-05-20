@@ -19,6 +19,27 @@ const Rute = ({navigation}) => {
   const [lineNames, setLineNames] = useState([]);
   const [stops, setStops] = useState([]);
 
+
+  const tryAPITranzy = async () => {
+
+    const url = 'https://api.tranzy.ai/v1/opendata/stop_times';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
+    };
+    
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+
+  };
+
+
+
   const transformKeys = (data) => {
     const transformedData = {};
     for (const key in data) {
@@ -279,18 +300,19 @@ console.log("Bus line names:", busLineNames);*/
       onPress={(index) => {
         switch (index) {
           case 0:
-            scrapeTrams();
-            setLineNames(tramLineNames);
+            tryAPITranzy();
+            //scrapeTrams();
+           // setLineNames(tramLineNames);
            // writeToDatabaseTrams();
             break;
           case 1:
-            scrapeBuses();
-            setLineNames(busLineNames);
+            //scrapeBuses();
+           // setLineNames(busLineNames);
             //writeToDatabaseBuses();
             break;
           case 2:
-            scrapeTrols();
-            setLineNames(trolLineNames);
+           // scrapeTrols();
+           // setLineNames(trolLineNames);
             //writeToDatabaseTrols();
             break;
           default:
