@@ -48,17 +48,11 @@ const Favorites = () => {
           data={favorites}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
-              <Text style={styles.name}>{`${item.line}`}</Text>
-              <Text>Stops:</Text>
-              {item.stops.map((stop, idx) => (
-              <View key={idx}>
-                <Text>{stop.stop_name}:<Text>{stop.arrival_time}</Text></Text>
-                
-              </View>
-            ))}
+              <Text style={styles.name}>{`${item.route_short_name}`}</Text>
+              <Text style={styles.name}>{`${item.route_long_name}`}</Text>
             </View>
           )}
-          keyExtractor={(item) => item.line}
+          keyExtractor={(item) => item.route_id}
         />
       ) : (
         <Text>Nicio stație favorită</Text>
