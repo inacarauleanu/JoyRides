@@ -35,6 +35,7 @@ const AdaugaNotififcare = ({navigation}) =>{
     const [stops, setStops] = useState([]);
     const [mijloc, setMijloc] = useState(0);
     const [minute, setMinute] = useState('00');
+    const [routes, setRoutes] = useState([]);
     const numbersArray = Array.from({ length: 60 }, (_, i) => ({ label: (i + 1).toString(), value: (i + 1).toString() }));
 
     const [expoPushToken, setExpoPushToken] = useState('');
@@ -99,102 +100,60 @@ const AdaugaNotififcare = ({navigation}) =>{
     return token;
   }
 
-  async function schedulePushNotification(/*statie, linie*/) {
+  async function schedulePushNotification(linie, minute) {
     console.log("s-a trimis notificarea");
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "You've got mail! 📬",
-        body: 'o notificare scheduled pentru un user',
-        /*body: {
-          statie: `${statie}`,
-          linie: `${linie}`,
-        },*/
+        title: "Notificare Transport",
+        body: `Linia ${linie} va ajunge în ${minute} minute.`,
         data: { data: 'goes here', test: { test1: 'more data' } },
       },
       trigger: { seconds: minute * 60 },
     });
   }
 
-useEffect(() => {
+  const tryAPITranzy = async (mijloc) => {
 
-    const db = getDatabase();
-    const tramsRef = ref(db, `${mijloc}/transformedData`);
-    const queryRef = query(tramsRef);
-  
+    const url = 'https://api.tranzy.ai/v1/opendata/routes';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
+    };
+    
     try {
-      const snapshot = onValue(queryRef, (snapshot) => {
-        const lineNames = [];
-        let index = 1; // Starting index
-        snapshot.forEach((childSnapshot) => {
-          childSnapshot.forEach((grandChildSnapshot) => {
-            const line = grandChildSnapshot.val().line;
-            if (!lineNames.includes(line)) {
-              lineNames.push({ label: line, value: index.toString() });
-              index++;
-            }
-          });
-        });
-  
-        //console.log('Line names extracted:', lineNames);
-        setTrams(lineNames);
-        return lineNames;
-      });
-  
-      return snapshot;
+      const response = await fetch(url, options);
+      const data = await response.json();
+      let rute = [];
+      if (mijloc == "trams") { rute = data.filter(obj => obj.route_type === 0);}
+      if(mijloc == "trols") { rute = data.filter(obj => obj.route_type === 11); }
+      if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
+
+      //console.log(rute);
+      setRoutes(rute);
+      //console.log(rute);
     } catch (error) {
-      console.error('Error extracting line names:', error);
-      return [];
+      console.error(error);
     }
-  
+
+  };
+
+  useEffect (() => {
+    tryAPITranzy(mijloc)
 }, [mijloc]);
 
-
-const extractStopsForLine = async (line, mijloc) => {
-    const db = getDatabase();
-    const tramsRef = ref(db, `${mijloc}/transformedData`);
-    const queryRef = query(tramsRef);
-  
-    try {
-      let stops = [];
-      
-       onValue(queryRef, (snapshot) => {
-        let index = 0;
-        snapshot.forEach((childSnapshot) => {
-          childSnapshot.forEach((grandChildSnapshot) => {
-            const data = grandChildSnapshot.val();
-            if (data.line === line) {
-                const stopsData = data.stops.map(stop => ({ label: stop.stop_name, value: (index++).toString()}));
-              stops = [...stops, ...stopsData];
-            }
-          });
-        });
-      });
-  
-    //  console.log('Stops for line', line, ':', stops);
-      return stops;
-    } catch (error) {
-      console.error('Error extracting stops for line', line, ':', error);
-      return [];
-    }
-  }
-
-          useEffect(() => {
-            if (linie !== 0) {
-              extractStopsForLine(linie, mijloc).then((stops) => {
-                //console.log('Stops for line', linie, ':', stops);
-                setStops(stops);
-              });
-            }
-          }, [linie, mijloc]);
+const dropdownData = routes.map(route => ({
+  label: `${route.route_short_name} - ${route.route_long_name}`,
+  value: route.route_id,
+}));
 
 
-          function writeUserNotificari(userId, linie, statie, timp) {
+          function writeUserNotificari(userId, linie, /*statie,*/ timp) {
             const db = getDatabase();
         
             try{
             set(ref(db, 'users/' + userId + '/notificari/' + uuid.v4()), {
               linie: linie,
-              statie: statie,
+              //statie: statie,
               linie: linie,
               timp: timp
             });
@@ -206,10 +165,10 @@ const extractStopsForLine = async (line, mijloc) => {
 
           const handleNotificarePress = async () => {
 
-            if (mijloc && linie && statie && minute) {
-                schedulePushNotification(/*statie, linie*/);
+            if (mijloc && linie /*&& statie*/ && minute) {
+                schedulePushNotification(linie, minute);
                 const userId = auth.currentUser.uid;
-                writeUserNotificari(userId, linie, statie, minute);
+                writeUserNotificari(userId, linie, /*statie,*/ minute);
                 Alert.alert('Notificare programată cu succes!', 'Vei fi redirecționat la Notificări',[
                   {
                     onPress: ()=>navigation.navigate("Notificari")
@@ -246,7 +205,7 @@ const extractStopsForLine = async (line, mijloc) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             itemTextStyle = {styles.textStyle}
-            data={trams}
+            data={dropdownData}
             search
             maxHeight={300}
             labelField="label"
@@ -262,7 +221,7 @@ const extractStopsForLine = async (line, mijloc) => {
                 setIsFocus(false);
             }}
             />
-        <Text style={styles.semititle}>Stație</Text>
+       {/* <Text style={styles.semititle}>Stație</Text>
             <Dropdown
             style={[styles.dropdown, isFocusStatie && { borderColor: Colors.babyOrange }]}
             placeholderStyle={styles.placeholderStyle}
@@ -284,7 +243,7 @@ const extractStopsForLine = async (line, mijloc) => {
                 setStatie(item.label);
                 setIsFocusStatie(false);
             }}
-            />
+          />*/}
              <Text style={styles.semititle}>Time</Text>
              <Dropdown
             style={[styles.dropdown, isFocusMinute && { borderColor: Colors.babyOrange }]}
