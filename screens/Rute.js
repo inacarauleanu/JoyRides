@@ -3,21 +3,14 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { ButtonGroup, Button, Image } from 'react-native-elements';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set, get, push, update } from "firebase/database";
-import { firebase } from "../firebase-config.js";
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import Icon from 'react-native-vector-icons/FontAwesome'; 
-import scraped_data_trams from "../server/scraped_data_trams.json"
-import scraped_data_trols from "../server/scraped_data_trols.json"
-import scraped_data_buses from "../server/scraped_data_buses.json"
-import { Line } from 'react-native-svg';
 
 const Rute = ({navigation}) => {
-  const [busStops, setBusStops] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
-  const [lineNames, setLineNames] = useState([]);
-  const [stops, setStops] = useState([]);
   const [mijloc, setMijloc] = useState(0);
   const [routes, setRoutes] = useState([]);
 
@@ -38,7 +31,7 @@ const Rute = ({navigation}) => {
       if(mijloc == "trols") { rute = data.filter(obj => obj.route_type === 11); }
       if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
 
-      console.log(rute);
+      //console.log(rute);
       setRoutes(rute);
      // console.log(data);
     } catch (error) {
@@ -51,139 +44,10 @@ const Rute = ({navigation}) => {
       tryAPITranzy(mijloc)
   }, [mijloc]);
 
-  const transformKeys = (data) => {
-    const transformedData = {};
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); 
-        transformedData[transformedKey] = data[key];
-      }
-    }
-    return transformedData;
-  };
 
-
-  const writeToDatabaseTrams = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_trams)
-      await set(ref(db, 'trams/'), {
-        transformedData
-      });
-      console.log("s-a scris pentru trams");
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-
-  
-  const writeToDatabaseTrols = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_trols)
-      set(ref(db, 'trols/'), {
-        transformedData
-      });
-      console.log("s-a scris pentru trols");
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-
-  
-  const writeToDatabaseBuses = async () => {
-    try {
-      const db = getDatabase();
-      const transformedData = transformKeys(scraped_data_buses)
-      set(ref(db, 'buses/'), {
-        transformedData
-      });
-      console.log("s-a scris pentru buses");
-    } catch (error) {
-      console.error('Error writing to Firebase Realtime Database:', error);
-    }
-  };
-  
   useEffect(() => {
     fetchData();
   }, []);
-
-  const scrapeTrams = async () => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch('http://192.168.100.20:3001/scrape/trams');
-        const data = await response.json();
-        //await writeToDatabaseTrams();
-        setBusStops(data);
-        console.log('Scraping completed successfully for trams');
-        await writeToDatabaseTrams();
-        //console.log(data);
-        //setLineNames(extractLineNames(data));
-      };
-  
-      // Initial scraping
-      await fetchData();
-      //await writeToDatabaseTrams();
-      // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 30000);
-  
-      // Return cleanup function to clear the interval on component unmount
-      return () => clearInterval(interval);
-    } catch (error) {
-      console.error('Error scraping trams data:', error);
-    }
-  };
-
-  const scrapeTrols = async () => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch('http://192.168.100.20:3001/scrape/trols');
-        const data = await response.json();
-        //writeToDatabaseTrols();
-        setBusStops(data);
-        console.log('Scraping completed successfully for trols');
-        setLineNames(extractLineNames(data));
-        writeToDatabaseTrols();
-      };
-  
-      // Initial scraping
-      await fetchData();
-  
-      // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 30000);
-  
-      // Return cleanup function to clear the interval on component unmount
-      return () => clearInterval(interval);
-    } catch (error) {
-      console.error('Error scraping trols data:', error);
-    }
-  };
-
-  const scrapeBuses = async () => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch('http://192.168.100.20:3001/scrape/buses');
-        const data = await response.json();
-        //writeToDatabaseBuses();
-        setBusStops(data);
-        console.log('Scraping completed successfully for buses', data);
-        setLineNames(extractLineNames(data));
-        writeToDatabaseBuses();
-      };
-  
-      // Initial scraping
-      await fetchData();
-  
-      // Schedule scraping every 60 seconds
-      const interval = setInterval(fetchData, 30000);
-  
-      // Return cleanup function to clear the interval on component unmount
-      return () => clearInterval(interval);
-    } catch (error) {
-      console.error('Error scraping buses data:', error);
-    }
-  };
-
 
   const fetchData = async () => {
     try {
@@ -253,56 +117,17 @@ const Rute = ({navigation}) => {
       
     />
  <View>
- {/*<FlatList
-  data={Object.entries(busStops)}
-  keyExtractor={(item) => item[0]}
-  renderItem={({ item }) => (
-    <View>
-      <Text>{item[0]}</Text>
-      {Array.isArray(item[1]) ? (
-        item[1].map((bus, index) => (
-          <View key={index} >
-          <TouchableOpacity onPress={() => handleItemClick(bus)} style={styles.itemContainer}>
-          <View>
-            <Text style={styles.name}>{bus.line}</Text>
-            <Text>Stops:</Text>
-            {bus.stops.map((stop, idx) => (
-              <View key={idx}>
-                <Text>Stop Name: {stop.stop_name}</Text>
-                <Text>Arrival Time: {stop.arrival_time}</Text>
-              </View>
-            ))}
-                <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(bus)}>
-                <Icon name={favorites.some((favItem) => favItem.line === bus.line) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
-              </TouchableOpacity>
-          </View>
-      
-          </TouchableOpacity>
-          </View>
-        ))
-      ) : (
-        <Text>Error: Data for route {item[0]} is not an array</Text>
-      )}
-      
-    </View>
-
-    
-  )}
-/>*/}
-
+ 
 <FlatList
   data={routes}
   keyExtractor={(item) => item.route_id}
   renderItem={({ item }) => (
     <TouchableOpacity 
       onPress={() => {
-       //const lineDetails =  getLineByName(item); 
-       //setStops(lineDetails);
-        //console.log(stops);
-        //console.log("ITEM", item);
+
         navigation.navigate("VeziLinie", 
         {  
-          //stops: lineDetails
+
           route_id: item.route_id
         });
       }} 

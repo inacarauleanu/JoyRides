@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from "expo-location";
 
 const VeziLinie = ({ route }) => {
@@ -17,10 +17,13 @@ const VeziLinie = ({ route }) => {
   const [id_trip, setIDTrip] = useState('');
   const [stops, setStops] = useState([]);
   const [filteredStops, setFilteredStops] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
+  const [progress, setProgress] = useState(100);
+  const [shapes, setShapes] = useState([]);
 
   useEffect(() => {
     const idRutaParam = route.params.route_id;
-    console.log("LINE PARAMS", idRutaParam);
+   // console.log("LINE PARAMS", idRutaParam);
     setIDRuta(idRutaParam);
   })
 
@@ -58,9 +61,9 @@ const VeziLinie = ({ route }) => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      let tripuri = data.filter(obj => obj.route_id === id_ruta); 
+      let tripuri = data.filter(obj => obj.route_id === id_ruta);
 
-      console.log(tripuri);
+      //console.log("tripuri", tripuri);
       setTrips(tripuri);
 
       const headsigns = tripuri.map(trip => trip.trip_headsign);
@@ -68,6 +71,8 @@ const VeziLinie = ({ route }) => {
 
       const tripIDs = tripuri.map(trip => trip.trip_id);
       setSelectedTripIDs(tripIDs);
+
+
 
     } catch (error) {
       console.error(error);
@@ -92,7 +97,7 @@ const VeziLinie = ({ route }) => {
       const data = await response.json();
       let stops = data.filter(obj => obj.trip_id === id_trip); 
 
-      console.log(stops);
+     // console.log(stops);
       setStops(stops);
 
     } catch (error) {
@@ -103,6 +108,32 @@ const VeziLinie = ({ route }) => {
 
   useEffect (() => {
       getStopsTranzy(id_trip)
+  }, [id_trip]);
+
+  const getShapesTranzy = async (id_trip) => {
+
+    const url = 'https://api.tranzy.ai/v1/opendata/shapes';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
+    };
+    
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      let shapeuri = data.filter(obj => obj.shape_id === id_trip); 
+
+      //console.log(shapeuri);
+      setShapes(shapeuri);
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  };
+
+  useEffect (() => {
+      getShapesTranzy(id_trip)
   }, [id_trip]);
 
   const getStopsNames = async (stops) => {
@@ -120,7 +151,13 @@ const VeziLinie = ({ route }) => {
       const stopIds = stops.map(stop => stop.stop_id);
       const filteredStops = data.filter(stop => stopIds.includes(stop.stop_id));
 
-      console.log("STOPS", filteredStops);
+      filteredStops.sort((a, b) => {
+        const stopA = stops.find(stop => stop.stop_id === a.stop_id);
+        const stopB = stops.find(stop => stop.stop_id === b.stop_id);
+        return stopA.stop_sequence - stopB.stop_sequence;
+      });
+
+     // console.log("STOPS", filteredStops);
       setFilteredStops(filteredStops);
 
     } catch (error) {
@@ -133,15 +170,57 @@ const VeziLinie = ({ route }) => {
       getStopsNames(stops)
   }, [stops]);
 
+  const getVehicles = async (id_trip) => {
+
+    const url = 'https://api.tranzy.ai/v1/opendata/vehicles';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
+    };
+    
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+
+      let vehicule = data.filter(obj => obj.trip_id === id_trip); 
+
+     // console.log("vehicles", vehicule);
+      setVehicles(vehicule);
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getVehicles(id_trip);
+      setProgress(100); // Reset progress bar
+    }, 30000); 
+  
+    return () => clearInterval(intervalId); 
+  }, [id_trip]);
+
+  useEffect(() => {
+    const progressInterval = setInterval(() => {
+      setProgress(prevProgress => prevProgress > 0 ? prevProgress - (100 / 30) : 0);
+    }, 1000);
+
+    return () => clearInterval(progressInterval); // Clear progress interval on unmount
+  }, []);
+
+
   const handlePress = () => {
     setCurrentHeadsignIndex(prevIndex => (prevIndex + 1) % selectedTripHeadsign.length);
     setCurrentcurrentTripID(prevIndex => (prevIndex + 1) % selectedTripIDs.length);
-
   };
 
   useEffect (() => {
     setIDTrip(selectedTripIDs[currentTripID]);
-    console.log("TRIP_ID", id_trip);
+    getVehicles(selectedTripIDs[currentTripID]);
+    setProgress(100); // Reset progress bar
+    //console.log("TRIP_ID", id_trip);
 }, [currentTripID, selectedTripIDs]);
 
   return (
@@ -156,6 +235,9 @@ const VeziLinie = ({ route }) => {
               </View>
             </View>
             </TouchableOpacity>
+            <View style={styles.progressBarContainer}>
+        <View style={[styles.progressBar, { width: `${progress}%` }]} />
+      </View>
       <MapView
         initialRegion={initialRegion}
         showsUserLocation={true}
@@ -170,6 +252,17 @@ const VeziLinie = ({ route }) => {
             title="Your Location"
           />
         )}
+        
+        {shapes.length > 0 && (
+          <Polyline
+            coordinates={shapes.map(shape => ({
+              latitude: shape.shape_pt_lat,
+              longitude: shape.shape_pt_lon
+            }))}
+            strokeColor="#FF0000"
+            strokeWidth={3}
+          />
+        )}
 
     {filteredStops.map(stop => (
           <Marker
@@ -179,7 +272,27 @@ const VeziLinie = ({ route }) => {
               longitude: stop.stop_lon,
             }}
             title={stop.stop_name}
-          />
+          >
+                      <Image source={require('../assets/icons/station.png')}
+      style={{
+          width:22,
+          height:22
+      }}/>
+      </Marker>
+        ))}
+
+    {vehicles.map(vehicule => (
+          <Marker
+            key={vehicule.id}
+            coordinate={{
+              latitude: vehicule.latitude,
+              longitude: vehicule.longitude,
+            }}
+            title={vehicule.label}
+            pinColor="blue"
+          >
+
+      </Marker>
         ))}
       </MapView>
       <View style={styles.flatcontainer}>
@@ -243,6 +356,17 @@ const styles = StyleSheet.create({
   },
   arrivalTime: {
     fontSize: 16,
+  },
+    progressBarContainer: {
+    height: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: '#4caf50', // Green color
+    borderRadius: 5,
   },
 });
 

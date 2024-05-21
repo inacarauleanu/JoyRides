@@ -19,82 +19,41 @@ const CumparaBilet = ({navigation}) =>{
   const [trams, setTrams] = useState([]);
   const [stops, setStops] = useState([]);
   const [mijloc, setMijloc] = useState(0);
+  const [routes, setRoutes] = useState([]);
 
-  useEffect(() => {
+  const tryAPITranzy = async (mijloc) => {
 
-    const db = getDatabase();
-    const tramsRef = ref(db, `${mijloc}/transformedData`);
-    const queryRef = query(tramsRef);
-  
+    const url = 'https://api.tranzy.ai/v1/opendata/routes';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
+    };
+    
     try {
-      const snapshot = onValue(queryRef, (snapshot) => {
-        const lineNames = [];
-        let index = 1; // Starting index
-        snapshot.forEach((childSnapshot) => {
-          childSnapshot.forEach((grandChildSnapshot) => {
-            const line = grandChildSnapshot.val().line;
-           // const value = lineNames.line + 1; // Generating value based on array length
-            if (!lineNames.includes(line)) {
-              lineNames.push({ label: line, value: index.toString() });
-              index++;
-            }
-          });
-        });
-  
-        //console.log('Line names extracted:', lineNames);
-        setTrams(lineNames);
-        return lineNames;
-      });
-  
-      return snapshot;
+      const response = await fetch(url, options);
+      const data = await response.json();
+      let rute = [];
+      if (mijloc == "trams") { rute = data.filter(obj => obj.route_type === 0);}
+      if(mijloc == "trols") { rute = data.filter(obj => obj.route_type === 11); }
+      if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
+
+      //console.log(rute);
+      setRoutes(rute);
+      console.log(rute);
     } catch (error) {
-      console.error('Error extracting line names:', error);
-      return [];
+      console.error(error);
     }
-  
-}, [mijloc]);
 
+  };
 
-const extractStopsForLine = async (line, mijloc) => {
-    const db = getDatabase();
-    const tramsRef = ref(db, `${mijloc}/transformedData`);
-    const queryRef = query(tramsRef);
-  
-    try {
-      let stops = [];
-      
-       onValue(queryRef, (snapshot) => {
-        let index = 0;
-        snapshot.forEach((childSnapshot) => {
-          childSnapshot.forEach((grandChildSnapshot) => {
-            const data = grandChildSnapshot.val();
-            if (data.line === line) {
-                const stopsData = data.stops.map(stop => ({ label: stop.stop_name, value: (index++).toString()}));
-              stops = [...stops, ...stopsData];
-            }
-          });
-        });
-      });
-  
-    //  console.log('Stops for line', line, ':', stops);
-      return stops;
-    } catch (error) {
-      console.error('Error extracting stops for line', line, ':', error);
-      return [];
-    }
-  }
-  
-          // Update stops when the line is changed
-          useEffect(() => {
-            if (linie !== 0) {
-              extractStopsForLine(linie, mijloc).then((stops) => {
-                // Do something with the extracted stops
-                //console.log('Stops for line', linie, ':', stops);
-                setStops(stops);
-              });
-            }
-          }, [linie, mijloc]);
+  useEffect (() => {
+      tryAPITranzy(mijloc)
+  }, [mijloc]);
 
+  const dropdownData = routes.map(route => ({
+    label: `${route.route_short_name} - ${route.route_long_name}`,
+    value: route.route_id,
+  }));
 
     return ( 
         <View style={styles.container}>
@@ -136,7 +95,7 @@ const extractStopsForLine = async (line, mijloc) => {
          selectedTextStyle={styles.selectedTextStyle}
          inputSearchStyle={styles.inputSearchStyle}
          itemTextStyle = {styles.textStyle}
-          data={trams}
+          data={dropdownData}
           search
           maxHeight={300}
           labelField="label"
