@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from "expo-location";
+import { auth } from "../firebase-config.js";
+import { getDatabase, ref, set } from "firebase/database";
 
 const VeziLinie = ({ route }) => {
   // Extract stops data from route parameters
@@ -20,6 +22,8 @@ const VeziLinie = ({ route }) => {
   const [vehicles, setVehicles] = useState([]);
   const [progress, setProgress] = useState(100);
   const [shapes, setShapes] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const idRutaParam = route.params.route_id;
@@ -52,6 +56,7 @@ const VeziLinie = ({ route }) => {
   
   const getTripTranzy = async (id_ruta) => {
 
+    setLoading(true);
     const url = 'https://api.tranzy.ai/v1/opendata/trips';
     const options = {
       method: 'GET',
@@ -71,10 +76,10 @@ const VeziLinie = ({ route }) => {
 
       const tripIDs = tripuri.map(trip => trip.trip_id);
       setSelectedTripIDs(tripIDs);
-
-
+      setLoading(false); // Stop loading'
 
     } catch (error) {
+      setLoading(false); // Stop loading in case of error
       console.error(error);
     }
 
@@ -86,6 +91,7 @@ const VeziLinie = ({ route }) => {
 
   const getStopsTranzy = async (id_trip) => {
 
+    setLoading(true);
     const url = 'https://api.tranzy.ai/v1/opendata/stop_times';
     const options = {
       method: 'GET',
@@ -99,8 +105,10 @@ const VeziLinie = ({ route }) => {
 
      // console.log(stops);
       setStops(stops);
+      setLoading(false);
 
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
 
@@ -112,6 +120,7 @@ const VeziLinie = ({ route }) => {
 
   const getShapesTranzy = async (id_trip) => {
 
+    setLoading(true);
     const url = 'https://api.tranzy.ai/v1/opendata/shapes';
     const options = {
       method: 'GET',
@@ -125,8 +134,9 @@ const VeziLinie = ({ route }) => {
 
       //console.log(shapeuri);
       setShapes(shapeuri);
-
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
 
@@ -138,6 +148,7 @@ const VeziLinie = ({ route }) => {
 
   const getStopsNames = async (stops) => {
 
+    setLoading(true);
     const url = 'https://api.tranzy.ai/v1/opendata/stops';
     const options = {
       method: 'GET',
@@ -147,6 +158,7 @@ const VeziLinie = ({ route }) => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
+      //console.log("Toate stopurile", data);
 
       const stopIds = stops.map(stop => stop.stop_id);
       const filteredStops = data.filter(stop => stopIds.includes(stop.stop_id));
@@ -157,10 +169,12 @@ const VeziLinie = ({ route }) => {
         return stopA.stop_sequence - stopB.stop_sequence;
       });
 
-     // console.log("STOPS", filteredStops);
+      console.log("STOPS", filteredStops);
       setFilteredStops(filteredStops);
+      setLoading(false);
 
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
 
@@ -172,6 +186,7 @@ const VeziLinie = ({ route }) => {
 
   const getVehicles = async (id_trip) => {
 
+    
     const url = 'https://api.tranzy.ai/v1/opendata/vehicles';
     const options = {
       method: 'GET',
@@ -223,9 +238,19 @@ const VeziLinie = ({ route }) => {
     //console.log("TRIP_ID", id_trip);
 }, [currentTripID, selectedTripIDs]);
 
+function anuntaControl(stopID, stops) {
+  const db = getDatabase();
+
+  set(ref(db, 'statii/' + stopID + '/'), {
+
+        stops: stops
+  });
+}
+
   return (
     <View style={styles.container}>
       {/*<Text style={styles.lineTitle}>{lineParams.line}</Text>*/}
+      {loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
       <TouchableOpacity       
             onPress={handlePress} >
             <View style={styles.stopContainer}>
@@ -235,6 +260,7 @@ const VeziLinie = ({ route }) => {
               </View>
             </View>
             </TouchableOpacity>
+}
             <View style={styles.progressBarContainer}>
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
@@ -264,7 +290,7 @@ const VeziLinie = ({ route }) => {
           />
         )}
 
-    {filteredStops.map(stop => (
+    { filteredStops.map(stop => (
           <Marker
             key={stop.stop_id}
             coordinate={{
@@ -272,11 +298,12 @@ const VeziLinie = ({ route }) => {
               longitude: stop.stop_lon,
             }}
             title={stop.stop_name}
+            tracksViewChanges = {false}
           >
                       <Image source={require('../assets/icons/station.png')}
       style={{
-          width:22,
-          height:22
+          width:20,
+          height:20
       }}/>
       </Marker>
         ))}
@@ -288,14 +315,17 @@ const VeziLinie = ({ route }) => {
               latitude: vehicule.latitude,
               longitude: vehicule.longitude,
             }}
-            title={vehicule.label}
+            title={`id:${vehicule.id}`}
+            description={`viteza:${vehicule.speed} km/h`}
             pinColor="blue"
+            onPress={() => console.log(`id:${vehicule.id}`)}
           >
 
       </Marker>
         ))}
       </MapView>
       <View style={styles.flatcontainer}>
+      {filteredStops.length > 0 && loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
         <FlatList
           data={filteredStops}
           keyExtractor={(item) => item.stop_id}
@@ -307,11 +337,20 @@ const VeziLinie = ({ route }) => {
             <View style={styles.stopContainer}>
               <View style={styles.stopItem}>
                 <Text style={styles.stopName}>{item.stop_name}</Text>
+                <TouchableOpacity 
+                  style={styles.favoriteButton}
+                  onPress={anuntaControl(item.stop_id, item)}
+                  >
+                  <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
+              </TouchableOpacity>
+
               </View>
             </View>
+
             </TouchableOpacity>
           )}
         />
+}
       </View>
     </View>
   );
