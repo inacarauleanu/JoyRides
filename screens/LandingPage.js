@@ -26,6 +26,8 @@ const LandingPage = (navigation) => {
   const [searchPressed, setSearchPressed] = useState(false); 
   const [coordsPointsArray, setCoordsPointsArray] = useState([]);
   const [routeColors, setRouteColors] = useState(["#FFC66C", "#FF5733", "#33FF57", "#337DFF", "#7F33FF"]); 
+  const [stops, setStops] = useState([]);
+  const [nearbyStops, setNearbyStops] = useState([]);
 
   const openGoogleMapsDirections = () => {
     const origin = encodeURIComponent(originAddress);
@@ -253,14 +255,83 @@ const LandingPage = (navigation) => {
     setSearchPressed(true); 
     await handleGetDirections(); 
   };
-  
+
+
+  const getStopsNames = async () => {
+
+
+    const url = 'https://api.tranzy.ai/v1/opendata/stops';
+    const options = {
+      method: 'GET',
+      headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'NZ1x19bpMZRzEciT7eadiL16cvxCLDdYa3KQKuRh'}
+    };
+    
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+
+      setStops(data);
+
+
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+
+  };
+
+  useEffect (() => {
+      getStopsNames()
+  }, []);
+
+
+  // Helper function to calculate distance between two coordinates in meters
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371e3; // Earth radius in meters
+  const φ1 = lat1 * Math.PI / 180;
+  const φ2 = lat2 * Math.PI / 180;
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = R * c; // in meters
+  return distance;
+};
+
+
+const getNearbyStops = async (currentLocation, stops) => {
+
+    if (currentLocation && stops.length > 0) {
+      const radius = 500; // Radius in meters
+      const nearbyStops = stops.filter(stop => {
+        const distance = calculateDistance(
+          currentLocation.latitude,
+          currentLocation.longitude,
+          stop.stop_lat,
+          stop.stop_lon
+        );
+        return distance <= radius;
+      });
+      setNearbyStops(nearbyStops); // Set nearby stops
+      console.log("nearby stops", nearbyStops);
+    }
+
+}
+
+useEffect (() => {
+  getNearbyStops(currentLocation, stops)
+}, [currentLocation, stops]);
+
   return (   
     <View style={styles.container}>
      
      <GooglePlacesAutocomplete
       placeholder='Adresă Plecare'
       onPress={(data, details = null) => {
-        // 'details' is provided when fetchDetails = true
         console.log(data, details);
         setShowSecondAutocomplete(true);
         setOriginAddress(data.description);
@@ -276,10 +347,6 @@ const LandingPage = (navigation) => {
           left: 20,
           zIndex: 1,
           width: '90%',
-         /* borderColor: 'black',
-          borderWidth: 1, // Match the border width of the search input
-          borderRadius: 5, // Match the border radius of the search input*/
-
         },
         listView: {
           backgroundColor: 'white',
@@ -309,7 +376,7 @@ const LandingPage = (navigation) => {
         <Image
           source={require('../assets/icons/search.png')}
           style={styles.icon}
-        />
+        /> 
       </TouchableOpacity>
       </View>
       
@@ -323,11 +390,11 @@ const LandingPage = (navigation) => {
             longitudeDelta: 0.0421,
           }}
     
-    showsUserLocation = {true}
-    showsCompass = {true}
-    rotateEnabled = {true}
-    style={searchPressed == false ? styles.mapUnPressed : styles.mapPressed} >
-    {currentLocation && (
+          showsUserLocation = {true}
+          showsCompass = {true}
+          rotateEnabled = {true}
+          style={searchPressed == false ? styles.mapUnPressed : styles.mapPressed} >
+          {currentLocation && (
             <Marker
               coordinate={{
                 latitude: currentLocation.latitude,
@@ -337,6 +404,23 @@ const LandingPage = (navigation) => {
             />
           )}
         
+        {nearbyStops.map(stop => (
+            <Marker
+              key={stop.stop_id}
+              coordinate={{
+                latitude: stop.stop_lat,
+                longitude: stop.stop_lon,
+              }}
+              title={stop.stop_name}
+              //tracksViewChanges={false}
+            >
+              <Image source={require('../assets/icons/station.png')}
+                style={{
+                  width: 20,
+                  height: 20
+                }}/>
+            </Marker>
+  ))}
       {/*<Polyline
         coordinates={coordinates}
         strokeColor="#FFC66C" 

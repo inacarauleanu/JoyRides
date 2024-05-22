@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, SafeAreaView} from 'react-native';
 import { ButtonGroup, Button, Image } from 'react-native-elements';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set, get, push, update } from "firebase/database";
@@ -17,6 +17,7 @@ const Rute = ({navigation}) => {
 
   const tryAPITranzy = async (mijloc) => {
 
+    setLoading(true);
     const url = 'https://api.tranzy.ai/v1/opendata/routes';
     const options = {
       method: 'GET',
@@ -34,7 +35,10 @@ const Rute = ({navigation}) => {
       //console.log(rute);
       setRoutes(rute);
      // console.log(data);
+     setLoading(false); // Stop loading'
+
     } catch (error) {
+      setLoading(false); // Stop loading in case of error
       console.error(error);
     }
 
@@ -97,10 +101,6 @@ const Rute = ({navigation}) => {
     set(ref(db, `users/${userId}/favorite/updatedFavorites`), updatedFavorites);
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rute</Text>
@@ -118,7 +118,10 @@ const Rute = ({navigation}) => {
     />
  <View>
  
-<FlatList
+ <View style={[styles.containerList, styles.horizontal]}>
+ {loading ? <ActivityIndicator size="large" color={Colors.babyOrange}/> : 
+
+  <FlatList
   data={routes}
   keyExtractor={(item) => item.route_id}
   renderItem={({ item }) => (
@@ -140,14 +143,22 @@ const Rute = ({navigation}) => {
     </TouchableOpacity>
   )}
 />
-
-
+}
+</View>
 </View>
   </View>
 
   );
 };
 const styles = StyleSheet.create({
+  containerList: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   container: {
     flex: 1,
     padding: 20,
