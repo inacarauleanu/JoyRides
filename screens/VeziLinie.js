@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline, Callout, CalloutSubview } from 'react-native-maps';
 import * as Location from "expo-location";
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set } from "firebase/database";
@@ -10,6 +10,7 @@ const VeziLinie = ({ route }) => {
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
+  const [goToRegion, setGoToRegion] = useState(null);
   const [id_ruta, setIDRuta] = useState('');
   const [trips, setTrips] = useState([]);
   const [selectedTripHeadsign, setSelectedTripHeadsign] = useState([]);
@@ -23,6 +24,7 @@ const VeziLinie = ({ route }) => {
   const [progress, setProgress] = useState(100);
   const [shapes, setShapes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [arrivalTimes, setArrivalTimes] = useState({});
 
 
   useEffect(() => {
@@ -169,7 +171,7 @@ const VeziLinie = ({ route }) => {
         return stopA.stop_sequence - stopB.stop_sequence;
       });
 
-      console.log("STOPS", filteredStops);
+      //console.log("STOPS", filteredStops);
       setFilteredStops(filteredStops);
       setLoading(false);
 
@@ -199,7 +201,7 @@ const VeziLinie = ({ route }) => {
 
       let vehicule = data.filter(obj => obj.trip_id === id_trip); 
 
-     // console.log("vehicles", vehicule);
+      console.log("vehicles", vehicule);
       setVehicles(vehicule);
 
     } catch (error) {
@@ -238,14 +240,86 @@ const VeziLinie = ({ route }) => {
     //console.log("TRIP_ID", id_trip);
 }, [currentTripID, selectedTripIDs]);
 
-function anuntaControl(stopID, stops) {
+/*function anuntaControl(stopID, stops) {
   const db = getDatabase();
 
   set(ref(db, 'statii/' + stopID + '/'), {
 
         stops: stops
   });
-}
+}*/
+
+// Funcția pentru a calcula distanța dintre două puncte GPS folosind formula haversine
+const haversine = (lat1, lon1, lat2, lon2) => {
+  const toRad = (x) => (x * Math.PI) / 180;
+
+  const R = 6371; // Raza Pământului în km
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+
+  return d; // Distanța în km
+};
+
+
+const estimateArrivalTime = (distance, speed) => {
+  if (speed === 0) return "Staționat"; 
+  if (speed < 0) return "N/A"; 
+
+  const timeInHours = distance / speed; // Timpul în ore
+  const timeInMinutes = timeInHours * 60; // Convertire în minute
+
+  
+  if (timeInMinutes < 5) {
+    const currentDate = new Date(); 
+    const currentHour = currentDate.getHours(); 
+    const currentMinute = currentDate.getMinutes(); 
+
+    // Adunăm timpul estimat la ora curentă
+    const arrivalHour = currentHour + Math.floor((currentMinute + timeInMinutes) / 60);
+    const arrivalMinute = Math.floor((currentMinute + timeInMinutes) % 60);
+
+    return `${arrivalHour}:${arrivalMinute < 10 ? '0' : ''}${arrivalMinute}`; 
+  } else {
+    return `${Math.round(timeInMinutes)} minute`; 
+  }
+};
+
+
+const calculateArrivalTimes = () => {
+  const times = {};
+
+  vehicles.forEach(vehicle => {
+    filteredStops.forEach(stop => {
+      const distance = haversine(vehicle.latitude, vehicle.longitude, stop.stop_lat, stop.stop_lon);
+      const time = estimateArrivalTime(distance, vehicle.speed);
+      if (!times[stop.stop_id] || time < times[stop.stop_id]) {
+        times[stop.stop_id] = time;
+      }
+    });
+  });
+
+  setArrivalTimes(times);
+};
+
+useEffect(() => {
+  if (vehicles.length > 0 && filteredStops.length > 0) {
+    calculateArrivalTimes();
+  }
+}, [vehicles, filteredStops]);
+
+const navigateToStation = (latitude, longitude) => {
+  setInitialRegion({
+    latitude,
+    longitude,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  });
+};
 
   return (
     <View style={styles.container}>
@@ -265,7 +339,8 @@ function anuntaControl(stopID, stops) {
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
       <MapView
-        initialRegion={initialRegion}
+        //initialRegion={initialRegion}
+        region={initialRegion}
         showsUserLocation={true}
         style={styles.map}
       >
@@ -297,14 +372,21 @@ function anuntaControl(stopID, stops) {
               latitude: stop.stop_lat,
               longitude: stop.stop_lon,
             }}
-            title={stop.stop_name}
+           // title={stop.stop_name}
             tracksViewChanges = {false}
+            
           >
-                      <Image source={require('../assets/icons/station.png')}
+          <Image source={require('../assets/icons/station.png')}
       style={{
           width:20,
           height:20
       }}/>
+      <Callout tooltip>
+            <View style={styles.calloutContainer}>
+              <Text style={styles.calloutTitle}>{stop.stop_name}</Text>
+              {/*<Text style={styles.calloutDescription}>Descriere sau alte informații</Text>*/}
+            </View>
+          </Callout>
       </Marker>
         ))}
 
@@ -315,11 +397,18 @@ function anuntaControl(stopID, stops) {
               latitude: vehicule.latitude,
               longitude: vehicule.longitude,
             }}
-            title={`id:${vehicule.id}`}
-            description={`viteza:${vehicule.speed} km/h`}
+           // title={`id:${vehicule.id}`}
+            //description={`viteza:${vehicule.speed} km/h`}
             pinColor="blue"
             onPress={() => console.log(`id:${vehicule.id}`)}
           >
+                  <Callout tooltip>
+            <View style={styles.calloutContainer}>
+              <Text style={styles.calloutTitle}>{`viteza:${vehicule.speed} km/h`}</Text>
+              <Text style={styles.calloutTitle}>{`ultima actualizare:${vehicule.timestamp}`}</Text>
+              {/*<Text style={styles.calloutDescription}>Descriere sau alte informații</Text>*/}
+            </View>
+          </Callout>
 
       </Marker>
         ))}
@@ -331,18 +420,17 @@ function anuntaControl(stopID, stops) {
           keyExtractor={(item) => item.stop_id}
           renderItem={({ item }) => (
             <TouchableOpacity       
-            onPress={() => {
-
-             }} >
+            onPress={() => navigateToStation(item.stop_lat, item.stop_lon)}>
             <View style={styles.stopContainer}>
               <View style={styles.stopItem}>
                 <Text style={styles.stopName}>{item.stop_name}</Text>
-                <TouchableOpacity 
+                <Text style={styles.arrivalTime}>{arrivalTimes[item.stop_id]}</Text>
+                {/*<TouchableOpacity 
                   style={styles.favoriteButton}
                   onPress={anuntaControl(item.stop_id, item)}
                   >
                   <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
-              </TouchableOpacity>
+            </TouchableOpacity>*/}
 
               </View>
             </View>
@@ -406,6 +494,28 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#4caf50', // Green color
     borderRadius: 5,
+  },
+
+  calloutContainer: {
+    width: 150,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  calloutTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  calloutDescription: {
+    fontSize: 14,
+    color: '#555',
   },
 });
 

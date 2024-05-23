@@ -2,7 +2,7 @@ import {Text, ScrollView, FlatList, View, Button, StyleSheet, Image, KeyboardAvo
 import { auth } from '../firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
-import MapView, {Marker, Polyline} from 'react-native-maps';
+import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
@@ -316,8 +316,8 @@ const getNearbyStops = async (currentLocation, stops) => {
         );
         return distance <= radius;
       });
-      setNearbyStops(nearbyStops); // Set nearby stops
-      console.log("nearby stops", nearbyStops);
+      setNearbyStops(nearbyStops); 
+      //console.log("nearby stops", nearbyStops);
     }
 
 }
@@ -411,7 +411,7 @@ useEffect (() => {
                 latitude: stop.stop_lat,
                 longitude: stop.stop_lon,
               }}
-              title={stop.stop_name}
+              //title={stop.stop_name}
               //tracksViewChanges={false}
             >
               <Image source={require('../assets/icons/station.png')}
@@ -419,6 +419,12 @@ useEffect (() => {
                   width: 20,
                   height: 20
                 }}/>
+                      <Callout tooltip>
+            <View style={styles.calloutContainer}>
+              <Text style={styles.calloutTitle}>{stop.stop_name}</Text>
+              {/*<Text style={styles.calloutDescription}>Descriere sau alte informații</Text>*/}
+            </View>
+          </Callout>
             </Marker>
   ))}
       {/*<Polyline
@@ -573,6 +579,27 @@ useEffect (() => {
     transitDetails: {
       marginLeft: 20,
       marginTop: 10,
+    },
+    calloutContainer: {
+      width: 150,
+      padding: 10,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 5,
+    },
+    calloutTitle: {
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    calloutDescription: {
+      fontSize: 14,
+      color: '#555',
     },
   });
   
