@@ -39,12 +39,19 @@ const CumparaBilet = ({navigation}) =>{
 
       //console.log(rute);
       setRoutes(rute);
-      console.log(rute);
+     // console.log(rute);
     } catch (error) {
       console.error(error);
     }
 
   };
+
+  const error = console.error;
+console.error = function(...args) {
+  if (/defaultProps/.test(args[0])) return;
+  error(...args);
+};
+
 
   useEffect (() => {
       tryAPITranzy(mijloc)

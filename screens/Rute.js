@@ -71,7 +71,12 @@ const Rute = ({navigation}) => {
       setLoading(false);
     }
   };
-
+  const error = console.error;
+  console.error = function(...args) {
+    if (/defaultProps/.test(args[0])) return;
+    error(...args);
+  };
+  
   const toggleFavorite = (line) => {
     const busWithLine = routes.find((route) => route.route_id === line.route_id);
   
