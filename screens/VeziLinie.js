@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, Modal} from 'react-native';
+import { Button } from 'react-native-elements';
 import MapView, { Marker, Polyline, Callout, CalloutSubview } from 'react-native-maps';
 import * as Location from "expo-location";
 import { auth } from "../firebase-config.js";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get, update} from "firebase/database";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const VeziLinie = ({ route }) => {
   // Extract stops data from route parameters
@@ -11,7 +13,7 @@ const VeziLinie = ({ route }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
   const [goToRegion, setGoToRegion] = useState(null);
-  const [id_ruta, setIDRuta] = useState('');
+  //const [id_ruta, setIDRuta] = useState('');
   const [trips, setTrips] = useState([]);
   const [selectedTripHeadsign, setSelectedTripHeadsign] = useState([]);
   const [currentHeadsignIndex, setCurrentHeadsignIndex] = useState(0);
@@ -24,14 +26,17 @@ const VeziLinie = ({ route }) => {
   const [progress, setProgress] = useState(100);
   const [shapes, setShapes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingTrips, setLoadingTrips] = useState(false);
   const [arrivalTimes, setArrivalTimes] = useState({});
+  const [currentState, setCurrentState] = useState({
+    currentHeadsignIndex: 0,
+    currentTripID: 0
+  });
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [modalStationId, setModalStationId] = useState(null);
 
 
-  useEffect(() => {
-    const idRutaParam = route.params.route_id;
-   // console.log("LINE PARAMS", idRutaParam);
-    setIDRuta(idRutaParam);
-  })
+const id_ruta = route.params.route_id;
 
   useEffect(() => {
     const getLocation = async () => {
@@ -55,17 +60,16 @@ const VeziLinie = ({ route }) => {
     getLocation();
   }, []);
 
-  
-  const getTripTranzy = async (id_ruta) => {
+  useEffect (() => {
+  const getTripTranzy = async () => {
 
-    setLoading(true);
+    setLoadingTrips(true);
     const url = 'https://api.tranzy.ai/v1/opendata/trips';
     const options = {
       method: 'GET',
       headers: {'X-Agency-Id': '8', Accept: 'application/json', 'X-API-KEY': 'kqZQV3y8d87sUvqLC6AFnPud6Gr1SFw1Ktk5kjNW'}
     };
     
-    try {
       const response = await fetch(url, options);
       const data = await response.json();
       let tripuri = data.filter(obj => obj.route_id === id_ruta);
@@ -78,18 +82,30 @@ const VeziLinie = ({ route }) => {
 
       const tripIDs = tripuri.map(trip => trip.trip_id);
       setSelectedTripIDs(tripIDs);
-      setLoading(false); // Stop loading'
-
-    } catch (error) {
-      setLoading(false); // Stop loading in case of error
-      console.error(error);
-    }
-
+      setLoadingTrips(false); // Stop loading'
   };
+  getTripTranzy().catch(console.error);
+  }, []);
 
-  useEffect (() => {
-      getTripTranzy(id_ruta)
-  }, [id_ruta]);
+  useEffect(() => {
+    if (id_trip && !loadingTrips) {
+      console.log("TRIP_ID in fetch", id_trip);
+      getStopsTranzy(id_trip);
+      getShapesTranzy(id_trip);
+      getVehicles(id_trip);
+    }
+  }, [id_trip, loadingTrips]);
+  
+
+useEffect (() => {
+  getStopsNames(stops)
+}, [stops]);
+
+useEffect(() => {
+  if (vehicles.length > 0 && filteredStops.length > 0) {
+    calculateArrivalTimes();
+  }
+}, [vehicles, filteredStops]);
 
   const getStopsTranzy = async (id_trip) => {
 
@@ -105,7 +121,7 @@ const VeziLinie = ({ route }) => {
       const data = await response.json();
       let stops = data.filter(obj => obj.trip_id === id_trip); 
 
-     // console.log(stops);
+      //console.log("stops", stops);
       setStops(stops);
       setLoading(false);
 
@@ -115,10 +131,6 @@ const VeziLinie = ({ route }) => {
     }
 
   };
-
-  useEffect (() => {
-      getStopsTranzy(id_trip)
-  }, [id_trip]);
 
   const getShapesTranzy = async (id_trip) => {
 
@@ -134,7 +146,7 @@ const VeziLinie = ({ route }) => {
       const data = await response.json();
       let shapeuri = data.filter(obj => obj.shape_id === id_trip); 
 
-      //console.log(shapeuri);
+      //console.log("shapes", shapeuri);
       setShapes(shapeuri);
       setLoading(false);
     } catch (error) {
@@ -143,10 +155,6 @@ const VeziLinie = ({ route }) => {
     }
 
   };
-
-  useEffect (() => {
-      getShapesTranzy(id_trip)
-  }, [id_trip]);
 
   const getStopsNames = async (stops) => {
 
@@ -171,7 +179,7 @@ const VeziLinie = ({ route }) => {
         return stopA.stop_sequence - stopB.stop_sequence;
       });
 
-      //console.log("STOPS", filteredStops);
+     // console.log("STOPS", filteredStops);
       setFilteredStops(filteredStops);
       setLoading(false);
 
@@ -182,9 +190,6 @@ const VeziLinie = ({ route }) => {
 
   };
 
-  useEffect (() => {
-      getStopsNames(stops)
-  }, [stops]);
 
   const getVehicles = async (id_trip) => {
 
@@ -201,7 +206,7 @@ const VeziLinie = ({ route }) => {
 
       let vehicule = data.filter(obj => obj.trip_id === id_trip); 
 
-      console.log("vehicles", vehicule);
+     // console.log("vehicles", vehicule);
       setVehicles(vehicule);
 
     } catch (error) {
@@ -229,17 +234,49 @@ const VeziLinie = ({ route }) => {
 
 
   const handlePress = () => {
-    setCurrentHeadsignIndex(prevIndex => (prevIndex + 1) % selectedTripHeadsign.length);
-    setCurrentcurrentTripID(prevIndex => (prevIndex + 1) % selectedTripIDs.length);
+    setCurrentState(prevState => {
+      const newIndex = (prevState.currentTripID + 1) % selectedTripIDs.length;
+      return {
+        currentHeadsignIndex: newIndex,
+        currentTripID: newIndex
+      };
+    });
   };
 
-  useEffect (() => {
-    setIDTrip(selectedTripIDs[currentTripID]);
-    getVehicles(selectedTripIDs[currentTripID]);
+  useEffect(() => {
+    setIDTrip(selectedTripIDs[currentState.currentTripID]);
     setProgress(100); // Reset progress bar
-    //console.log("TRIP_ID", id_trip);
-}, [currentTripID, selectedTripIDs]);
+  }, [currentState.currentTripID, selectedTripIDs]);
 
+  useEffect(() => {
+    const checkThreeClicksForStations = async () => {
+      const db = getDatabase();
+      const stopsRef = ref(db, 'stops');
+
+      try {
+        const stopsSnapshot = await get(stopsRef);
+        const stopsData = stopsSnapshot.val();
+
+        if (stopsData) {
+          Object.entries(stopsData).forEach(([stopId, stopData]) => {
+            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3) {
+              // At least three users have pressed the button for this station
+              setShowOverlay(true);
+              setModalStationId(stopId);
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error checking clicks for stations:', error);
+      }
+    };
+
+    checkThreeClicksForStations();
+  }, []);
+
+  const handleOverlayPress = () => {
+    setShowOverlay(false); // Hide the overlay when pressed
+  };
 /*function anuntaControl(stopID, stops) {
   const db = getDatabase();
 
@@ -306,11 +343,7 @@ const calculateArrivalTimes = () => {
   setArrivalTimes(times);
 };
 
-useEffect(() => {
-  if (vehicles.length > 0 && filteredStops.length > 0) {
-    calculateArrivalTimes();
-  }
-}, [vehicles, filteredStops]);
+
 
 const navigateToStation = (latitude, longitude) => {
   setInitialRegion({
@@ -320,6 +353,56 @@ const navigateToStation = (latitude, longitude) => {
     longitudeDelta: 0.005,
   });
 };
+
+const handleBellPress = async (stopId) => {
+  console.log("bell pressed");
+  const userId = auth.currentUser.uid; // Get the current user's ID
+  const db = getDatabase();
+  const stopRef = ref(db, 'stops/' + stopId);
+
+  try {
+    
+    // Get the current stop data
+    const stopSnapshot = await get(stopRef);
+    let stopData = stopSnapshot.val();
+
+    if (!stopData) {
+      // If no data exists for this stop, create a new entry
+      stopData = { pressedBy: [] };
+    }
+
+    // Add the current user's ID to the pressedBy array if it's not already present
+    if (!stopData.pressedBy.includes(userId)) {
+      stopData.pressedBy.push(userId);
+    }
+
+    // Check if the count of unique users pressing the button is three
+    if (stopData.pressedBy.length === 3) {
+      // Save the stop data to Firebase
+      await set(stopRef, stopData);
+      console.log(`Stop ${stopId} saved to Firebase`);
+    } else {
+      // Update the stop data in Firebase
+      await update(stopRef, stopData);
+      console.log(`User ${userId} pressed the bell for stop ${stopId}`);
+    }
+  } catch (error) {
+    console.error('Error handling bell press:', error);
+  }
+};
+const handleModalButton1 = () => {
+  // Logic for handling button 1 in the modal
+  console.log("Button 1 in modal pressed");
+  setShowOverlay(false); // Close the modal
+};
+
+const handleModalButton2 = () => {
+  // Logic for handling button 2 in the modal
+  console.log("Button 2 in modal pressed");
+  setShowOverlay(false); // Close the modal
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -338,6 +421,23 @@ const navigateToStation = (latitude, longitude) => {
             <View style={styles.progressBarContainer}>
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
+      {showOverlay && (
+
+<View style={styles.overlayContent}>
+  <Text>Three users have pressed the button for station {modalStationId}!</Text>
+  <Button
+    onPress={handleModalButton1}
+    title="Button 1"
+    color="#841584"
+  />
+  <Button
+    onPress={handleModalButton2}
+    title="Button 2"
+    color="#841584"
+  />
+</View>
+
+)}
       <MapView
         //initialRegion={initialRegion}
         region={initialRegion}
@@ -373,7 +473,7 @@ const navigateToStation = (latitude, longitude) => {
               longitude: stop.stop_lon,
             }}
            // title={stop.stop_name}
-            tracksViewChanges = {false}
+            //tracksViewChanges = {false}
             
           >
           <Image source={require('../assets/icons/station.png')}
@@ -381,12 +481,12 @@ const navigateToStation = (latitude, longitude) => {
           width:20,
           height:20
       }}/>
-      <Callout tooltip>
-            <View style={styles.calloutContainer}>
-              <Text style={styles.calloutTitle}>{stop.stop_name}</Text>
-              {/*<Text style={styles.calloutDescription}>Descriere sau alte informații</Text>*/}
-            </View>
-          </Callout>
+        <Callout tooltip>
+          <View style={styles.calloutContainer}>
+            <Text style={styles.calloutTitle}>{stop.stop_name}</Text>
+           </View>
+        </Callout>
+
       </Marker>
         ))}
 
@@ -412,7 +512,9 @@ const navigateToStation = (latitude, longitude) => {
 
       </Marker>
         ))}
+
       </MapView>
+     
       <View style={styles.flatcontainer}>
       {filteredStops.length > 0 && loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
         <FlatList
@@ -425,12 +527,12 @@ const navigateToStation = (latitude, longitude) => {
               <View style={styles.stopItem}>
                 <Text style={styles.stopName}>{item.stop_name}</Text>
                 <Text style={styles.arrivalTime}>{arrivalTimes[item.stop_id]}</Text>
-                {/*<TouchableOpacity 
+                <TouchableOpacity 
                   style={styles.favoriteButton}
-                  onPress={anuntaControl(item.stop_id, item)}
+                  onPress={() =>  handleBellPress(item.stop_id)}
                   >
                   <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
-            </TouchableOpacity>*/}
+            </TouchableOpacity>
 
               </View>
             </View>
@@ -440,6 +542,7 @@ const navigateToStation = (latitude, longitude) => {
         />
 }
       </View>
+     
     </View>
   );
 };
@@ -512,11 +615,20 @@ const styles = StyleSheet.create({
   calloutTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5, // Add margin to separate the title from the buttons
   },
-  calloutDescription: {
-    fontSize: 14,
-    color: '#555',
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-});
+  overlayContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5, // Elevation for Android shadows
+  }}
+);
 
 export default VeziLinie;

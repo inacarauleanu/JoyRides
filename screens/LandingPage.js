@@ -29,6 +29,13 @@ const LandingPage = (navigation) => {
   const [stops, setStops] = useState([]);
   const [nearbyStops, setNearbyStops] = useState([]);
 
+  const error = console.error;
+  console.error = function(...args) {
+    if (/defaultProps/.test(args[0])) return;
+    error(...args);
+  };
+
+
   const openGoogleMapsDirections = () => {
     const origin = encodeURIComponent(originAddress);
     const destination = encodeURIComponent(destinationAddress);
@@ -187,7 +194,11 @@ const LandingPage = (navigation) => {
 
   const renderSubSteps = ({ item }) => (
     <View style={styles.subStepContainer}>
+     {item.html_instructions ? (
       <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
+    ) : (
+      <Text>No instructions available</Text>
+    )}
       <Text>Distance: {item.distance}</Text>
       <Text>Duration: {item.duration}</Text>
       <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
@@ -197,7 +208,11 @@ const LandingPage = (navigation) => {
 
   const renderStepInstructions = ({ item }) => (
     <View style={styles.stepContainer}>
+     {item.html_instructions ? (
       <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
+    ) : (
+      <Text>No instructions available</Text>
+    )}
       <Text>Distance: {item.distance}</Text>
       <Text>Duration: {item.duration}</Text>
       <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
