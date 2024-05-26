@@ -4,8 +4,10 @@ import { Button } from 'react-native-elements';
 import MapView, { Marker, Polyline, Callout, CalloutSubview } from 'react-native-maps';
 import * as Location from "expo-location";
 import { auth } from "../firebase-config.js";
-import { getDatabase, ref, set, get, update} from "firebase/database";
+import { getDatabase, ref, set, get, update, push} from "firebase/database";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SlidingUpPanel from 'rn-sliding-up-panel';
+
 
 const VeziLinie = ({ route }) => {
   // Extract stops data from route parameters
@@ -27,6 +29,7 @@ const VeziLinie = ({ route }) => {
   const [shapes, setShapes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingTrips, setLoadingTrips] = useState(false);
+  const [isUserNearby, setIsUserNearby] = useState(false);
   const [arrivalTimes, setArrivalTimes] = useState({});
   const [currentState, setCurrentState] = useState({
     currentHeadsignIndex: 0,
@@ -248,6 +251,15 @@ useEffect(() => {
     setProgress(100); // Reset progress bar
   }, [currentState.currentTripID, selectedTripIDs]);
 
+
+    const isStopIDOnThisLine = (stopId, filteredStops) =>{
+
+      return filteredStops.some(stop => String(stop.stop_id) === String(stopId));
+
+    };
+
+
+
   useEffect(() => {
     const checkThreeClicksForStations = async () => {
       const db = getDatabase();
@@ -259,7 +271,7 @@ useEffect(() => {
 
         if (stopsData) {
           Object.entries(stopsData).forEach(([stopId, stopData]) => {
-            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3) {
+            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3 && isStopIDOnThisLine(stopId, filteredStops)) {
               // At least three users have pressed the button for this station
               setShowOverlay(true);
               setModalStationId(stopId);
@@ -272,7 +284,7 @@ useEffect(() => {
     };
 
     checkThreeClicksForStations();
-  }, []);
+  }, [filteredStops]);
 
   const handleOverlayPress = () => {
     setShowOverlay(false); // Hide the overlay when pressed
@@ -301,7 +313,6 @@ const haversine = (lat1, lon1, lat2, lon2) => {
 
   return d; // Distanța în km
 };
-
 
 const estimateArrivalTime = (distance, speed) => {
   if (speed === 0) return "Staționat"; 
@@ -354,11 +365,23 @@ const navigateToStation = (latitude, longitude) => {
   });
 };
 
-const handleBellPress = async (stopId) => {
-  console.log("bell pressed");
+/*useEffect(()=> {
+
+  const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
+  const proximityThreshold = 2; // Example threshold in kilometers --- DE MODIFICAT PENTRU ACURATETE MAI MARE
+  if (distance <= proximityThreshold) {
+    // User is in proximity, handle bell press
+    console.log(`User ${userId} is in proximity of stop ${stopId}`);
+  }
+
+}, [])*/
+
+const handleBellPress = async (stopId, stopLat, stop_lon) => {
+ // console.log("bell pressed");
   const userId = auth.currentUser.uid; // Get the current user's ID
   const db = getDatabase();
   const stopRef = ref(db, 'stops/' + stopId);
+  const proximityThreshold = 2; // Example threshold in kilometers --- DE MODIFICAT PENTRU ACURATETE MAI MARE
 
   try {
     
@@ -368,32 +391,88 @@ const handleBellPress = async (stopId) => {
 
     if (!stopData) {
       // If no data exists for this stop, create a new entry
-      stopData = { pressedBy: [] };
+      stopData = { 
+        pressedBy: [],
+        latitude: stopLat, // Add stop latitude
+        longitude: stop_lon, // Add stop longitude
+       };
     }
 
-    // Add the current user's ID to the pressedBy array if it's not already present
-    if (!stopData.pressedBy.includes(userId)) {
-      stopData.pressedBy.push(userId);
-    }
+     // Calculate distance between user and stop
+     const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
+     console.log("distance", distance);
 
-    // Check if the count of unique users pressing the button is three
-    if (stopData.pressedBy.length === 3) {
-      // Save the stop data to Firebase
-      await set(stopRef, stopData);
-      console.log(`Stop ${stopId} saved to Firebase`);
-    } else {
-      // Update the stop data in Firebase
-      await update(stopRef, stopData);
-      console.log(`User ${userId} pressed the bell for stop ${stopId}`);
-    }
+     // Check if the user is in proximity of the stop
+     if (distance <= proximityThreshold) {
+       // User is in proximity, handle bell press
+       console.log(`User ${userId} is in proximity of stop ${stopId}`);
+       
+       // Add the current user's ID to the pressedBy array if it's not already present
+       if (!stopData.pressedBy.includes(userId)) {
+         stopData.pressedBy.push(userId);
+       }
+ 
+       // Check if the count of unique users pressing the button is three
+       if (stopData.pressedBy.length === 3) {
+         // Save the stop data to Firebase
+         await set(stopRef, stopData);
+         console.log(`Stop ${stopId} saved to Firebase`);
+       } else {
+         // Update the stop data in Firebase
+         await update(stopRef, stopData);
+         console.log(`User ${userId} pressed the bell for stop ${stopId}`);
+       }
+     } else {
+       // User is not in proximity, display message
+       alert("Nu esti suficient de aproape pentru a performa această acțiune.");
+     }
   } catch (error) {
     console.error('Error handling bell press:', error);
   }
 };
-const handleModalButton1 = () => {
+const handleModalButton1 = async () => {
   // Logic for handling button 1 in the modal
   console.log("Button 1 in modal pressed");
-  setShowOverlay(false); // Close the modal
+
+  const userId = auth.currentUser.uid; // Get the current user's ID
+
+  const db = getDatabase();
+  const stopRef = ref(db, `stops/${modalStationId}/`);
+  const proximityThreshold = 2; // Example threshold in kilometers
+
+  try {
+    // Retrieve stop data from Firebase
+    const stopSnapshot = await get(stopRef);
+    const stopData = stopSnapshot.val();
+
+    if (stopData) {
+           // Add the current user's ID to the pressedBy array if it's not already present
+           if (!stopData.pressedBy.includes(userId)) {
+            stopData.pressedBy.push(userId);
+          }
+      // Calculate distance between user and stop
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
+      console.log("Distance to stop:", distance);
+
+      // Check if the user is in proximity of the stop
+      if (distance <= proximityThreshold) {
+        // User is in proximity, proceed to push user's ID to pressedBy array
+        await update(stopRef, stopData);
+        console.log(`User ${userId} pressed the button at stop ${modalStationId}`);
+        
+        // Close the modal
+        setShowOverlay(false);
+      } else {
+        // User is not in proximity, display a message or handle accordingly
+        console.log("User is not in proximity to the stop.");
+      }
+    } else {
+      console.log("Stop data not found.");
+    }
+  } catch (error) {
+    console.error('Error handling button press:', error);
+  }
+
 };
 
 const handleModalButton2 = () => {
@@ -401,8 +480,6 @@ const handleModalButton2 = () => {
   console.log("Button 2 in modal pressed");
   setShowOverlay(false); // Close the modal
 };
-
-
 
   return (
     <View style={styles.container}>
@@ -421,19 +498,19 @@ const handleModalButton2 = () => {
             <View style={styles.progressBarContainer}>
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
-      {showOverlay && (
 
+      {showOverlay && (
 <View style={styles.overlayContent}>
   <Text>Three users have pressed the button for station {modalStationId}!</Text>
   <Button
     onPress={handleModalButton1}
-    title="Button 1"
+    title="Este tot acolo"
     color="#841584"
   />
   <Button
     onPress={handleModalButton2}
-    title="Button 2"
-    color="#841584"
+    title="Nu mai este"
+    color="#33D7FF"
   />
 </View>
 
@@ -473,7 +550,7 @@ const handleModalButton2 = () => {
               longitude: stop.stop_lon,
             }}
            // title={stop.stop_name}
-            //tracksViewChanges = {false}
+            tracksViewChanges = {false}
             
           >
           <Image source={require('../assets/icons/station.png')}
@@ -514,9 +591,20 @@ const handleModalButton2 = () => {
         ))}
 
       </MapView>
-     
+
+
+     <SlidingUpPanel
+     ref={c => this._panel = c}
+     draggableRange={{ top: 600, bottom: 200 }} 
+     allowDragging={true}
+     showBackdrop={false}
+     >
       <View style={styles.flatcontainer}>
+      <View style={{ alignItems: 'center' }}>
+    <Icon name="arrow-down" size={15} color="#0FF" />
+  </View>
       {filteredStops.length > 0 && loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
+      <View style={styles.Slidecontainer}>
         <FlatList
           data={filteredStops}
           keyExtractor={(item) => item.stop_id}
@@ -529,7 +617,7 @@ const handleModalButton2 = () => {
                 <Text style={styles.arrivalTime}>{arrivalTimes[item.stop_id]}</Text>
                 <TouchableOpacity 
                   style={styles.favoriteButton}
-                  onPress={() =>  handleBellPress(item.stop_id)}
+                  onPress={() =>  handleBellPress(item.stop_id, item.stop_lat, item.stop_lon)}
                   >
                   <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
             </TouchableOpacity>
@@ -539,10 +627,12 @@ const handleModalButton2 = () => {
 
             </TouchableOpacity>
           )}
+        
         />
+          </View>
 }
       </View>
-     
+      </SlidingUpPanel>
     </View>
   );
 };
@@ -559,7 +649,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   flatcontainer: {
-    flex: 0.4,
+    flex: 1,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  Slidecontainer: {
+    flex: 1,
+    backgroundColor: 'white',
     width: '100%',
   },
   stopContainer: {
@@ -579,13 +683,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 15,
     elevation: 3,
+    flexWrap: 'wrap', 
   },
   stopName: {
     fontSize: 16,
     fontWeight: 'bold',
+    maxWidth: '70%', 
   },
   arrivalTime: {
     fontSize: 16,
+    maxWidth: '30%', 
+    textAlign: 'right', 
+
   },
     progressBarContainer: {
     height: 10,
@@ -595,7 +704,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4caf50', // Green color
+    backgroundColor: '#4caf50', 
     borderRadius: 5,
   },
 
@@ -615,7 +724,7 @@ const styles = StyleSheet.create({
   calloutTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5, // Add margin to separate the title from the buttons
+    marginBottom: 5, 
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -627,7 +736,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 10,
-    elevation: 5, // Elevation for Android shadows
+    elevation: 5, 
   }}
 );
 
