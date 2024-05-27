@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, Modal} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, Modal, Animated} from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker, Polyline, Callout, CalloutSubview } from 'react-native-maps';
 import * as Location from "expo-location";
@@ -37,6 +37,30 @@ const VeziLinie = ({ route }) => {
   });
   const [showOverlay, setShowOverlay] = useState(false);
   const [modalStationId, setModalStationId] = useState(null);
+  const [stopTimer, setStopTimer] = useState(null);
+  const [stopTimerAll, setStopTimerAll] = useState(null);
+  const [progressWidth, setProgressWidth] = useState('100%');
+  const [stopToBeDeleted, setStopToBeDeleted] = useState('');
+
+  useEffect(() => {
+    const duration = 10000; // Duration in milliseconds (10 seconds)
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(duration - elapsedTime, 0);
+      const remainingProgress = (remainingTime / duration) * 100;
+      setProgressWidth(remainingProgress);
+
+      if (remainingTime === 0) {
+        clearInterval(interval);
+        setShowOverlay(false);
+      }
+    }, 100); // Update progress every 100 milliseconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
 
 
 const id_ruta = route.params.route_id;
@@ -275,7 +299,9 @@ useEffect(() => {
               // At least three users have pressed the button for this station
               setShowOverlay(true);
               setModalStationId(stopId);
-            }
+            } /*else if (stopData.pressedBy.length < 3){
+              setModalStationId(stopId);
+            }*/
           });
         }
       } catch (error) {
@@ -285,18 +311,6 @@ useEffect(() => {
 
     checkThreeClicksForStations();
   }, [filteredStops]);
-
-  const handleOverlayPress = () => {
-    setShowOverlay(false); // Hide the overlay when pressed
-  };
-/*function anuntaControl(stopID, stops) {
-  const db = getDatabase();
-
-  set(ref(db, 'statii/' + stopID + '/'), {
-
-        stops: stops
-  });
-}*/
 
 // Funcția pentru a calcula distanța dintre două puncte GPS folosind formula haversine
 const haversine = (lat1, lon1, lat2, lon2) => {
@@ -365,17 +379,17 @@ const navigateToStation = (latitude, longitude) => {
   });
 };
 
-/*useEffect(()=> {
+  // Effect to start timer when overlay is shown
+  useEffect(() => {
+    if (modalStationId) {
+      if (stopTimer) clearTimeout(stopTimer);
+      const newTimer = setTimeout(() => deleteStopFromFirebase(modalStationId), 2 * 60 * 1000);
+      setStopTimer(newTimer);
+    //  setShowOverlay(false);
+    }
+  }, [showOverlay, modalStationId]);
 
-  const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
-  const proximityThreshold = 2; // Example threshold in kilometers --- DE MODIFICAT PENTRU ACURATETE MAI MARE
-  if (distance <= proximityThreshold) {
-    // User is in proximity, handle bell press
-    console.log(`User ${userId} is in proximity of stop ${stopId}`);
-  }
-
-}, [])*/
-
+  
 const handleBellPress = async (stopId, stopLat, stop_lon) => {
  // console.log("bell pressed");
   const userId = auth.currentUser.uid; // Get the current user's ID
@@ -393,6 +407,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
       // If no data exists for this stop, create a new entry
       stopData = { 
         pressedBy: [],
+        pressedByNo: [],
         latitude: stopLat, // Add stop latitude
         longitude: stop_lon, // Add stop longitude
        };
@@ -404,12 +419,14 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
 
      // Check if the user is in proximity of the stop
      if (distance <= proximityThreshold) {
+
+      const currentTime = new Date().toISOString();
        // User is in proximity, handle bell press
        console.log(`User ${userId} is in proximity of stop ${stopId}`);
        
        // Add the current user's ID to the pressedBy array if it's not already present
-       if (!stopData.pressedBy.includes(userId)) {
-         stopData.pressedBy.push(userId);
+       if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
+        stopData.pressedBy.push({ userId, date: currentTime });
        }
  
        // Check if the count of unique users pressing the button is three
@@ -417,15 +434,22 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
          // Save the stop data to Firebase
          await set(stopRef, stopData);
          console.log(`Stop ${stopId} saved to Firebase`);
+         setShowOverlay(true);
        } else {
          // Update the stop data in Firebase
          await update(stopRef, stopData);
+
          console.log(`User ${userId} pressed the bell for stop ${stopId}`);
+
        }
      } else {
        // User is not in proximity, display message
        alert("Nu esti suficient de aproape pentru a performa această acțiune.");
      }
+
+     //setModalStationId(stopId);
+     setShowOverlay(false);
+
   } catch (error) {
     console.error('Error handling bell press:', error);
   }
@@ -446,9 +470,11 @@ const handleModalButton1 = async () => {
     const stopData = stopSnapshot.val();
 
     if (stopData) {
+            
+            const currentTime = new Date().toISOString();
            // Add the current user's ID to the pressedBy array if it's not already present
-           if (!stopData.pressedBy.includes(userId)) {
-            stopData.pressedBy.push(userId);
+           if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
+            stopData.pressedBy.push({ userId, date: currentTime });
           }
       // Calculate distance between user and stop
       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
@@ -469,17 +495,77 @@ const handleModalButton1 = async () => {
     } else {
       console.log("Stop data not found.");
     }
+
+    if (stopTimer) clearTimeout(stopTimer);
+    setShowOverlay(false);
+
   } catch (error) {
     console.error('Error handling button press:', error);
   }
-
 };
 
-const handleModalButton2 = () => {
+const handleModalButton2 = async () => {
   // Logic for handling button 2 in the modal
   console.log("Button 2 in modal pressed");
-  setShowOverlay(false); // Close the modal
+  const userId = auth.currentUser.uid; // Get the current user's ID
+
+  const db = getDatabase();
+  const stopRef = ref(db, `stops/${modalStationId}/`);
+  const proximityThreshold = 2; // Example threshold in kilometers
+
+  try{
+  const stopSnapshot = await get(stopRef);
+  let stopData = stopSnapshot.val();
+
+  if (!stopData.pressedByNo) {
+    stopData.pressedByNo = [];
+  }
+
+  const currentTime = new Date().toISOString();
+  if (!stopData.pressedByNo.some(entry => entry.userId === userId)) {
+    stopData.pressedByNo.push({ userId, date: currentTime });
+  }
+  
+
+      // Calculate distance between user and stop
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
+      console.log("Distance to stop:", distance);
+
+      // Check if the user is in proximity of the stop
+      if (distance <= proximityThreshold) {
+        // User is in proximity, proceed to push user's ID to pressedBy array
+        await update(stopRef, stopData);
+        console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
+        
+        // Close the modal
+        setShowOverlay(false);
+      } else {
+        // User is not in proximity, display a message or handle accordingly
+        console.log("User is not in proximity to the stop.");
+      }
+    
+
+    if (stopTimer) clearTimeout(stopTimer);
+    setShowOverlay(false);
+
+  } catch (error) {
+    console.error('Error handling button press:', error);
+  }
 };
+
+const deleteStopFromFirebase = async (stopId) => {
+  const db = getDatabase();
+  const stopRef = ref(db, 'stops/' + stopId);
+  try {
+    await set(stopRef, null);
+    console.log(`Stop ${stopId} deleted from Firebase`);
+    setShowOverlay(false);
+  } catch (error) {
+    console.error('Error deleting stop:', error);
+  }
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -502,6 +588,7 @@ const handleModalButton2 = () => {
       {showOverlay && (
 <View style={styles.overlayContent}>
   <Text>Three users have pressed the button for station {modalStationId}!</Text>
+
   <Button
     onPress={handleModalButton1}
     title="Este tot acolo"
@@ -512,6 +599,11 @@ const handleModalButton2 = () => {
     title="Nu mai este"
     color="#33D7FF"
   />
+
+<View style={styles.progressBarContainer}>
+  <View style={[styles.progressBar1, { width: `${progressWidth}%` }]} />
+  </View>
+
 </View>
 
 )}
@@ -648,6 +740,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 10,
   },
+  bar: {
+    height: 20,
+    backgroundColor: '#333',
+    borderRadius: 10,
+    backgroundColor: 'green',
+  },
   flatcontainer: {
     flex: 1,
     backgroundColor: 'white',
@@ -707,7 +805,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#4caf50', 
     borderRadius: 5,
   },
-
+  progressBar1: {
+    height: '100%',
+    backgroundColor: 'blue', 
+    borderRadius: 5,
+  },
   calloutContainer: {
     width: 150,
     padding: 10,
