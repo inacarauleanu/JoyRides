@@ -33,7 +33,7 @@ const VeziLinie = ({ route }) => {
   const [arrivalTimes, setArrivalTimes] = useState({});
   const [currentState, setCurrentState] = useState({
     currentHeadsignIndex: 0,
-    currentTripID: 0
+    currentTripID: 0 
   });
   const [showOverlay, setShowOverlay] = useState(false);
   const [modalStationId, setModalStationId] = useState(null);
@@ -276,7 +276,7 @@ useEffect(() => {
   }, [currentState.currentTripID, selectedTripIDs]);
 
 
-    const isStopIDOnThisLine = (stopId, filteredStops) =>{
+    const isStopIDOnThisLine = (stopId) =>{
 
       return filteredStops.some(stop => String(stop.stop_id) === String(stopId));
 
@@ -286,32 +286,46 @@ useEffect(() => {
 
   useEffect(() => {
     const checkThreeClicksForStations = async () => {
-      const db = getDatabase();
+      const db = getDatabase(); 
       const stopsRef = ref(db, 'stops');
-
+ 
       try {
         const stopsSnapshot = await get(stopsRef);
         const stopsData = stopsSnapshot.val();
 
         if (stopsData) {
+          let stationFound = false;
+
           Object.entries(stopsData).forEach(([stopId, stopData]) => {
-            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3 && isStopIDOnThisLine(stopId, filteredStops)) {
-              // At least three users have pressed the button for this station
-              setShowOverlay(true);
-              setModalStationId(stopId);
-            } /*else if (stopData.pressedBy.length < 3){
-              setModalStationId(stopId);
-            }*/
+            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3 && isStopIDOnThisLine(stopId)) {
+
+             // console.log("Condition 1 satisfied for stopId:", stopId);
+           
+              if (!stationFound) {
+
+              if (stopData.pressedByNo && (stopData.pressedByNo.length > (stopData.pressedBy.length / 2))) {
+                  setShowOverlay(false);
+                //  console.log("Condition 2 satisfied for stopId:", stopId);
+                //  console.log("Setting showOverlay to false for stopId:", stopId);
+              } else {
+                  setShowOverlay(true);
+                  setModalStationId(stopId); 
+                 // console.log("Condition 3 satisfied for stopId:", stopId);
+                 // console.log("Setting showOverlay to true and modalStationId to", stopId);
+              }
+                 stationFound = true; // Marchează că s-a găsit o stație
+          }
+        }
+          
           });
         }
       } catch (error) {
-        console.error('Error checking clicks for stations:', error);
+        console.error('Error checking clicks for stations:', error); 
       }
     };
-
     checkThreeClicksForStations();
   }, [filteredStops]);
-
+ 
 // Funcția pentru a calcula distanța dintre două puncte GPS folosind formula haversine
 const haversine = (lat1, lon1, lat2, lon2) => {
   const toRad = (x) => (x * Math.PI) / 180;
@@ -379,15 +393,6 @@ const navigateToStation = (latitude, longitude) => {
   });
 };
 
-  // Effect to start timer when overlay is shown
-  useEffect(() => {
-    if (modalStationId) {
-      if (stopTimer) clearTimeout(stopTimer);
-      const newTimer = setTimeout(() => deleteStopFromFirebase(modalStationId), 2 * 60 * 1000);
-      setStopTimer(newTimer);
-    //  setShowOverlay(false);
-    }
-  }, [showOverlay, modalStationId]);
 
   
 const handleBellPress = async (stopId, stopLat, stop_lon) => {
@@ -406,6 +411,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
     if (!stopData) {
       // If no data exists for this stop, create a new entry
       stopData = { 
+        lastUpdate: null,
         pressedBy: [],
         pressedByNo: [],
         latitude: stopLat, // Add stop latitude
@@ -428,7 +434,9 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
        if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
         stopData.pressedBy.push({ userId, date: currentTime });
        }
- 
+       
+       stopData.lastUpdate = currentTime;
+
        // Check if the count of unique users pressing the button is three
        if (stopData.pressedBy.length === 3) {
          // Save the stop data to Firebase
@@ -448,7 +456,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
      }
 
      //setModalStationId(stopId);
-     setShowOverlay(false);
+    // setShowOverlay(false);
 
   } catch (error) {
     console.error('Error handling bell press:', error);
@@ -480,6 +488,8 @@ const handleModalButton1 = async () => {
       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
       console.log("Distance to stop:", distance);
 
+      stopData.lastUpdate = currentTime;
+
       // Check if the user is in proximity of the stop
       if (distance <= proximityThreshold) {
         // User is in proximity, proceed to push user's ID to pressedBy array
@@ -496,8 +506,8 @@ const handleModalButton1 = async () => {
       console.log("Stop data not found.");
     }
 
-    if (stopTimer) clearTimeout(stopTimer);
-    setShowOverlay(false);
+   /* if (stopTimer) clearTimeout(stopTimer);*/
+    //setShowOverlay(false);
 
   } catch (error) {
     console.error('Error handling button press:', error);
@@ -531,12 +541,14 @@ const handleModalButton2 = async () => {
       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
       console.log("Distance to stop:", distance);
 
+      stopData.lastUpdate = currentTime;
+
       // Check if the user is in proximity of the stop
       if (distance <= proximityThreshold) {
         // User is in proximity, proceed to push user's ID to pressedBy array
         await update(stopRef, stopData);
         console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
-        
+
         // Close the modal
         setShowOverlay(false);
       } else {
@@ -544,22 +556,54 @@ const handleModalButton2 = async () => {
         console.log("User is not in proximity to the stop.");
       }
     
-
-    if (stopTimer) clearTimeout(stopTimer);
-    setShowOverlay(false);
-
   } catch (error) {
     console.error('Error handling button press:', error);
   }
 };
 
+useEffect(() => {
+  const deleteStopsIfNotUpdated = async () => {
+    const db = getDatabase(); 
+    const stopsRef = ref(db, 'stops');
+
+    try {
+      const stopsSnapshot = await get(stopsRef);
+      const stopsData = stopsSnapshot.val();
+
+      if (stopsData) {
+        Object.entries(stopsData).forEach(([stopId, stopData]) => {
+          if (stopData && stopData.lastUpdate) {
+            const lastUpdateTimestamp = Date.parse(stopData.lastUpdate); // Convertim timpul în milisecunde
+            const currentTimestamp = new Date().getTime();
+            const twoMinutesInMillis = 2 * 60 * 1000; // 2 minute în milisecunde
+
+            // Verifică dacă ultima actualizare a fost mai veche de 2 minute
+            if (currentTimestamp - lastUpdateTimestamp > twoMinutesInMillis) {
+              // Șterge stația din Firebase
+              deleteStopFromFirebase(stopId);
+            }
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting stops:', error);
+    }
+  };
+
+  // Setează un interval pentru a verifica periodic stațiile și a le șterge dacă nu au fost actualizate
+  const intervalId = setInterval(deleteStopsIfNotUpdated, 2 * 60 * 1000); // Verifică la fiecare 2 minute
+
+  // Curăță intervalul la demontarea componentei
+  return () => clearInterval(intervalId);
+}, []);
+
 const deleteStopFromFirebase = async (stopId) => {
   const db = getDatabase();
   const stopRef = ref(db, 'stops/' + stopId);
+  
   try {
     await set(stopRef, null);
     console.log(`Stop ${stopId} deleted from Firebase`);
-    setShowOverlay(false);
   } catch (error) {
     console.error('Error deleting stop:', error);
   }
