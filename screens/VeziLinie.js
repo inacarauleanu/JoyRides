@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, Modal} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, Modal, Alert} from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
 import * as Location from "expo-location";
 import { auth } from "../firebase-config.js";
-import { getDatabase, ref, set, get, update, push} from "firebase/database";
+import { getDatabase, ref, set, get, update, push, remove, onValue} from "firebase/database";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 
@@ -15,9 +15,7 @@ const VeziLinie = ({ route }) => {
   const [initialRegion, setInitialRegion] = useState(null);
   const [trips, setTrips] = useState([]);
   const [selectedTripHeadsigns, setSelectedTripHeadsigns] = useState([]);
-  const [currentHeadsignIndex, setCurrentHeadsignIndex] = useState(0);
   const [selectedTripIDs, setSelectedTripIDs] = useState([]);
-  const [currentTripID, setCurrentcurrentTripID] = useState(0);
   const [id_trip, setIDTrip] = useState('');
   const [id_headsign, setIDHeadsign] = useState('');
   const [stops, setStops] = useState([]);
@@ -38,11 +36,15 @@ const VeziLinie = ({ route }) => {
   const [progressWidth, setProgressWidth] = useState('100%');
   const [progressWidthVehicul, setProgressWidthVehicul] = useState('100%');
   const [modalVisible, setModalVisible] = useState(false);
+  const [stopModalVisible, setStopModalVisible] = useState(false);
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
+  const [selectedStopId, setSelectedStopId] = useState(null);
   const [selectedVehicleIdForOverlay, setSelectedVehicleIdForOverlay] = useState(null);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const [selectedVehicleLatitude, setSelectedVehicleLatitude] = useState(null);
-  const [selectedVehicleLongitude, setSelectedVehicleLongitude] = useState(null);
+  const [tracking, setTracking] = useState(false);
+  const [heading, setHeading] = useState(null);
+  const [butonStopShare, setButonStopShare] = useState(false);
+  const [userLocations, setUserLocations] = useState({});
 
   useEffect(() => {
     const duration = 10000; // (10 secunde)
@@ -669,12 +671,20 @@ const handleMarkerPress = (vehicleId) => {
   setModalVisible(true);
 };
 
+const handleStopMarkerPress = (stop_id) => {
+  //const selected = vehicles.find(vehicle => vehicle.id === vehicleId);
+  setSelectedStopId(stop_id);
+ // setSelectedVehicle(selected);
+ // console.log("vehicul selectat", selected);
+  setStopModalVisible(true);
+};
+
 useEffect(() => {
   if (selectedVehicleId) {
     const selected = vehicles.find(vehicle => vehicle.id === selectedVehicleId);
     setSelectedVehicle(selected);
   }
-  console.log(selectedVehicle);
+ // console.log(selectedVehicle);
 }, [selectedVehicleId, vehicles]);
 
 
@@ -947,6 +957,102 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
   }
 };
 
+
+useEffect(() => {
+  let locationSubscription;
+
+  const startTracking = async () => {
+    // Cerere de permisiune pentru accesarea locației
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+      return;
+    }
+
+    // Începerea urmăriri locației
+    locationSubscription = await Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.High,
+        timeInterval: 5000, // Interval de 5 secunde
+        distanceInterval: 1, // Distanța minimă de 10 metri între actualizări
+        headingInterval: 1, // Actualizări ale direcției la fiecare secundă
+      },
+      (location) => {
+        setCurrentLocation(location.coords);
+        setHeading(location.coords.heading);
+        const userId =  auth.currentUser.uid; // Utilizează ID-ul unic al utilizatorului tău
+        const db = getDatabase();
+        const locationRef = ref(db, `locations/${id_trip}/${userId}`);
+        set(locationRef, {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          heading: location.coords.heading, // Salvarea și direcției în baza de date
+        });
+      }
+    );
+  };
+
+  if (tracking) {
+    startTracking();
+  } else {
+    if (locationSubscription) {
+      locationSubscription.remove();
+    }
+    // Ștergerea locației din Firebase când tracking devine false
+    const userId = auth.currentUser.uid; // Utilizează ID-ul unic al utilizatorului tău
+    const db = getDatabase();
+    const locationRef = ref(db, `locations/${id_trip}/${userId}`);
+    remove(locationRef);
+    setButonStopShare(false);
+  }
+
+  return () => {
+    if (locationSubscription) {
+      locationSubscription.remove();
+    }
+  };
+}, [tracking]);
+
+useEffect(() => {
+  const db = getDatabase();
+  const locationsRef = ref(db, `locations/${id_trip}`);
+
+  const unsubscribe = onValue(locationsRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      setUserLocations(data);
+    } else {
+      setUserLocations({});
+    }
+  });
+
+  return () => {
+    unsubscribe();
+  };
+}, []);
+
+
+const handleShareLocation = (selectedStopId) => {
+  Alert.alert(
+    'Partajare Locație',
+    'Doriți să partajați locația dvs. în timp real?',
+    [
+      {
+        text: 'Nu',
+        onPress: () => {console.log('Partajare locație anulată'), setStopModalVisible(false)},
+        style: 'cancel',
+      },
+      {
+        text: 'Da',
+        onPress: () => {setTracking(true), setStopModalVisible(false), setButonStopShare(true)}
+      },
+    ],
+    { cancelable: false }
+  );
+};
+
+
+
   return (
     <View style={styles.container}>
       {/*<Text style={styles.lineTitle}>{lineParams.line}</Text>*/}
@@ -965,6 +1071,13 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
 
+      {butonStopShare && (
+           <Button
+           title={"Nu mai trimite locația"}
+           onPress={() => setTracking(false)}
+         />
+      )}
+     
       {showOverlay && (
 <View style={styles.overlayContent}>
   <Text>Three users have pressed the button for station {modalStationId}!</Text>
@@ -1022,10 +1135,23 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
               latitude: currentLocation.latitude,
               longitude: currentLocation.longitude,
             }}
-            title="Your Location"
+            title="Aici ești tu"
           />
         )}
-        
+       {/* {Object.keys(userLocations).length > 0 && Object.keys(userLocations).map((userId) => (
+            <Marker
+              key={userId}
+              coordinate={{
+                latitude: userLocations[userId].latitude,
+                longitude: userLocations[userId].longitude,
+              }}
+              title={`User: ${userId}`}
+              //description={`Heading: ${userLocations[userId].heading}°`}
+              pinColor="green"
+            />
+          ))}  */}
+
+
         {shapes.length > 0 && (
           <Polyline
             coordinates={shapes.map(shape => ({
@@ -1046,7 +1172,7 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
             }}
            // title={stop.stop_name}
             tracksViewChanges = {false}
-            
+            onPress={() =>handleStopMarkerPress(stop.stop_id)}
           >
           <Image source={require('../assets/icons/station.png')}
       style={{
@@ -1112,24 +1238,6 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
                   <Text style={styles.buttonText}>Control</Text>
             </TouchableOpacity>
             </View>
-           {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-                  style={styles.favoriteButtonModal}
-                  onPress={() =>  console.log('Action 2 clicked')}
-                  >
-                  <Image source={require('../assets/icons/cleaning.png')} style={{ width: 30, height: 30}}/>
-                  <Text style={styles.buttonText}>Curățenie</Text>
-            </TouchableOpacity>
-            </View>
-            <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-                  style={styles.favoriteButtonModal}
-                  onPress={() =>  console.log('Action 3 clicked')}
-                  >
-                  <Image source={require('../assets/icons/crowd.png')} style={{ width: 30, height: 30}}/>
-                  <Text style={styles.buttonText}>Aglomerație</Text>
-            </TouchableOpacity>
-           </View>*/}
             <View style={styles.buttonContainer}>
             <TouchableOpacity 
                   style={styles.favoriteButtonModal}
@@ -1137,6 +1245,37 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
                   >
                   <Image source={require('../assets/icons/defect.png')} style={{ width: 30, height: 30}}/>
                   <Text style={styles.buttonText}>Defecțiune</Text>
+            </TouchableOpacity>
+            </View>
+            </View>
+            </View>
+            </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={stopModalVisible}
+        onRequestClose={() => setStopModalVisible(false)}
+      >
+            <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <TouchableOpacity 
+                  style={styles.favoriteButtonModal}
+                  onPress={() => setStopModalVisible(false)}
+                  >
+                  <Image source={require('../assets/icons/close.png')} style={{ width: 30, height: 30}}/>
+                  
+            </TouchableOpacity>
+            <Text style={styles.modalText}>Ce ai vrea să raportrezi despre statia {selectedStopId} ?</Text>
+            <View style={styles.buttonRow}>
+            <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+                  style={styles.favoriteButtonModal}
+                  onPress={() =>  handleShareLocation(selectedStopId)}
+                  >
+                  <Image source={require('../assets/icons/share-location.png')} style={{ width: 30, height: 30}}/>
+                  <Text style={styles.buttonText}>Mijloc lipsă</Text>
             </TouchableOpacity>
             </View>
             </View>
