@@ -14,11 +14,12 @@ const VeziLinie = ({ route }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
   const [trips, setTrips] = useState([]);
-  const [selectedTripHeadsign, setSelectedTripHeadsign] = useState([]);
+  const [selectedTripHeadsigns, setSelectedTripHeadsigns] = useState([]);
   const [currentHeadsignIndex, setCurrentHeadsignIndex] = useState(0);
   const [selectedTripIDs, setSelectedTripIDs] = useState([]);
   const [currentTripID, setCurrentcurrentTripID] = useState(0);
   const [id_trip, setIDTrip] = useState('');
+  const [id_headsign, setIDHeadsign] = useState('');
   const [stops, setStops] = useState([]);
   const [filteredStops, setFilteredStops] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -125,7 +126,8 @@ const id_ruta = route.params.route_id;
       setTrips(tripuri);
 
       const headsigns = tripuri.map(trip => trip.trip_headsign);
-      setSelectedTripHeadsign(headsigns);
+      setSelectedTripHeadsigns(headsigns);
+      //console.log(headsigns);
 
       const tripIDs = tripuri.map(trip => trip.trip_id);
       setSelectedTripIDs(tripIDs);
@@ -292,6 +294,7 @@ useEffect(() => {
 
   useEffect(() => {
     setIDTrip(selectedTripIDs[currentState.currentTripID]);
+    setIDHeadsign(selectedTripHeadsigns[currentState.currentHeadsignIndex]);
     setProgress(100); // Reset progress bar
   }, [currentState.currentTripID, selectedTripIDs]);
 
@@ -507,6 +510,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
             {
             await update(stopRef, stopData);
             console.log(`User ${userId} pressed the bell for stop ${stopId}`);
+            
             }
      }
       else 
@@ -694,6 +698,7 @@ const handleControlPressVehicul = async (vehicleId) => {
          pressedByNo: [],
          latitude: selectedVehicle.latitude, 
          longitude: selectedVehicle.longitude, 
+         defectiune: []
         };
      }
  
@@ -726,6 +731,7 @@ const handleControlPressVehicul = async (vehicleId) => {
              {
              await update(vehicleRef, vehicleData);
              console.log(`User ${userId} pressed the bell for vehicle ${vehicleId}`);
+             alert("Ați raportat cu succes un control RATT. Mulțumim!");
              }
       
        }else 
@@ -736,6 +742,72 @@ const handleControlPressVehicul = async (vehicleId) => {
  
    } catch (error) {
      console.error('Error handling bell press for control:', error);
+   }
+ };
+ 
+ const handleDefecțiunePressVehicul = async (vehicleId) => {
+  // console.log("bell pressed");
+   const userId = auth.currentUser.uid; // Get the current user's ID
+   const db = getDatabase();
+   const vehicleRef = ref(db, 'vehicule/' + vehicleId);
+   const proximityThreshold = 2; // Example threshold in kilometers --- DE MODIFICAT PENTRU ACURATETE MAI MARE
+ 
+   try {
+     
+     const vehicleSnapshot = await get(vehicleRef);
+     let vehicleData = vehicleSnapshot.val();
+ 
+     if (!vehicleData) {
+ 
+      vehicleData = { 
+         lastUpdate: null,
+         pressedBy: [],
+         latitude: selectedVehicle.latitude, 
+         longitude: selectedVehicle.longitude, 
+         defectiune: []
+        };
+     }
+ 
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, selectedVehicle.latitude, selectedVehicle.longitude);
+      console.log("distance", distance);
+ 
+     if (distance <= proximityThreshold) 
+     {
+ 
+         const currentTime = new Date().toISOString();
+        // console.log(`User ${userId} is in proximity of stop ${stopId}`);
+         
+         if (!vehicleData.defectiune.some(entry => entry.userId === userId)) 
+           {
+            vehicleData.defectiune.push({ userId, date: currentTime });
+           }
+         
+           vehicleData.lastUpdate = currentTime;
+           vehicleData.latitude = selectedVehicle.latitude;
+           vehicleData.longitude = selectedVehicle.longitude;
+ 
+         if (vehicleData.defectiune.length === 3) 
+           {
+           await set(vehicleRef, vehicleData);
+           console.log(`Vehicle ${vehicleId} saved to Firebase`);
+           //setShowOverlayVehicul(true);
+           setModalVisible(false);
+         } 
+             else 
+             {
+             await update(vehicleRef, vehicleData);
+             console.log(`User ${userId} pressed the bell for vehicle ${vehicleId}`);
+             alert(`Ați raportat cu succes o defecțiune la vehiculul ${vehicleId} RATT. Mulțumim!`);
+             }
+      
+       }else 
+       {
+        alert("Nu esti suficient de aproape pentru a performa această acțiune.");
+       } 
+ 
+ 
+   } catch (error) {
+     console.error('Error handling bell press for defectiune:', error);
    }
  };
 
@@ -865,7 +937,7 @@ useEffect(() => {
 
 const deleteVehicleFromFirebase = async (vehicleId) => {
   const db = getDatabase();
-  const vehicleRef = ref(db, 'vehicule/' + vehicleId);
+  const vehicleRef = ref(db, 'vehicule/' + vehicleId + '/pressedBy');
   
   try {
     await set(vehicleRef, null);
@@ -883,9 +955,9 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
             onPress={handlePress} >
             <View style={styles.stopContainer}>
               <View style={styles.stopItem}>
-                <Text style={styles.stopName}>{selectedTripHeadsign[currentHeadsignIndex]}</Text>
-                <Text style={styles.arrivalTime}>{selectedTripIDs[currentTripID]}</Text>
-              </View>
+                <Text style={styles.stopName}>{id_headsign}</Text>
+                <Text style={styles.arrivalTime}>{id_trip}</Text>
+              </View> 
             </View>
             </TouchableOpacity>
 }
@@ -1040,7 +1112,7 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
                   <Text style={styles.buttonText}>Control</Text>
             </TouchableOpacity>
             </View>
-            <View style={styles.buttonContainer}>
+           {/* <View style={styles.buttonContainer}>
             <TouchableOpacity 
                   style={styles.favoriteButtonModal}
                   onPress={() =>  console.log('Action 2 clicked')}
@@ -1057,11 +1129,11 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
                   <Image source={require('../assets/icons/crowd.png')} style={{ width: 30, height: 30}}/>
                   <Text style={styles.buttonText}>Aglomerație</Text>
             </TouchableOpacity>
-            </View>
+           </View>*/}
             <View style={styles.buttonContainer}>
             <TouchableOpacity 
                   style={styles.favoriteButtonModal}
-                  onPress={() =>  console.log('Action 4 clicked')}
+                  onPress={() =>  handleDefecțiunePressVehicul(selectedVehicleId)}
                   >
                   <Image source={require('../assets/icons/defect.png')} style={{ width: 30, height: 30}}/>
                   <Text style={styles.buttonText}>Defecțiune</Text>
@@ -1137,8 +1209,7 @@ const styles = StyleSheet.create({
   favoriteButtonModal: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
+
   },
   flatcontainer: {
     flex: 1,
@@ -1187,7 +1258,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '100%',
     marginTop: 5,
-   // maxWidth: '100%', 
+    maxWidth: '100%', 
   },
   buttonContainer: {
     alignItems: 'center',

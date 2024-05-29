@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { auth } from "../firebase-config.js";
 import { Colors, Sizes, Fonts } from "../constants/styles.js";
 
-const Favorites = () => {
+const Favorites = ({navigation}) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,11 +45,20 @@ const Favorites = () => {
       <Text style={styles.title}>Favorite</Text>
       {favorites.length ? (
         <FlatList
+        
           data={favorites}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
+              <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("VeziLinie", 
+                      {  
+                        route_id: item.route_id
+                      });
+                    }} >
               <Text style={styles.name}>{`${item.route_short_name}`}</Text>
               <Text style={styles.name}>{`${item.route_long_name}`}</Text>
+              </TouchableOpacity>
             </View>
           )}
           keyExtractor={(item) => item.route_id}
