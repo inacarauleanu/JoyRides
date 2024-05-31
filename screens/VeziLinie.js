@@ -9,7 +9,7 @@ import { getDatabase, ref, set, get, update, push, remove, onValue} from "fireba
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as BackgroundFetch from 'expo-background-fetch';
-import { startBackgroundLocationUpdates } from "./BackgroundTasks.js";
+import { startBackgroundLocationUpdates, stopBackgroundLocationUpdates } from "./BackgroundTasks.js";
 import * as Notifications from "expo-notifications";
 
 
@@ -1063,79 +1063,6 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
 };
 
 
-/*useEffect(() => {
-  let locationSubscription;
-
-  const startTracking = async () => {
-    // Cerere de permisiune pentru accesarea locației
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      console.log('Permission to access location was denied');
-      return;
-    }
-
-    // Începerea urmăriri locației
-    locationSubscription = await Location.watchPositionAsync(
-      {
-        accuracy: Location.Accuracy.High,
-        timeInterval: 5000, // Interval de 5 secunde
-        distanceInterval: 1, // Distanța minimă de 10 metri între actualizări
-        headingInterval: 1, // Actualizări ale direcției la fiecare secundă
-      },
-      (location) => {
-        setCurrentLocation(location.coords);
-        setHeading(location.coords.heading);
-        const userId =  auth.currentUser.uid; // Utilizează ID-ul unic al utilizatorului tău
-        const db = getDatabase();
-        const locationRef = ref(db, `locations/${id_trip}/${userId}`);
-        set(locationRef, {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          heading: location.coords.heading, // Salvarea și direcției în baza de date
-        });
-      }
-    );
-  };
-
-  if (tracking) {
-    startTracking();
-  } else {
-    if (locationSubscription) {
-      locationSubscription.remove();
-    }
-    // Ștergerea locației din Firebase când tracking devine false
-    const userId = auth.currentUser.uid; // Utilizează ID-ul unic al utilizatorului tău
-    const db = getDatabase();
-    const locationRef = ref(db, `locations/${id_trip}/${userId}`);
-    remove(locationRef);
-    setButonStopShare(false);
-  }
-
-  return () => {
-    if (locationSubscription) {
-      locationSubscription.remove();
-    }
-  };
-}, [tracking]);
-*/
-useEffect(() => {
-  const db = getDatabase();
-  const locationsRef = ref(db, `locations/${id_trip}`);
-
-  const unsubscribe = onValue(locationsRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      setUserLocations(data);
-    } else {
-      setUserLocations({});
-    }
-  });
-
-  return () => {
-    unsubscribe();
-  };
-}, []);
-
 
 const handleShareLocation = (selectedStopId) => {
   Alert.alert(
@@ -1144,7 +1071,7 @@ const handleShareLocation = (selectedStopId) => {
     [
       {
         text: 'Nu',
-        onPress: () => {tryStuff; setStopModalVisible(false)},
+        onPress: () => {setStopModalVisible(false)},
         style: 'cancel',
       },
       {
@@ -1160,7 +1087,14 @@ const handleShareLocation = (selectedStopId) => {
   );
 };
 
-
+const handleStopShareLocation = async () => {
+  const userId = auth.currentUser.uid;
+  const db = getDatabase();
+  const locationRef = ref(db, `locations/${userId}`);
+  await remove(locationRef);
+  setButonStopShare(false);
+  await stopBackgroundLocationUpdates();
+};
 
   return (
     <View style={styles.container}>
@@ -1183,7 +1117,7 @@ const handleShareLocation = (selectedStopId) => {
       
            <Button
            title={"Nu mai trimite locația"}
-          onPress= {requestPermissions}
+          onPress= {handleStopShareLocation}
          />
    
      
