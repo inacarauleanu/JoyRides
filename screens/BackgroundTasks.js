@@ -55,6 +55,11 @@ const startBackgroundLocationUpdates = async () => {
     timeInterval: 5000,
     distanceInterval: 1,
     showsBackgroundLocationIndicator: true,
+    foregroundService: {
+      notificationTitle: 'JoyRides este activa in fundal',
+      notificationBody: 'Monitorizam locatia in timp real',
+      notificationColor: '#333333',
+    },
   });
 
   registerBackgroundTask();
