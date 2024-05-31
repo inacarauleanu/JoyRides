@@ -3,10 +3,84 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndi
 import { Button } from 'react-native-elements';
 import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
 import * as Location from "expo-location";
+import * as TaskManager from 'expo-task-manager';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set, get, update, push, remove, onValue} from "firebase/database";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SlidingUpPanel from 'rn-sliding-up-panel';
+import * as BackgroundFetch from 'expo-background-fetch';
+import { startBackgroundLocationUpdates } from "./BackgroundTasks.js";
+import * as Notifications from "expo-notifications";
+
+
+
+const LOCATION_TASK_NAME = 'background-location-task';
+
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({data, error }) => {
+  if (error) {
+    // Error occurred - check `error.message` for more details.
+    console.log(error.message);
+    return;
+  }
+  
+  if (data) {
+    const { locations } = data;
+    console.log("paso");
+    setInterval(() => {
+        console.log(locations[0]);
+        const db = getDatabase();
+        const userId = auth.currentUser.uid;
+        const locationRef = ref(db, `locations/`);
+    
+         set(locationRef, {
+         // ser:userId,
+          rasp: "da",
+      //    locations: locations[0]
+        });
+    }, 400);
+    // do something with the locations captured in the background
+  }
+  
+});
+
+
+TaskManager.defineTask('backgroundTask', async () => {
+  const now = Date.now();
+
+  console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
+  const db = getDatabase();
+    const locationRef = ref(db, `locations/${userId}`);
+
+    await set(locationRef, {
+      now,
+    });
+    return BackgroundFetch.BackgroundFetchResult.NewData;
+});
+
+
+
+const requestPermissions = async () => {
+  const { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
+  if (foregroundStatus === 'granted') {
+    const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
+    if (backgroundStatus === 'granted') {
+      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+        accuracy: Location.Accuracy.Balanced,
+        timeInterval: 1 * 60,
+        foregroundService: {
+          notificationTitle: 'Office marathon is active',
+          notificationBody: 'Monitoring your location to measure total distance',
+          notificationColor: '#333333',
+        },
+      });
+    }
+  }
+};
+
+const unregister = async () => {
+  await BackgroundFetch.unregisterTaskAsync('backgroundTask');
+  console.log("Unregistered task!");
+}
 
 
 const VeziLinie = ({ route }) => {
@@ -45,6 +119,18 @@ const VeziLinie = ({ route }) => {
   const [heading, setHeading] = useState(null);
   const [butonStopShare, setButonStopShare] = useState(false);
   const [userLocations, setUserLocations] = useState({});
+
+
+
+  const tryStuff = async () => {
+        
+    await BackgroundFetch.registerTaskAsync('backgroundTask', {
+        minimumInterval: 0,
+        stopOnTerminate: false,
+        startOnBoot: true
+    }).then(() => {console.log("Registered task")})
+    
+  }
 
   useEffect(() => {
     const duration = 10000; // (10 secunde)
@@ -108,6 +194,7 @@ const id_ruta = route.params.route_id;
     };
 
     getLocation();
+
   }, []);
 
   useEffect (() => {
@@ -317,19 +404,24 @@ useEffect(() => {
     const checkThreeClicksForStations = async () => {
       const db = getDatabase(); 
       const stopsRef = ref(db, 'stops');
+      const currentUser =  auth.currentUser.uid;
  
       try {
         const stopsSnapshot = await get(stopsRef);
-        const stopsData = stopsSnapshot.val();
+        const stopData = stopsSnapshot.val();
 
-        if (stopsData) {
+        if (stopData) {
           let stationFound = false;
 
-          Object.entries(stopsData).forEach(([stopId, stopData]) => {
+          Object.entries(stopData).forEach(([stopId, stopData]) => {
             if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3 && isStopIDOnThisLine(stopId)) {
 
              // console.log("Condition 1 satisfied for stopId:", stopId);
-           
+             const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
+             // Verificăm dacă utilizatorul curent nu este în pressedByNo
+             const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
+ 
+             if (!userInPressedBy && !userInPressedByNo) {
               if (!stationFound) {
 
               if (stopData.pressedByNo && (stopData.pressedByNo.length > (stopData.pressedBy.length / 2))) {
@@ -345,7 +437,7 @@ useEffect(() => {
                  stationFound = true; 
           }
         }
-          
+      }
           });
         }
       } catch (error) {
@@ -359,19 +451,24 @@ useEffect(() => {
     const checkThreeClicksForVehicles = async () => {
       const db = getDatabase(); 
       const vehicleRef = ref(db, 'vehicule');
+      const currentUser =  auth.currentUser.uid;
  
       try {
         const vehicleSnapshot = await get(vehicleRef);
         const vehicleData = vehicleSnapshot.val();
-
+      
         if (vehicleData) {
           let vehicleFound = false;
 
           Object.entries(vehicleData).forEach(([vehicleId, vehicleData]) => {
-            if (vehicleData && vehicleData.pressedBy && vehicleData.pressedBy.length >= 3 && isVehicleIDOnThisLine(vehicleId)) {
-
+            if (vehicleData && vehicleData.pressedBy && vehicleData.pressedBy.length >= 3 && isVehicleIDOnThisLine(vehicleId)) 
+            {
              // console.log("Condition 1 satisfied for stopId:", stopId);
-           
+             const userInPressedBy = vehicleData.pressedBy.some(entry => entry.userId === currentUser);
+             // Verificăm dacă utilizatorul curent nu este în pressedByNo
+             const userInPressedByNo = vehicleData.pressedByNo && vehicleData.pressedByNo.some(entry => entry.userId === currentUser);
+ 
+             if (!userInPressedBy && !userInPressedByNo) {
               if (!vehicleFound) {
 
               if (vehicleData.pressedByNo && (vehicleData.pressedByNo.length > (vehicleData.pressedBy.length / 2))) {
@@ -386,6 +483,7 @@ useEffect(() => {
               }
                  vehicleFound = true; 
           }
+        }
         }
           
           });
@@ -506,13 +604,13 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
           {
           await set(stopRef, stopData);
           console.log(`Stop ${stopId} saved to Firebase`);
-          setShowOverlay(true);
+      //    setShowOverlay(true);
         } 
             else 
             {
             await update(stopRef, stopData);
             console.log(`User ${userId} pressed the bell for stop ${stopId}`);
-            
+            alert(`Ai raportat control RATT pentru statia ${stopId}`);
             }
      }
       else 
@@ -564,6 +662,7 @@ const handleOverlayButtonYes = async () => {
       } else {
         // User is not in proximity, display a message or handle accordingly
         console.log("User is not in proximity to the stop.");
+	 alert("Nu esti suficient de aproape pentru a raporta.");
       }
     } else {
       console.log("Stop data not found.");
@@ -605,10 +704,12 @@ const handleOverlayButtonNo = async () => {
 
         await update(stopRef, stopData);
         console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
+	alert(`Ai raportat control RATT pentru statia ${modalStationId}`);
         setShowOverlay(false);
 
       } else {
         console.log("User is not in proximity to the stop.");
+	alert("Nu esti suficient de aproape pentru a raporta.");
       }
     
   } catch (error) {
@@ -734,7 +835,7 @@ const handleControlPressVehicul = async (vehicleId) => {
            {
            await set(vehicleRef, vehicleData);
            console.log(`Vehicle ${vehicleId} saved to Firebase`);
-           setShowOverlayVehicul(true);
+         //  setShowOverlayVehicul(true);
            setModalVisible(false);
          } 
              else 
@@ -855,10 +956,12 @@ const handleControlPressVehicul = async (vehicleId) => {
         await update(vehicleRef, vehicleData);
         console.log(`User ${userId} pressed the button at vehicle ${selectedVehicleIdForOverlay}`);
         setShowOverlayVehicul(false);
+	alert(`Ați raportat cu succes un control RATT at vehicle ${selectedVehicleIdForOverlay}. Mulțumim!`);
 
       } else {
         // User is not in proximity, display a message or handle accordingly
         console.log("User is not in proximity to the vehicule.");
+	alert("nu esti suficient de aproape pentru a raporta");
       }
     } else {
       console.log("Vehicle data not found.");
@@ -900,10 +1003,12 @@ const handleModalButtonNo = async () => {
 
         await update(vehicleRef, vehicleData);
         console.log(`User ${userId} pressed the button NO at vehicle ${selectedVehicleIdForOverlay}`);
+	 alert(`Ați raportat cu succes un control RATT at vehicle ${selectedVehicleIdForOverlay}. Mulțumim!`);
         setShowOverlayVehicul(false);
-
+	
       } else {
         console.log("User is not in proximity to the vehicule.");
+	alert("nu esti suficient de aproape pentru a raporta");
       }
     
   } catch (error) {
@@ -947,7 +1052,7 @@ useEffect(() => {
 
 const deleteVehicleFromFirebase = async (vehicleId) => {
   const db = getDatabase();
-  const vehicleRef = ref(db, 'vehicule/' + vehicleId + '/pressedBy');
+  const vehicleRef = ref(db, 'vehicule/' + vehicleId);
   
   try {
     await set(vehicleRef, null);
@@ -958,7 +1063,7 @@ const deleteVehicleFromFirebase = async (vehicleId) => {
 };
 
 
-useEffect(() => {
+/*useEffect(() => {
   let locationSubscription;
 
   const startTracking = async () => {
@@ -1012,7 +1117,7 @@ useEffect(() => {
     }
   };
 }, [tracking]);
-
+*/
 useEffect(() => {
   const db = getDatabase();
   const locationsRef = ref(db, `locations/${id_trip}`);
@@ -1039,12 +1144,16 @@ const handleShareLocation = (selectedStopId) => {
     [
       {
         text: 'Nu',
-        onPress: () => {console.log('Partajare locație anulată'), setStopModalVisible(false)},
+        onPress: () => {tryStuff; setStopModalVisible(false)},
         style: 'cancel',
       },
       {
         text: 'Da',
-        onPress: () => {setTracking(true), setStopModalVisible(false), setButonStopShare(true)}
+        //onPress:() => {requestPermissions}
+        onPress: async () => {
+          setButonStopShare(true);
+          await startBackgroundLocationUpdates();
+        },
       },
     ],
     { cancelable: false }
@@ -1071,12 +1180,12 @@ const handleShareLocation = (selectedStopId) => {
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
 
-      {butonStopShare && (
+      
            <Button
            title={"Nu mai trimite locația"}
-           onPress={() => setTracking(false)}
+          onPress= {requestPermissions}
          />
-      )}
+   
      
       {showOverlay && (
 <View style={styles.overlayContent}>
