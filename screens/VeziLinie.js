@@ -12,77 +12,6 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import { startBackgroundLocationUpdates, stopBackgroundLocationUpdates } from "./BackgroundTasks.js";
 import * as Notifications from "expo-notifications";
 
-
-
-const LOCATION_TASK_NAME = 'background-location-task';
-
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({data, error }) => {
-  if (error) {
-    // Error occurred - check `error.message` for more details.
-    console.log(error.message);
-    return;
-  }
-  
-  if (data) {
-    const { locations } = data;
-    console.log("paso");
-    setInterval(() => {
-        console.log(locations[0]);
-        const db = getDatabase();
-        const userId = auth.currentUser.uid;
-        const locationRef = ref(db, `locations/`);
-    
-         set(locationRef, {
-         // ser:userId,
-          rasp: "da",
-      //    locations: locations[0]
-        });
-    }, 400);
-    // do something with the locations captured in the background
-  }
-  
-});
-
-
-TaskManager.defineTask('backgroundTask', async () => {
-  const now = Date.now();
-
-  console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
-  const db = getDatabase();
-    const locationRef = ref(db, `locations/${userId}`);
-
-    await set(locationRef, {
-      now,
-    });
-    return BackgroundFetch.BackgroundFetchResult.NewData;
-});
-
-
-
-const requestPermissions = async () => {
-  const { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
-  if (foregroundStatus === 'granted') {
-    const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
-    if (backgroundStatus === 'granted') {
-      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy: Location.Accuracy.Balanced,
-        timeInterval: 1 * 60,
-        foregroundService: {
-          notificationTitle: 'Office marathon is active',
-          notificationBody: 'Monitoring your location to measure total distance',
-          notificationColor: '#333333',
-        },
-      });
-    }
-  }
-};
-
-const unregister = async () => {
-  await BackgroundFetch.unregisterTaskAsync('backgroundTask');
-  console.log("Unregistered task!");
-}
-
-
 const VeziLinie = ({ route }) => {
 
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -118,19 +47,9 @@ const VeziLinie = ({ route }) => {
   const [tracking, setTracking] = useState(false);
   const [heading, setHeading] = useState(null);
   const [butonStopShare, setButonStopShare] = useState(false);
-  const [userLocations, setUserLocations] = useState({});
+  const [locations, setLocations] = useState({});
 
 
-
-  const tryStuff = async () => {
-        
-    await BackgroundFetch.registerTaskAsync('backgroundTask', {
-        minimumInterval: 0,
-        stopOnTerminate: false,
-        startOnBoot: true
-    }).then(() => {console.log("Registered task")})
-    
-  }
 
   useEffect(() => {
     const duration = 10000; // (10 secunde)
@@ -1088,13 +1007,34 @@ const handleShareLocation = (selectedStopId) => {
 };
 
 const handleStopShareLocation = async () => {
+  await stopBackgroundLocationUpdates();
   const userId = auth.currentUser.uid;
   const db = getDatabase();
   const locationRef = ref(db, `locations/${userId}`);
-  await remove(locationRef);
+  await set(locationRef, null);
   setButonStopShare(false);
-  await stopBackgroundLocationUpdates();
 };
+
+
+useEffect(() => {
+  const database = getDatabase();
+  const locationsRef = ref(database, 'locations');
+
+  // Ascultarea modificărilor în baza de date Firebase
+  const handleData = snapshot => {
+    if (snapshot.exists()) {
+      setLocations(snapshot.val());
+    }
+  };
+
+  // Activarea ascultătorului pentru modificări în locații
+  const unsubscribe = onValue(locationsRef, handleData);
+
+  // Dezactivarea ascultătorului când componenta este demontată
+  return () => {
+    off(locationsRef, 'value', handleData);
+  };
+}, []);
 
   return (
     <View style={styles.container}>
@@ -1114,11 +1054,13 @@ const handleStopShareLocation = async () => {
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
       </View>
 
-      
-           <Button
-           title={"Nu mai trimite locația"}
-          onPress= {handleStopShareLocation}
-         />
+      {butonStopShare && (
+                   <Button
+                   title={"Nu mai trimite locația"}
+                  onPress= {handleStopShareLocation}
+                 />
+      )}
+
    
      
       {showOverlay && (
@@ -1252,6 +1194,18 @@ const handleStopShareLocation = async () => {
           </Callout>
 
       </Marker>
+        ))}
+
+    {Object.keys(locations).map(key => (
+          <Marker
+            key={key}
+            coordinate={{
+              latitude: locations[key].latitude,
+              longitude: locations[key].longitude,
+            }}
+            title={key}
+            pinColor="green"
+          />
         ))}
 
       </MapView>
