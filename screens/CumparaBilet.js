@@ -3,12 +3,8 @@ import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 //import Button from '../components/Button.js';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { ButtonGroup, Button, Image } from 'react-native-elements';
-import { color, fonts } from '@rneui/base';
 import { Dropdown } from 'react-native-element-dropdown';
-import PlataCard from './PlataCard.js';
-import PlataMesaj from './PlataMesaj.js';
-import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, equalTo } from "firebase/database";
-import { auth } from "../firebase-config.js";
+import * as SMS from 'expo-sms';
 
 const CumparaBilet = ({navigation}) =>{
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -16,10 +12,9 @@ const CumparaBilet = ({navigation}) =>{
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [linie, setLinie] = useState(0);
-  const [trams, setTrams] = useState([]);
-  const [stops, setStops] = useState([]);
   const [mijloc, setMijloc] = useState(0);
   const [routes, setRoutes] = useState([]);
+  const [message, setMessage] = React.useState('');
 
   const tryAPITranzy = async (mijloc) => {
 
@@ -39,7 +34,7 @@ const CumparaBilet = ({navigation}) =>{
 
       //console.log(rute);
       setRoutes(rute);
-     // console.log(rute);
+      console.log(rute);
     } catch (error) {
       console.error(error);
     }
@@ -54,11 +49,37 @@ console.error = function(...args) {
 
 
   useEffect (() => {
-      tryAPITranzy(mijloc)
+      tryAPITranzy(mijloc);
+
   }, [mijloc]);
 
+  useEffect(() =>{
+    setMessage(linie);
+  }, [linie])
+
+  const sendSMS = async () => {
+    
+    const mesaj = selectedIndex === 0 ? `B${message}` : `ZI`;
+    console.log("LINIE",message);
+    const isAvailable = await SMS.isAvailableAsync();
+
+    if (isAvailable) {
+      const { result } = await SMS.sendSMSAsync(
+        ['7442'], // numărul de telefon
+       mesaj // textul mesajului
+      );
+      if (result === 'sent') {
+        Alert.alert('Mesaj trimis cu succes!');
+      } else {
+        Alert.alert('Mesajul nu a fost trimis.');
+      }
+    } else {
+      Alert.alert('Funcția de trimitere SMS nu este disponibilă pe acest dispozitiv.');
+    }
+  };
+
   const dropdownData = routes.map(route => ({
-    label: `${route.route_short_name} - ${route.route_long_name}`,
+    label: `${route.route_short_name}`,
     value: route.route_id,
   }));
 
@@ -148,7 +169,7 @@ console.error = function(...args) {
          <Button
                 buttonStyle={styles.btn1}
                 title="Plata SMS   "
-                onPress = {()=>navigation.navigate("PlataMesaj")}
+                onPress = {sendSMS}
                 titleStyle = {styles.titlu}
                 icon = {
                     <Image
