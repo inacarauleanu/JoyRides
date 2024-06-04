@@ -4,10 +4,10 @@
     "slug": "JoyRides",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.png",
+    "icon": "./assets/icons/public-transport.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icons/splash.png",
+      "image": "./assets/icons/public-transport.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,7 +25,8 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.ACCESS_BACKGROUND_LOCATION",
-        "android.permission.FOREGROUND_SERVICE_LOCATION"
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "CAMERA"
       ],
       "config": {
         "googleMaps": {
@@ -33,7 +34,7 @@
         }
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/public-transport.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ina.carauleanu.JoyRides"
@@ -47,6 +48,13 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
           "isAndroidBackgroundLocationEnabled" : true
+        }
+        
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
