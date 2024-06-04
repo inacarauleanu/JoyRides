@@ -1,12 +1,13 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import Button from '../components/Button.js';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Button } from 'react-native';
+//import Button from '../components/Button.js';
 import {Image } from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update } from "firebase/database";
 import { auth } from "../firebase-config.js";
-import CumparaBilet from './CumparaBilet.js';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Use the appropriate icon library
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
 
 const Bilete = ({navigation}) =>{
   const [loading, setLoading] = useState(true);
@@ -84,9 +85,69 @@ const Bilete = ({navigation}) =>{
       status: "invalid"
   }); 
   };
+
+  const [image, setImage] = useState(null);
+  const [labels, setLabels] = useState(null);
+  const [detectedText, setDetectedText] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const analyzeImage = async () => {
+    try {
+      if (!image) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      // Replace 'YOUR_GOOGLE_CLOUD_VISION_API_KEY' with your actual API key
+      const apiKey = 'AIzaSyC8EnWmZA0j1mtdwFnD4k23-WMq7-40yuI';
+      const apiUrl = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
+
+      // Read the image file from local URI and convert it to base64
+      const base64ImageData = await FileSystem.readAsStringAsync(image, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const requestData = {
+        requests: [
+          {
+            image: {
+              content: base64ImageData,
+            },
+            features: [{ type: 'TEXT_DETECTION', maxResults: 5 }],
+          },
+        ],
+      };
+
+      const apiResponse = await axios.post(apiUrl, requestData);
+      const textAnnotations = apiResponse.data.responses[0].textAnnotations;
+      setDetectedText(textAnnotations);
+      
+    } catch (error) {
+      console.error('Error analyzing image:', error);
+      alert('Error analyzing image. Please try again later.');
+    }
+  };
+
   if (loading) {
     return <Text>Loading...</Text>;
   }
+
+  
 
     return (
       <View style={styles.container}>
@@ -139,6 +200,26 @@ const Bilete = ({navigation}) =>{
                 title="Cumpara bilet nou"
                 onPress = {()=>navigation.navigate('CumparaBilet')}
             />
+            <Button
+                style={styles.btn}
+                title="Adauga abonament"
+                onPress = {pickImage}
+            />      
+              {image && <Image source={{ uri: image }} style={{ width: 200, height: 200}} />}
+              <Button
+                style={styles.btn}
+                title="Analizeaza abonament"
+                onPress = {analyzeImage}
+            />     
+        {detectedText && (
+        <View style={styles.textContainer}>
+          {detectedText.map((item, index) => (
+            <Text key={index} style={styles.text}>
+              {item.description}
+            </Text>
+          ))}
+        </View>
+      )}
       </View>
       );
     };
@@ -151,6 +232,14 @@ const Bilete = ({navigation}) =>{
         marginTop: 35,
         alignContent: "center",
         alignItems: 'center'
+      },
+      textContainer: {
+        marginTop: 20,
+        paddingHorizontal: 20,
+      },
+      text: {
+        fontSize: 16,
+        marginVertical: 5,
       },
       title: {
         fontSize: 24,
