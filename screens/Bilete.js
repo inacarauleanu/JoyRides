@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
 //import Button from '../components/Button.js';
 import {Image, ButtonGroup, Button } from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
@@ -125,16 +125,34 @@ const Bilete = ({navigation}) =>{
   }); 
   };
 
+  const selectSource = () => {
+    Alert.alert(
+      'Selectează sursa imaginii',
+      'Vrei să alegi o imagine din galerie sau să faci o poză cu camera?',
+      [
+        { text: 'Galerie', onPress: () => pickImage('gallery') },
+        { text: 'Camera', onPress: () => pickImage('camera') },
+      ]
+    );
+  };
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
+  const pickImage = async (source) => {
+   let result;
+    if (source === 'gallery') {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    } else if (source === 'camera') {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    }
     console.log(result);
 
     if (!result.canceled) {
@@ -301,7 +319,7 @@ const Bilete = ({navigation}) =>{
 
     return (
       <View style={styles.container}>
-      <Text style={styles.title}>Biletele tale</Text>
+      <Text style={styles.title}>{selectedIndexes == 0 ? 'Biletele tale' : 'Abonamentele tale' }</Text>
       <ButtonGroup
       buttons={['Bilete', 'Abonamente']}
       selectedIndex={selectedIndexes}
@@ -389,7 +407,7 @@ const Bilete = ({navigation}) =>{
             buttonStyle={styles.btn}
             title="Adauga abonament"
             titleStyle={styles.titlu}
-            onPress={pickImage}
+            onPress={selectSource}
           />
           <FlatList
       data={subscriptions}
