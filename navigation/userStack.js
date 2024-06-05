@@ -18,6 +18,7 @@ import PlataMesaj from '../screens/PlataMesaj.js';
 import VeziBilet from '../screens/VeziBilet.js';
 import VeziLinie from '../screens/VeziLinie.js';
 import AdaugaNotififcare from '../screens/AdaugaNotificare.js';
+import VeziAbonament from '../screens/VeziAbonament';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -149,6 +150,7 @@ export default function UserStack() {
         <Stack.Screen name="VeziBilet" component={VeziBilet} options={{ headerShown: false }} />
         <Stack.Screen name="VeziLinie" component={VeziLinie} options={{ headerShown: false }} />
         <Stack.Screen name="AdaugaNotififcare" component={AdaugaNotififcare} options={{ headerShown: false }} />
+        <Stack.Screen name="VeziAbonament" component={VeziAbonament} options={{ headerShown: false }} />
       </Stack.Navigator>
       
       
