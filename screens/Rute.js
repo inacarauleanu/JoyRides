@@ -11,7 +11,7 @@ const Rute = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
-  const [mijloc, setMijloc] = useState(0);
+  const [mijloc, setMijloc] = useState("trams");
   const [routes, setRoutes] = useState([]);
 
 
@@ -32,13 +32,11 @@ const Rute = ({navigation}) => {
       if(mijloc == "trols") { rute = data.filter(obj => obj.route_type === 11); }
       if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
 
-      //console.log(rute);
       setRoutes(rute);
-     // console.log(data);
-     setLoading(false); // Stop loading'
+     setLoading(false); 
 
     } catch (error) {
-      setLoading(false); // Stop loading in case of error
+      setLoading(false);
       console.error(error);
     }
 
@@ -87,12 +85,12 @@ const Rute = ({navigation}) => {
   
     const isFavorite = favorites.some((favItem) => favItem.route_id === line.route_id);
     if (isFavorite) {
-      // Remove from favorites
+
       const updatedFavorites = favorites.filter((favItem) => favItem.route_id !== line.route_id);
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
     } else {
-      // Add to favorites
+
       const updatedFavorites = [...favorites, busWithLine];
       setFavorites(updatedFavorites);
       updateFavoritesInFirebase(updatedFavorites);
@@ -143,7 +141,9 @@ const Rute = ({navigation}) => {
       <Text style={styles.name}>{item.route_short_name}</Text>
       <Text style={styles.longName}>{item.route_long_name}</Text>
       <TouchableOpacity style={styles.favoriteButton} onPress={() => toggleFavorite(item)}>
-        <Icon name={favorites.some((favItem) => favItem.route_id === item.route_id) ? 'heart' : 'heart-o'} size={30} color={Colors.babyOrange} />
+        <Icon name={favorites.some((favItem) => 
+          favItem.route_id === item.route_id) ? 'heart' : 'heart-o'} 
+          size={30} color={Colors.babyOrange} />
       </TouchableOpacity>
     </TouchableOpacity>
   )}
