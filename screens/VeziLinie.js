@@ -437,7 +437,7 @@ const estimateArrivalTime = (distance, speed) => {
   const timeInMinutes = timeInHours * 60; // Convertire în minute
 
   
-  if (timeInMinutes < 5) {
+  if (timeInMinutes > 5) {
     const currentDate = new Date(); 
     const currentHour = currentDate.getHours(); 
     const currentMinute = currentDate.getMinutes(); 
