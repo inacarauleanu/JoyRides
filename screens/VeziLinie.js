@@ -5,7 +5,7 @@ import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
 import * as Location from "expo-location";
 import * as TaskManager from 'expo-task-manager';
 import { auth } from "../firebase-config.js";
-import { getDatabase, ref, set, get, update, push, remove, onValue} from "firebase/database";
+import { getDatabase, ref, set, get, update, push, remove, onValue, off} from "firebase/database";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as BackgroundFetch from 'expo-background-fetch';

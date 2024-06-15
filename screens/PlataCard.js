@@ -62,7 +62,7 @@ const PlataCard = ({navigation, route}) => {
     console.log("mijloc_transport:", JSON.stringify(mijloc_transport));
     console.log("linie:", JSON.stringify(linie));
 
-    const response = await fetch(`http://192.168.1.103:3000/payments/intents`, { //DE SCHIMBAT LA TIMISOARA
+    const response = await fetch(`http://192.168.100.20:3000/payments/intents`, { //DE SCHIMBAT LA TIMISOARA
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', 
@@ -79,6 +79,7 @@ const PlataCard = ({navigation, route}) => {
   };
 
  // const {confirmPayment, loading} = useConfirmPayment();
+
   const handlePayPress = async () => {
       // Gather the customer's billing information (for example, email)
       const billingDetails = {
@@ -101,7 +102,8 @@ const PlataCard = ({navigation, route}) => {
       } else if (paymentIntent) {
         console.log('Success from promise', paymentIntent);
         const userId = auth.currentUser.uid;
-        writeUserBilete(userId, JSON.stringify(valabilitate), JSON.stringify(mijloc_transport), JSON.stringify(linie), JSON.stringify(total), currentTime);
+        writeUserBilete(userId, JSON.stringify(valabilitate), JSON.stringify(mijloc_transport), 
+        JSON.stringify(linie), JSON.stringify(total), currentTime);
         Alert.alert('Plată efectuată cu succes', 'Tranzacția a fost efectuată cu succes!',[
           {
             onPress: ()=>navigation.navigate("Bilete")
