@@ -34,7 +34,7 @@ const CumparaBilet = ({navigation}) =>{
 
       //console.log(rute);
       setRoutes(rute);
-      console.log(rute);
+     // console.log(rute);
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +60,7 @@ console.error = function(...args) {
   const sendSMS = async () => {
     
     const mesaj = selectedIndex === 0 ? `B${message}` : `ZI`;
-    console.log("LINIE",message);
+   // console.log("LINIE",message);
     const isAvailable = await SMS.isAvailableAsync();
 
     if (isAvailable) {
@@ -69,9 +69,9 @@ console.error = function(...args) {
        mesaj // textul mesajului
       );
       if (result === 'sent') {
-        Alert.alert('Mesaj trimis cu succes!');
+       // Alert.alert('Mesaj trimis cu succes!');
       } else {
-        Alert.alert('Mesajul nu a fost trimis.');
+       // Alert.alert('Mesajul nu a fost trimis.');
       }
     } else {
       Alert.alert('Funcția de trimitere SMS nu este disponibilă pe acest dispozitiv.');

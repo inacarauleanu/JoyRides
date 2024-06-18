@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Alert, ActivityIndicator } from 'react-native';
 //import Button from '../components/Button.js';
 import {Image, ButtonGroup, Button } from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
@@ -13,8 +13,7 @@ import { ref as sRef } from 'firebase/storage';
 import uuid from 'react-native-uuid';
 
 const Bilete = ({navigation}) =>{
-  const [loading, setLoading] = useState(true);
-  const [bilete, setBilete] = useState([]);
+
   const [identifierText, setIdentifierText] = useState(null);
   const [selectedIndexes, setSelectedIndexes] = useState(0);
   const [showBilete, setShowBilete] = useState(true);
@@ -25,6 +24,9 @@ const Bilete = ({navigation}) =>{
   const [detectedValabilitate, setDetectedValabilitate] = useState(null);
   const [detectedAbonament, setDetectedAbonament] = useState(null);
   const [subscriptions, setSubscriptions] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+  const [bilete, setBilete] = useState([]);
 
   useEffect(() => {
     const userId = auth.currentUser.uid;
@@ -51,12 +53,9 @@ const Bilete = ({navigation}) =>{
       setLoading(false);
     };
 
-    // cauta schimbari in baza de date
     const unsubscribe = onValue(userRef, handleData, handleError);
 
-    // goleste listenerul
     return () => off(userRef, 'value', handleData);
-
     
   }, []);
 
@@ -178,6 +177,7 @@ const Bilete = ({navigation}) =>{
     return blob;
   };
   
+  const apiKey = 'AIzaSyC8EnWmZA0j1mtdwFnD4k23-WMq7-40yuI';
 
   const analyzeImage = async (image) => {
     try {
@@ -185,12 +185,8 @@ const Bilete = ({navigation}) =>{
         alert('Please select an image first.');
         return;
       }
-
-      // Replace 'YOUR_GOOGLE_CLOUD_VISION_API_KEY' with your actual API key
-      const apiKey = 'AIzaSyC8EnWmZA0j1mtdwFnD4k23-WMq7-40yuI';
       const apiUrl = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
 
-      // Read the image file from local URI and convert it to base64
       const base64ImageData = await FileSystem.readAsStringAsync(image, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -312,7 +308,7 @@ const Bilete = ({navigation}) =>{
 
   
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="large" color={Colors.babyOrange}/> ;
   }
 
   
@@ -333,11 +329,13 @@ const Bilete = ({navigation}) =>{
       textStyle = {styles.textStyle}
       
     />
+    
  {showBilete ? (
   
         // Afișăm biletele dacă este selectat butonul "Bilete"
         bilete.length ? (
           <View>
+            
                     <Button
           buttonStyle={styles.btn}
           title="Cumpara bilet nou"

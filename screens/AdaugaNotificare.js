@@ -100,17 +100,6 @@ const AdaugaNotififcare = ({navigation}) =>{
     return token;
   }
 
-  async function schedulePushNotification(linie, minute) {
-    console.log("s-a trimis notificarea");
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Notificare Transport",
-        body: `Linia ${linie} va ajunge în ${minute} minute.`,
-        data: { data: 'goes here', test: { test1: 'more data' } },
-      },
-      trigger: { seconds: minute * 60 },
-    });
-  }
 
   const tryAPITranzy = async (mijloc) => {
 
@@ -162,6 +151,18 @@ const dropdownData = routes.map(route => ({
           console.error('Eroare la salvarea in Firebase:', error); 
         }
       }
+
+          async function schedulePushNotification(linie, minute) {
+            console.log("s-a trimis notificarea");
+            await Notifications.scheduleNotificationAsync({
+              content: {
+                title: "Notificare Transport",
+                body: `Linia ${linie} va ajunge în ${minute} minute.`,
+              },
+              trigger: { seconds: minute * 60 },
+            });
+          }
+        
 
           const handleNotificarePress = async () => {
 

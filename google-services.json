@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "634976697024",
+    "firebase_url": "https://joyride-de26f-default-rtdb.firebaseio.com",
+    "project_id": "joyride-de26f",
+    "storage_bucket": "joyride-de26f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634976697024:android:43c16a21f660b222588b25",
+        "android_client_info": {
+          "package_name": "com.ina.carauleanu.JoyRides"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634976697024-l78jic4nndkigup79g0j4tadlb2a72s2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ina.carauleanu.JoyRides",
+            "certificate_hash": "9ab322cfeb9c8561f2bbb64f7b5e12b75e1ee95d"
+          }
+        },
+        {
+          "client_id": "634976697024-tn17oe5f9ce9gavs9lvgbl4i8o3593hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANusx15v_PhIIfm5wUOchee7ayMMqkYcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634976697024-tn17oe5f9ce9gavs9lvgbl4i8o3593hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
