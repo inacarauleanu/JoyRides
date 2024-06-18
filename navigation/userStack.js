@@ -126,6 +126,8 @@ function MainStack(){
           options={{
             tabBarLabel: 'Profil',
             headerShown: false,
+            tabBarActiveTintColor: Colors.greyForText,
+            tabBarActiveBackgroundColor: Colors.babyOrange,
             tabBarIcon: ({ color, size }) => (
              // <Icon name="ios-heart" color={Colors.babyOrange} size={size} />
              <Image

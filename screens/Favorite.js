@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { auth } from "../firebase-config.js";
 import { Colors, Sizes, Fonts } from "../constants/styles.js";
@@ -37,18 +37,20 @@ const Favorites = ({navigation}) => {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="large" color={Colors.babyOrange}/>;
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favorite</Text>
+      
       {favorites.length ? (
         <FlatList
         
           data={favorites}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
+              {loading ? <ActivityIndicator size="large" color={Colors.babyOrange}/> : 
               <TouchableOpacity
                     onPress={() => {
                       navigation.navigate("VeziLinie", 
@@ -58,7 +60,7 @@ const Favorites = ({navigation}) => {
                     }} >
               <Text style={styles.name}>{`${item.route_short_name}`}</Text>
               <Text style={styles.name}>{`${item.route_long_name}`}</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>}
             </View>
           )}
           keyExtractor={(item) => item.route_id}

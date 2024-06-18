@@ -12,7 +12,8 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import { startBackgroundLocationUpdates, stopBackgroundLocationUpdates } from "./BackgroundTasks.js";
 import * as Notifications from "expo-notifications";
 
-const VeziLinie = ({ route }) => {
+
+const VeziLinie = ({ route, navigation }) => {
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
@@ -36,8 +37,6 @@ const VeziLinie = ({ route }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showOverlayVehicul, setShowOverlayVehicul] = useState(false);
   const [modalStationId, setModalStationId] = useState(null);
-  const [progressWidth, setProgressWidth] = useState('100%');
-  const [progressWidthVehicul, setProgressWidthVehicul] = useState('100%');
   const [modalVisible, setModalVisible] = useState(false);
   const [stopModalVisible, setStopModalVisible] = useState(false);
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
@@ -51,47 +50,57 @@ const VeziLinie = ({ route }) => {
 
 
 
+  const [progressWidth, setProgressWidth] = useState(100);
+  const [progressWidthVehicul, setProgressWidthVehicul] = useState(100);
+
+  // Prima bara de progres
   useEffect(() => {
-    const duration = 10000; // (10 secunde)
-    const startTime = Date.now();
+    if (showOverlay) {
+      const duration = 10000; // 10 secunde
+      const startTime = Date.now();
 
-    const interval = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(duration - elapsedTime, 0);
-      const remainingProgress = (remainingTime / duration) * 100;
-      setProgressWidth(remainingProgress);
+      const interval = setInterval(() => {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(duration - elapsedTime, 0);
+        const remainingProgress = (remainingTime / duration) * 100;
+        setProgressWidth(remainingProgress);
 
-      if (remainingTime === 0) {
-        clearInterval(interval);
-        setShowOverlay(false);
-      }
-    }, 100); // Update progress every 100 milliseconds
+        if (remainingTime === 0) {
+          clearInterval(interval);
+          setShowOverlay(false);
+        }
+      }, 100); // Update progress every 100 milliseconds
 
-    return () => clearInterval(interval); 
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [showOverlay]);
 
+  // A doua bara de progres
   useEffect(() => {
-    const duration = 10000; // (10 secunde)
-    const startTime = Date.now();
+    if (showOverlayVehicul) {
+      const duration = 10000; // 10 secunde
+      const startTime = Date.now();
 
-    const interval = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(duration - elapsedTime, 0);
-      const remainingProgress = (remainingTime / duration) * 100;
-      setProgressWidthVehicul(remainingProgress);
+      const interval = setInterval(() => {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(duration - elapsedTime, 0);
+        const remainingProgress = (remainingTime / duration) * 100;
+        setProgressWidthVehicul(remainingProgress);
 
-      if (remainingTime === 0) {
-        clearInterval(interval);
-        setShowOverlayVehicul(false);
-      }
-    }, 100); // Update progress every 100 milliseconds
+        if (remainingTime === 0) {
+          clearInterval(interval);
+          setShowOverlayVehicul(false);
+        }
+      }, 100); // Update progress every 100 milliseconds
 
-    return () => clearInterval(interval); 
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [showOverlayVehicul]);
 
 
 
 const id_ruta = route.params.route_id;
+const numeLinie = route.params.linie;
 
   useEffect(() => {
     const getLocation = async () => {
@@ -319,52 +328,54 @@ useEffect(() => {
 
     };
 
-  useEffect(() => {
-    const checkThreeClicksForStations = async () => {
-      const db = getDatabase(); 
-      const stopsRef = ref(db, 'stops');
-      const currentUser =  auth.currentUser.uid;
- 
-      try {
-        const stopsSnapshot = await get(stopsRef);
-        const stopData = stopsSnapshot.val();
+    const [processedStations, setProcessedStations] = useState([]);
 
-        if (stopData) {
-          let stationFound = false;
-
-          Object.entries(stopData).forEach(([stopId, stopData]) => {
-            if (stopData && stopData.pressedBy && stopData.pressedBy.length >= 3 && isStopIDOnThisLine(stopId)) {
-
-             // console.log("Condition 1 satisfied for stopId:", stopId);
-             const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
-             // Verificăm dacă utilizatorul curent nu este în pressedByNo
-             const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
- 
-             if (!userInPressedBy && !userInPressedByNo) {
-              if (!stationFound) {
-
-              if (stopData.pressedByNo && (stopData.pressedByNo.length > (stopData.pressedBy.length / 2))) {
-                  setShowOverlay(false);
-                //  console.log("Condition 2 satisfied for stopId:", stopId);
-                //  console.log("Setting showOverlay to false for stopId:", stopId);
-              } else {
-                  setShowOverlay(true);
-                  setModalStationId(stopId); 
-                 // console.log("Condition 3 satisfied for stopId:", stopId);
-                 // console.log("Setting showOverlay to true and modalStationId to", stopId);
+    useEffect(() => {
+      const checkThreeClicksForStations = async () => {
+        const db = getDatabase();
+        const stopsRef = ref(db, 'stops');
+        const currentUser = auth.currentUser.uid;
+    
+        try {
+          const stopsSnapshot = await get(stopsRef);
+          const stopData = stopsSnapshot.val();
+    
+          if (stopData) {
+            let stationFound = false;
+    
+            Object.entries(stopData).forEach(([stopId, stopData]) => {
+              if (
+                stopData &&
+                stopData.pressedBy &&
+                stopData.pressedBy.length >= 3 &&
+                isStopIDOnThisLine(stopId) &&
+                !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
+              ) {
+                const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
+                const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
+    
+                if (!userInPressedBy && !userInPressedByNo) {
+                  if (!stationFound) {
+                    if (stopData.pressedByNo && stopData.pressedByNo.length > stopData.pressedBy.length / 2) {
+                      setShowOverlay(false);
+                    } else {
+                      setShowOverlay(true);
+                      setModalStationId(stopId);
+                      stationFound = true;
+                      setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
+                    }
+                  }
+                }
               }
-                 stationFound = true; 
+            });
           }
+        } catch (error) {
+          console.error('Error checking clicks for stations:', error);
         }
-      }
-          });
-        }
-      } catch (error) {
-        console.error('Error checking clicks for stations:', error); 
-      }
-    };
-    checkThreeClicksForStations();
-  }, [filteredStops]);
+      };
+    
+      checkThreeClicksForStations();
+    }, [filteredStops]);
  
   useEffect(() => {
     const checkThreeClicksForVehicles = async () => {
@@ -517,20 +528,11 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
               stopData.pressedBy.push({ userId, date: currentTime });
           }
         
-        stopData.lastUpdate = currentTime;
-
-        if (stopData.pressedBy.length === 3) 
-          {
-          await set(stopRef, stopData);
-          console.log(`Stop ${stopId} saved to Firebase`);
-      //    setShowOverlay(true);
-        } 
-            else 
-            {
+            stopData.lastUpdate = currentTime;
             await update(stopRef, stopData);
             console.log(`User ${userId} pressed the bell for stop ${stopId}`);
             alert(`Ai raportat control RATT pentru statia ${stopId}`);
-            }
+            
      }
       else 
       {
@@ -544,49 +546,42 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
 };
 
 const handleOverlayButtonYes = async () => {
-
   console.log("Button 1 in modal pressed");
 
   const userId = auth.currentUser.uid; 
-
   const db = getDatabase();
   const stopRef = ref(db, `stops/${modalStationId}/`);
   const proximityThreshold = 2; 
 
   try {
-
     const stopSnapshot = await get(stopRef);
     const stopData = stopSnapshot.val();
 
     if (stopData) {
-            
-            const currentTime = new Date().toISOString();
+      const currentTime = new Date().toISOString();
 
-           if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
-            stopData.pressedBy.push({ userId, date: currentTime });
-          }
+      if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
+        stopData.pressedBy.push({ userId, date: currentTime });
+      }
 
       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
       console.log("Distance to stop:", distance);
 
       stopData.lastUpdate = currentTime;
 
-
       if (distance <= proximityThreshold) {
-
         await update(stopRef, stopData);
         console.log(`User ${userId} pressed the button at stop ${modalStationId}`);
         setShowOverlay(false);
-
+        setProcessedStations(prev => [...prev, modalStationId]);
+        checkThreeClicksForStations(); // Re-run the check to see if there are other stations to process
       } else {
-        // User is not in proximity, display a message or handle accordingly
         console.log("User is not in proximity to the stop.");
-	 alert("Nu esti suficient de aproape pentru a raporta.");
+        Alert.alert("Nu esti suficient de aproape pentru a raporta.");
       }
     } else {
       console.log("Stop data not found.");
     }
-
   } catch (error) {
     console.error('Error handling button press:', error);
   }
@@ -625,16 +620,64 @@ const handleOverlayButtonNo = async () => {
         console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
 	alert(`Ai raportat control RATT pentru statia ${modalStationId}`);
         setShowOverlay(false);
+        setProcessedStations(prev => [...prev, modalStationId]);
+        checkThreeClicksForStations(); // Re-run the check to see if there arS
 
       } else {
         console.log("User is not in proximity to the stop.");
 	alert("Nu esti suficient de aproape pentru a raporta.");
       }
-    
+      //checkThreeClicksForStations();
   } catch (error) {
     console.error('Error handling button press:', error);
   }
 };
+
+const checkThreeClicksForStations = async () => {
+  const db = getDatabase();
+  const stopsRef = ref(db, 'stops');
+  const currentUser = auth.currentUser.uid;
+
+  try {
+    const stopsSnapshot = await get(stopsRef);
+    const stopData = stopsSnapshot.val();
+
+    if (stopData) {
+      let stationFound = false;
+
+      Object.entries(stopData).forEach(([stopId, stopData]) => {
+        if (
+          stopData &&
+          stopData.pressedBy &&
+          stopData.pressedBy.length >= 3 &&
+          isStopIDOnThisLine(stopId) &&
+          !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
+        ) {
+          const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
+          const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
+
+          if (!userInPressedBy && !userInPressedByNo) {
+            if (!stationFound) {
+              if (stopData.pressedByNo && stopData.pressedByNo.length > stopData.pressedBy.length / 2) {
+                setShowOverlay(false);
+              } else {
+                setShowOverlay(true);
+                setModalStationId(stopId);
+                stationFound = true;
+                setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
+              }
+            }
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error checking clicks for stations:', error);
+  }
+};
+useEffect(() => {
+  checkThreeClicksForStations();
+}, [filteredStops]);
 
 useEffect(() => {
   const deleteStopsIfNotUpdated = async () => {
@@ -665,7 +708,7 @@ useEffect(() => {
     }
   };
 
-  const intervalId = setInterval(deleteStopsIfNotUpdated, 2 * 60 * 1000); // Verifică la fiecare 2 minute
+  const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); // Verifică la fiecare 2 minute
 
   return () => clearInterval(intervalId);
 }, []);
@@ -750,19 +793,11 @@ const handleControlPressVehicul = async (vehicleId) => {
            vehicleData.latitude = selectedVehicle.latitude;
            vehicleData.longitude = selectedVehicle.longitude;
  
-         if (vehicleData.pressedBy.length === 3) 
-           {
-           await set(vehicleRef, vehicleData);
-           console.log(`Vehicle ${vehicleId} saved to Firebase`);
-         //  setShowOverlayVehicul(true);
-           setModalVisible(false);
-         } 
-             else 
-             {
              await update(vehicleRef, vehicleData);
              console.log(`User ${userId} pressed the bell for vehicle ${vehicleId}`);
              alert("Ați raportat cu succes un control RATT. Mulțumim!");
-             }
+             setModalVisible(false);
+             
       
        }else 
        {
@@ -815,20 +850,11 @@ const handleControlPressVehicul = async (vehicleId) => {
            vehicleData.lastUpdate = currentTime;
            vehicleData.latitude = selectedVehicle.latitude;
            vehicleData.longitude = selectedVehicle.longitude;
- 
-         if (vehicleData.defectiune.length === 3) 
-           {
-           await set(vehicleRef, vehicleData);
-           console.log(`Vehicle ${vehicleId} saved to Firebase`);
-           //setShowOverlayVehicul(true);
-           setModalVisible(false);
-         } 
-             else 
-             {
+
              await update(vehicleRef, vehicleData);
              console.log(`User ${userId} pressed the bell for vehicle ${vehicleId}`);
              alert(`Ați raportat cu succes o defecțiune la vehiculul ${vehicleId} RATT. Mulțumim!`);
-             }
+
       
        }else 
        {
@@ -864,7 +890,7 @@ const handleControlPressVehicul = async (vehicleId) => {
             vehicleData.pressedBy.push({ userId, date: currentTime });
           }
 
-      const distance = haversine(currentLocation.latitude, currentLocation.longitude, selectedVehicle.latitude, selectedVehicle.longitude);
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, vehicleData.latitude, vehicleData.longitude);
       console.log("Distance to stop:", distance);
 
       vehicleData.lastUpdate = currentTime;
@@ -913,7 +939,7 @@ const handleModalButtonNo = async () => {
     vehicleData.pressedByNo.push({ userId, date: currentTime });
   }
 
-      const distance = haversine(currentLocation.latitude, currentLocation.longitude, selectedVehicle.latitude, selectedVehicle.longitude);
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, vehicleData.latitude, vehicleData.longitude);
       console.log("Distance to stop:", distance);
 
       vehicleData.lastUpdate = currentTime;
@@ -964,7 +990,7 @@ useEffect(() => {
     }
   };
 
-  const intervalId = setInterval(deleteStopsIfNotUpdated, 2 * 60 * 1000); // Verifică la fiecare 2 minute
+  const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); // Verifică la fiecare 2 minute
 
   return () => clearInterval(intervalId);
 }, []);
@@ -1023,9 +1049,13 @@ useEffect(() => {
   // Ascultarea modificărilor în baza de date Firebase
   const handleData = snapshot => {
     if (snapshot.exists()) {
-      setLocations(snapshot.val());
+      const data = snapshot.val();
+      setLocations(data ? Object.values(data) : []);
+    } else {
+      setLocations([]); // Setează locațiile ca fiind goale dacă nu există niciun snapshot
     }
   };
+
 
   // Activarea ascultătorului pentru modificări în locații
   const unsubscribe = onValue(locationsRef, handleData);
@@ -1035,6 +1065,15 @@ useEffect(() => {
     off(locationsRef, 'value', handleData);
   };
 }, []);
+
+/*const handleNotificationPress = (statieNume, arrivalTime) => {
+  navigation.navigate('AdaugaNotififcare', {
+    linie: numeLinie,
+  //  statieId: statieId,
+    statieNume: statieNume,
+    minute: arrivalTime
+  });
+};*/
 
   return (
     <View style={styles.container}>
@@ -1061,53 +1100,28 @@ useEffect(() => {
                  />
       )}
 
-   
-     
-      {showOverlay && (
-<View style={styles.overlayContent}>
-  <Text>Three users have pressed the button for station {modalStationId}!</Text>
+{showOverlay && (
+        <View style={styles.overlayContent}>
+          <Text>Three users have pressed the button for station {modalStationId}!</Text>
+          <Button onPress={handleOverlayButtonYes} title="Este tot acolo" color="#841584" />
+          <Button onPress={handleOverlayButtonNo} title="Nu mai este" color="#33D7FF" />
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar1, { width: `${progressWidth}%` }]} />
+          </View>
+        </View>
+      )}
 
-  <Button
-    onPress={handleOverlayButtonYes}
-    title="Este tot acolo"
-    color="#841584"
-  />
-  <Button
-    onPress={handleOverlayButtonNo}
-    title="Nu mai este"
-    color="#33D7FF"
-  />
-
-<View style={styles.progressBarContainer}>
-  <View style={[styles.progressBar1, { width: `${progressWidth}%` }]} />
-  </View>
-
-</View>
-
-)}
-
-{showOverlayVehicul && (
-<View style={styles.overlayContent}>
-  <Text>Three users have pressed the button for vehicle {selectedVehicleIdForOverlay}!</Text>
-
-  <Button 
-    onPress={handleModalButtonYes}
-    title="Este tot acolo"
-    color="#841584"
-  />
-  <Button
-    onPress={handleModalButtonNo}
-    title="Nu mai este"
-    color="#33D7FF"
-  />
-
-<View style={styles.progressBarContainer}>
-  <View style={[styles.progressBar1, { width: `${progressWidthVehicul}%` }]} />
-</View>
-
-</View>
-
-)}
+      {showOverlayVehicul && (
+        <View style={styles.overlayContent}>
+          <Text>Three users have pressed the button for vehicle {selectedVehicleIdForOverlay}!</Text>
+          <Button onPress={handleModalButtonYes} title="Este tot acolo" color="#841584" />
+          <Button onPress={handleModalButtonNo} title="Nu mai este" color="#33D7FF" />
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar1, { width: `${progressWidthVehicul}%` }]} />
+          </View>
+        </View>
+      )}
+      
       <MapView
         //initialRegion={initialRegion}
         region={initialRegion}
@@ -1182,9 +1196,15 @@ useEffect(() => {
             }}
              // title={`id:${vehicule.id}`}s
             //description={`viteza:${vehicule.speed} km/h`}
-            pinColor="blue"
+            tracksViewChanges = {false}
             onPress={() =>handleMarkerPress(vehicule.id)}
           >
+      <Image source={require('../assets/icons/pinBus.png')}
+      style={{
+          width:40,
+          height:40
+      }}/> 
+
             <Callout tooltip>
             <View style={styles.calloutContainer}>
               <Text style={styles.calloutTitle}>{`viteza:${vehicule.speed} km/h`}</Text>
@@ -1205,7 +1225,15 @@ useEffect(() => {
             }}
             title={key}
             pinColor="green"
-          />
+          >
+                  <Image source={require('../assets/icons/pngUser.png')}
+      style={{
+          width:40,
+          height:40
+      }}/> 
+      </Marker>
+          
+
         ))}
 
       </MapView>
@@ -1288,7 +1316,7 @@ useEffect(() => {
      >
       <View style={styles.flatcontainer}>
       <View style={{ alignItems: 'center' }}>
-    <Icon name="arrow-down" size={15} color="#0FF" />
+    <Icon name="minus" size={15} color="#0FF" />
   </View>
       {filteredStops.length > 0 && loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
       <View style={styles.Slidecontainer}>
@@ -1307,8 +1335,24 @@ useEffect(() => {
                   onPress={() =>  handleBellPress(item.stop_id, item.stop_lat, item.stop_lon)}
                   >
                   <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
-                  
             </TouchableOpacity>
+
+            <TouchableOpacity 
+                  style={styles.favoriteButton}
+                  onPress={() => 
+                    {
+                      navigation.navigate('AdaugaNotififcare', {
+                        linie: numeLinie,
+                      //  statieId: statieId,
+                        statie: item.stop_name,
+                        minute: arrivalTimes[item.stop_id]
+                      });
+                    }
+                  }
+                  >
+                  <Image source={require('../assets/icons/notification.png')} style={{ width: 20, height: 20}}/>
+                  </TouchableOpacity>
+            
 
               </View>
             </View>

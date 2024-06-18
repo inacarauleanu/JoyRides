@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import {Image, Button} from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 //import Button from '../components/Button.js';
@@ -164,7 +164,7 @@ const Notificari = ({navigation}) =>{
   };
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="large" color={Colors.babyOrange}/>;
   }
     return (
         <View style={styles.container}>

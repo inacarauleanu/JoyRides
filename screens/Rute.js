@@ -134,7 +134,8 @@ const Rute = ({navigation}) => {
         navigation.navigate("VeziLinie", 
         {  
 
-          route_id: item.route_id
+          route_id: item.route_id,
+          linie: item.route_short_name
         });
       }} 
       style={styles.itemContainer}>

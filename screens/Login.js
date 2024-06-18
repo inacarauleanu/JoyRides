@@ -100,10 +100,6 @@ const toggleShowPassword = () => {
                 onPress = {login}
             />
 
-            <GoogleButton
-                isLoading={isLoading}
-                onPress = {()=>navigation.navigate("Login")}
-            />
            
         </KeyboardAwareScrollView>
         

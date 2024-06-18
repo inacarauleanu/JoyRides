@@ -10,6 +10,7 @@ import DestinationButton from '../components/DestinationButton';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {decode} from "@mapbox/polyline";
 import RenderHtml from 'react-native-render-html';
+import SlidingUpPanel from 'rn-sliding-up-panel';
 
 const LandingPage = (navigation) => {
 
@@ -207,6 +208,7 @@ const LandingPage = (navigation) => {
   );
 
   const renderStepInstructions = ({ item }) => (
+    
     <View style={styles.stepContainer}>
      {item.html_instructions ? (
       <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
@@ -257,6 +259,7 @@ const LandingPage = (navigation) => {
   const renderRouteInstructions = ({ item }) => (
     <View style={styles.routeContainer}>
       <Text>Route {item.routeIndex + 1}:</Text>
+      
       <FlatList
         data={item.legs}
         renderItem={renderLegInstructions}
@@ -495,10 +498,7 @@ useEffect (() => {
 
 {searchPressed && stepDetails.length > 0 && (
   <View style={styles.instructionsContainer}>
-          <Button
-        title="Open Google Maps"
-        onPress={openGoogleMapsDirections} // Define openGoogleMapsDirections function
-      />
+      
 <FlatList
     data={stepDetails} // The data contains the details of each route
     renderItem={renderRouteInstructions} // Function to render each route

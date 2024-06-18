@@ -16,6 +16,7 @@ import LandingPage from './LandingPage.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
+
 const Register = ({navigation}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState('')
@@ -121,7 +122,7 @@ const Register = ({navigation}) =>{
     return (
      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style = {styles.header}>
-        <Text style={styles.mainTitle}>Crează-ți un cont gratuit</Text>
+        <Text style={styles.mainTitle}>Creează-ți un cont gratuit</Text>
     </View>
 
     <View style = {styles.footer} >
@@ -196,10 +197,6 @@ const Register = ({navigation}) =>{
                 onPress = {createAccount}
             />
 
-            <GoogleButton
-                isLoading={isLoading}
-                onPress = {signInWithGoogle}
-            />
         </KeyboardAwareScrollView>
       
     </View>
