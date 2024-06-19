@@ -12,7 +12,7 @@ const CumparaBilet = ({navigation}) =>{
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [linie, setLinie] = useState(0);
-  const [mijloc, setMijloc] = useState(0);
+  const [mijloc, setMijloc] = useState("trams");
   const [routes, setRoutes] = useState([]);
   const [message, setMessage] = React.useState('');
 

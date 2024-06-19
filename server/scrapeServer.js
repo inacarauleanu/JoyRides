@@ -9,6 +9,52 @@ let tramData = {}; // Object to store scraped tram data
 let trolsData = {}; // Object to store scraped trols data
 let busesData = {}; // Object to store scraped buses data
 
+const transformKeys = (data) => {
+    const transformedData = {};
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const transformedKey = key.replace(/[.#$/\[\]]/g, '_'); 
+        transformedData[transformedKey] = data[key];
+      }
+    }
+    return transformedData;
+  };
+
+
+  const writeToDatabaseTrams = async () => {
+    try {
+      const db = getDatabase();
+      const transformedData = transformKeys(scraped_data_trams)
+      await set(ref(db, 'trams/'), {
+        transformedData
+      });
+      console.log("s-a scris pentru trams");
+    } catch (error) {
+      console.error('Error writing to Firebase Realtime Database:', error);
+    }
+  };
+
+
+const scrapeTrams = async () => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch('http://192.168.1.102:3001/scrape/trams');
+        const data = await response.json();
+        setBusStops(data);
+        console.log('Scraping completed successfully for trams');
+        await writeToDatabaseTrams();
+      };
+  
+      await fetchData();
+
+      const interval = setInterval(fetchData, 60000);
+  
+      return () => clearInterval(interval);
+    } catch (error) {
+      console.error('Error scraping trams data:', error);
+    }
+  };
+
 const updateServerData = (data) => {
     // Update server's data here
     console.log('Updating server data with scraped data:');
