@@ -331,54 +331,6 @@ useEffect(() => {
     };
 
     const [processedStations, setProcessedStations] = useState([]);
-
-    useEffect(() => {
-      const checkThreeClicksForStations = async () => {
-        const db = getDatabase();
-        const stopsRef = ref(db, 'stops');
-        const currentUser = auth.currentUser.uid;
-    
-        try {
-          const stopsSnapshot = await get(stopsRef);
-          const stopData = stopsSnapshot.val();
-    
-          if (stopData) {
-            let stationFound = false;
-    
-            Object.entries(stopData).forEach(([stopId, stopData]) => {
-              if (
-                stopData &&
-                stopData.pressedBy &&
-                stopData.pressedBy.length >= 3 &&
-                isStopIDOnThisLine(stopId) &&
-                !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
-              ) {
-                const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
-                const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
-    
-                if (!userInPressedBy && !userInPressedByNo) {
-                  if (!stationFound) {
-                    if (stopData.pressedByNo && stopData.pressedByNo.length > stopData.pressedBy.length / 2) {
-                      setShowOverlay(false);
-                    } else {
-                      setShowOverlay(true);
-                      setModalStationId(stopId);
-                      setModalStationName(stopData.stopName);
-                      stationFound = true;
-                      setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
-                    }
-                  }
-                }
-              }
-            });
-          }
-        } catch (error) {
-          console.error('Error checking clicks for stations:', error);
-        }
-      };
-    
-      checkThreeClicksForStations();
-    }, [filteredStops]);
  
   useEffect(() => {
     const checkThreeClicksForVehicles = async () => {
@@ -495,240 +447,243 @@ const navigateToStation = (latitude, longitude) => {
 
   
 const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
- // console.log("bell pressed");
-  const userId = auth.currentUser.uid; // Get the current user's ID
-  const db = getDatabase();
-  const stopRef = ref(db, 'stops/' + stopId);
-  const proximityThreshold = 2; // Example threshold in kilometers --- DE MODIFICAT PENTRU ACURATETE MAI MARE
-
-  try {
-    
-    const stopSnapshot = await get(stopRef);
-    let stopData = stopSnapshot.val();
-
-    if (!stopData) {
-
-      stopData = { 
-        lastUpdate: null,
-        pressedBy: [],
-        pressedByNo: [],
-        latitude: stopLat, 
-        longitude: stop_lon, 
-        stopName: stop_name
-       };
-    }
-
-     const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
-     console.log("distance", distance);
-
-    if (distance <= proximityThreshold) 
-    {
-
-        const currentTime = new Date().toISOString();
-        console.log(`User ${userId} is in proximity of stop ${stopId}`);
-        
-        if (!stopData.pressedBy.some(entry => entry.userId === userId)) 
-          {
-              stopData.pressedBy.push({ userId, date: currentTime });
-          }
-        
-            stopData.lastUpdate = currentTime;
-            await update(stopRef, stopData);
-            console.log(`User ${userId} pressed the bell for stop ${stopId}`);
-            alert(`Ai raportat control RATT pentru statia ${stop_name}`);
-            
+  // console.log("bell pressed");
+   const userId = auth.currentUser.uid; // Get the current user's ID
+   const db = getDatabase();
+   const controaleRef = ref(db, `stops/${stopId}/controale`);
+   const proximityThreshold = 2; 
+ 
+   try {
+     const stopSnapshot = await get(controaleRef);
+     let stopData = stopSnapshot.val();
+ 
+     if (!stopData) {
+ 
+       stopData = { 
+         lastUpdate: null,
+         pressedBy: [],
+         pressedByNo: [],
+         latitude: stopLat, 
+         longitude: stop_lon, 
+         stopName: stop_name
+        };
      }
-      else 
-      {
-       alert("Nu esti suficient de aproape pentru a performa această acțiune.");
+ 
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
+      console.log("distance", distance);
+ 
+     if (distance <= proximityThreshold) 
+     {
+ 
+         const currentTime = new Date().toISOString();
+         console.log(`User ${userId} is in proximity of stop ${stopId}`);
+         
+         if (!stopData.pressedBy.some(entry => entry.userId === userId)) 
+           {
+               stopData.pressedBy.push({ userId, date: currentTime });
+           }
+         
+             stopData.lastUpdate = currentTime;
+             await update(controaleRef, stopData);
+             console.log(`User ${userId} pressed the bell for stop ${stopId}`);
+             alert(`Ai raportat control RATT pentru statia ${stop_name}`);
+             
       }
-
-
-  } catch (error) {
-    console.error('Error handling bell press:', error);
-  }
-};
-
-const handleOverlayButtonYes = async () => {
-  console.log("Button 1 in modal pressed");
-
-  const userId = auth.currentUser.uid; 
-  const db = getDatabase();
-  const stopRef = ref(db, `stops/${modalStationId}/`);
-  const proximityThreshold = 2; 
-
-  try {
-    const stopSnapshot = await get(stopRef);
-    const stopData = stopSnapshot.val();
-
-    if (stopData) {
-      const currentTime = new Date().toISOString();
-
-      if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
-        stopData.pressedBy.push({ userId, date: currentTime });
-      }
-
-      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
-      console.log("Distance to stop:", distance);
-
-      stopData.lastUpdate = currentTime;
-
-      if (distance <= proximityThreshold) {
-        await update(stopRef, stopData);
-        console.log(`User ${userId} pressed the button at stop ${modalStationId}`);
-        setShowOverlay(false);
-        setProcessedStations(prev => [...prev, modalStationId]);
-        checkThreeClicksForStations(); // Re-run the check to see if there are other stations to process
-      } else {
-        console.log("User is not in proximity to the stop.");
-        Alert.alert("Nu esti suficient de aproape pentru a raporta.");
-      }
-    } else {
-      console.log("Stop data not found.");
-    }
-  } catch (error) {
-    console.error('Error handling button press:', error);
-  }
-};
-
-const handleOverlayButtonNo = async () => {
-
-  console.log("Button 2 in modal pressed");
-  const userId = auth.currentUser.uid; 
-
-  const db = getDatabase();
-  const stopRef = ref(db, `stops/${modalStationId}/`);
-  const proximityThreshold = 2; 
-
-  try{
-  const stopSnapshot = await get(stopRef);
-  let stopData = stopSnapshot.val();
-
-  if (!stopData.pressedByNo) {
-    stopData.pressedByNo = [];
-  }
-
-  const currentTime = new Date().toISOString();
-  if (!stopData.pressedByNo.some(entry => entry.userId === userId)) {
-    stopData.pressedByNo.push({ userId, date: currentTime });
-  }
-
-      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
-      console.log("Distance to stop:", distance);
-
-      stopData.lastUpdate = currentTime;
-
-      if (distance <= proximityThreshold) {
-
-        await update(stopRef, stopData);
-        console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
-	alert(`Ai raportat control RATT pentru statia ${modalStationName}`);
-        setShowOverlay(false);
-        setProcessedStations(prev => [...prev, modalStationId]);
-        checkThreeClicksForStations(); // Re-run the check to see if there arS
-
-      } else {
-        console.log("User is not in proximity to the stop.");
-	alert("Nu esti suficient de aproape pentru a raporta.");
-      }
-      //checkThreeClicksForStations();
-  } catch (error) {
-    console.error('Error handling button press:', error);
-  }
-};
-
-const checkThreeClicksForStations = async () => {
-  const db = getDatabase();
-  const stopsRef = ref(db, 'stops');
-  const currentUser = auth.currentUser.uid;
-
-  try {
-    const stopsSnapshot = await get(stopsRef);
-    const stopData = stopsSnapshot.val();
-
-    if (stopData) {
-      let stationFound = false;
-
-      Object.entries(stopData).forEach(([stopId, stopData]) => {
-        if (
-          stopData &&
-          stopData.pressedBy &&
-          stopData.pressedBy.length >= 3 &&
-          isStopIDOnThisLine(stopId) &&
-          !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
-        ) {
-          const userInPressedBy = stopData.pressedBy.some(entry => entry.userId === currentUser);
-          const userInPressedByNo = stopData.pressedByNo && stopData.pressedByNo.some(entry => entry.userId === currentUser);
-
-          if (!userInPressedBy && !userInPressedByNo) {
-            if (!stationFound) {
-              if (stopData.pressedByNo && stopData.pressedByNo.length > stopData.pressedBy.length / 2) {
-                setShowOverlay(false);
-              } else {
-                setShowOverlay(true);
-                setModalStationId(stopId);
-                setModalStationName(stopData.stopName);
-                stationFound = true;
-                setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
-              }
-            }
-          }
-        }
-      });
-    }
-  } catch (error) {
-    console.error('Error checking clicks for stations:', error);
-  }
-};
-useEffect(() => {
-  checkThreeClicksForStations();
-}, [filteredStops]);
-
-useEffect(() => {
-  const deleteStopsIfNotUpdated = async () => {
-    const db = getDatabase(); 
-    const stopsRef = ref(db, 'stops');
-
-    try {
-      const stopsSnapshot = await get(stopsRef);
-      const stopsData = stopsSnapshot.val();
-
-      if (stopsData) {
-        Object.entries(stopsData).forEach(([stopId, stopData]) => {
-          if (stopData && stopData.lastUpdate) {
-            const lastUpdateTimestamp = Date.parse(stopData.lastUpdate); // Convertim timpul în milisecunde
-            const currentTimestamp = new Date().getTime();
-            const twoMinutesInMillis = 2 * 60 * 1000; // 2 minute în milisecunde
-
-            // Verifică dacă ultima actualizare a fost mai veche de 2 minute
-            if (currentTimestamp - lastUpdateTimestamp > twoMinutesInMillis) {
-              // Șterge stația din Firebase
-              deleteStopFromFirebase(stopId);
-            }
-          }
-        });
-      }
-    } catch (error) {
-      console.error('Error deleting stops:', error);
-    }
-  };
-
-  const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); // Verifică la fiecare 2 minute
-
-  return () => clearInterval(intervalId);
-}, []);
-
-const deleteStopFromFirebase = async (stopId) => {
-  const db = getDatabase();
-  const stopRef = ref(db, 'stops/' + stopId);
-  
-  try {
-    await set(stopRef, null);
-    console.log(`Stop ${stopId} deleted from Firebase`);
-  } catch (error) {
-    console.error('Error deleting stop:', error);
-  }
-};
+       else 
+       {
+        alert("Nu esti suficient de aproape pentru a performa această acțiune.");
+       }
+ 
+ 
+   } catch (error) {
+     console.error('Error handling bell press:', error);
+   }
+ };
+ 
+ const handleOverlayButtonYes = async () => {
+   console.log("Button 1 in modal pressed");
+ 
+   const userId = auth.currentUser.uid; 
+   const db = getDatabase();
+   const controaleRef = ref(db, `stops/${modalStationId}/controale`);
+   const proximityThreshold = 2; 
+ 
+   try {
+     const stopSnapshot = await get(controaleRef);
+     const stopData = stopSnapshot.val();
+ 
+     if (stopData) {
+       const currentTime = new Date().toISOString();
+ 
+       if (!stopData.pressedBy.some(entry => entry.userId === userId)) {
+         stopData.pressedBy.push({ userId, date: currentTime });
+       }
+ 
+       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
+       console.log("Distance to stop:", distance);
+ 
+       stopData.lastUpdate = currentTime;
+ 
+       if (distance <= proximityThreshold) {
+         await update(controaleRef, stopData);
+         console.log(`User ${userId} pressed the button at stop ${modalStationId}`);
+         setShowOverlay(false);
+         setProcessedStations(prev => [...prev, modalStationId]);
+         checkThreeClicksForStations(); // Re-run the check to see if there are other stations to process
+       } else {
+         console.log("User is not in proximity to the stop.");
+         Alert.alert("Nu esti suficient de aproape pentru a raporta.");
+       }
+     } else {
+       console.log("Stop data not found.");
+     }
+   } catch (error) {
+     console.error('Error handling button press:', error);
+   }
+ };
+ 
+ const handleOverlayButtonNo = async () => {
+ 
+   console.log("Button 2 in modal pressed");
+   const userId = auth.currentUser.uid; 
+ 
+   const db = getDatabase();
+   const controaleRef = ref(db, `stops/${modalStationId}/controale`);
+   const proximityThreshold = 2; 
+ 
+   try {
+     const stopSnapshot = await get(controaleRef);
+     let stopData = stopSnapshot.val();
+ 
+   if (!stopData.pressedByNo) {
+     stopData.pressedByNo = [];
+   }
+ 
+   const currentTime = new Date().toISOString();
+   if (!stopData.pressedByNo.some(entry => entry.userId === userId)) {
+     stopData.pressedByNo.push({ userId, date: currentTime });
+   }
+ 
+       const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopData.latitude, stopData.longitude);
+       console.log("Distance to stop:", distance);
+ 
+       stopData.lastUpdate = currentTime;
+ 
+       if (distance <= proximityThreshold) {
+ 
+         await update(controaleRef, stopData);
+         console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
+   alert(`Ai raportat control RATT pentru statia ${modalStationName}`);
+         setShowOverlay(false);
+         setProcessedStations(prev => [...prev, modalStationId]);
+         checkThreeClicksForStations(); // Re-run the check to see if there arS
+ 
+       } else {
+         console.log("User is not in proximity to the stop.");
+   alert("Nu esti suficient de aproape pentru a raporta.");
+       }
+       //checkThreeClicksForStations();
+   } catch (error) {
+     console.error('Error handling button press:', error);
+   }
+ };
+ 
+ const checkThreeClicksForStations = async () => {
+   const db = getDatabase();
+   const stopsRef = ref(db, 'stops');
+   const currentUser = auth.currentUser.uid;
+ 
+   try {
+     const stopsSnapshot = await get(stopsRef);
+     const stopData = stopsSnapshot.val();
+ 
+     if (stopData) {
+       let stationFound = false;
+ 
+       Object.entries(stopData).forEach(([stopId, stopData]) => {
+         const controaleData = stopData.controale;
+ 
+         if (
+           controaleData &&
+           controaleData.pressedBy &&
+           controaleData.pressedBy.length >= 3 &&
+           isStopIDOnThisLine(stopId) &&
+           !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
+         ) {
+           const userInPressedBy = controaleData.pressedBy.some(entry => entry.userId === currentUser);
+           const userInPressedByNo = controaleData.pressedByNo && controaleData.pressedByNo.some(entry => entry.userId === currentUser);
+ 
+           if (!userInPressedBy && !userInPressedByNo) {
+             if (!stationFound) {
+               if (controaleData.pressedByNo && controaleData.pressedByNo.length > controaleData.pressedBy.length / 2) {
+                 setShowOverlay(false);
+               } else {
+                 setShowOverlay(true);
+                 setModalStationId(stopId);
+                 setModalStationName(controaleData.stopName);
+                 stationFound = true;
+                 setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
+               }
+             }
+           }
+         }
+       });
+     }
+   } catch (error) {
+     console.error('Error checking clicks for stations:', error);
+   }
+ };
+ useEffect(() => {
+   checkThreeClicksForStations();
+ }, [filteredStops]);
+ 
+ useEffect(() => {
+   const deleteStopsIfNotUpdated = async () => {
+     const db = getDatabase(); 
+     const stopsRef = ref(db, 'stops');
+ 
+     try {
+       const stopsSnapshot = await get(stopsRef);
+       const stopsData = stopsSnapshot.val();
+ 
+       if (stopsData) {
+         Object.entries(stopsData).forEach(([stopId, stopData]) => {
+           const controaleData = stopData.controale;
+ 
+           if (controaleData && controaleData.lastUpdate) {
+             const lastUpdateTimestamp = Date.parse(controaleData.lastUpdate); 
+             const currentTimestamp = new Date().getTime();
+             const twoMinutesInMillis = 2 * 60 * 1000; // 2 minute în milisecunde
+ 
+             // Verifică dacă ultima actualizare a fost mai veche de 2 minute
+             if (currentTimestamp - lastUpdateTimestamp > twoMinutesInMillis) {
+               // Șterge stația din Firebase
+               deleteStopFromFirebase(stopId);
+             }
+           }
+         });
+       }
+     } catch (error) {
+       console.error('Error deleting stops:', error);
+     }
+   };
+ 
+   const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); // Verifică la fiecare 2 minute
+ 
+   return () => clearInterval(intervalId);
+ }, []);
+ 
+ const deleteStopFromFirebase = async (stopId) => {
+   const db = getDatabase();
+   const stopRef = ref(db, `stops/${stopId}/controale`);
+   
+   try {
+     await set(stopRef, null);
+     console.log(`Stop ${stopId} deleted from Firebase`);
+   } catch (error) {
+     console.error('Error deleting stop:', error);
+   }
+ };
 
 
 const handleMarkerPress = (vehicleId) => {
