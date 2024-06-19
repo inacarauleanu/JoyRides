@@ -49,7 +49,7 @@ const Welcome = ({navigation}) =>{
           />
          </View>
          <View style = {styles.helpingText}>
-                    <Text style={styles.inputText}>un tagline pentru aplicatie <Text onPress = {()=>navigation.navigate("ForgotPassword")} style={styles.helpingTextBold}>aici.</Text></Text> 
+                    <Text style={styles.inputText}>Transportul public pentru tot publicul </Text> 
                 </View>
 
             <Button
