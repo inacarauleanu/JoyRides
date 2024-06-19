@@ -4,6 +4,7 @@ import * as Location from 'expo-location';
 import { auth } from "../firebase-config.js";
 import { getDatabase, ref, set, get, update, push, remove, onValue} from "firebase/database";
 import { Platform} from 'react-native';
+import * as Notifications from 'expo-notifications';
 
 const BACKGROUND_LOCATION_TASK = 'BACKGROUND_LOCATION_TASK';
 
@@ -24,12 +25,37 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async () => {
       response: 'da',
     });
 
-   // return BackgroundFetch.Result.NewData;
   } catch (error) {
     console.log('Error in background location task:', error);
     return BackgroundFetch.Result.Failed;
   }
 });
+
+const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK';
+
+TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async ({ data, error, executionInfo }) => {
+  if (error) {
+    console.error('Eroare în task-ul de notificare în background:', error);
+    return;
+  }
+
+  console.log('Notificare primită în background:', data);
+
+  // Extragem datele notificării (presupunând că notificarea conține titlul și mesajul)
+  const { title, body } = data;
+
+  // Programăm notificarea push
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: title || 'Sosire iminentă!',
+      body: body || 'Se apropie momentul sosirii la stația X.',
+      sound: 'default',
+    },
+    trigger: null, // Trimiterea imediată
+  });
+});
+
+Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
 
 const registerBackgroundTask = async () => {
   try {

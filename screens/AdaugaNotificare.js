@@ -33,7 +33,7 @@ const AdaugaNotififcare = ({navigation}) =>{
     const [statie, setStatie] = useState(0);
     const [trams, setTrams] = useState([]);
     const [stops, setStops] = useState([]);
-    const [mijloc, setMijloc] = useState(0);
+    const [mijloc, setMijloc] = useState("trams");
     const [minute, setMinute] = useState('00');
     const [routes, setRoutes] = useState([]);
     const numbersArray = Array.from({ length: 60 }, (_, i) => ({ label: (i + 1).toString(), value: (i + 1).toString() }));
@@ -158,6 +158,7 @@ const dropdownData = routes.map(route => ({
               content: {
                 title: "Notificare Transport",
                 body: `Linia ${linie} va ajunge în ${minute} minute.`,
+                data: { data: 'goes here', test: { test1: 'more data' } },
               },
               trigger: { seconds: minute * 60 },
             });
