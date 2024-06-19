@@ -103,6 +103,7 @@ const VeziLinie = ({ route, navigation }) => {
 
 const id_ruta = route.params.route_id;
 const numeLinie = route.params.linie;
+const mijloc = route.params.mijloc;
 
   useEffect(() => {
     const getLocation = async () => {
@@ -1305,9 +1306,11 @@ useEffect(() => {
                     {
                       navigation.navigate('AdaugaNotififcare', {
                         linie: numeLinie,
-                      //  statieId: statieId,
+                        statieId: item.stop_id,
                         statie: item.stop_name,
-                        minute: arrivalTimes[item.stop_id]
+                        minute: arrivalTimes[item.stop_id],
+                        mijloc: mijloc,
+                        id_ruta: id_ruta
                       });
                     }
                   }
