@@ -185,8 +185,8 @@ const Notificari = ({navigation}) =>{
             <View style={{ padding: 10 }}>
               {/*<Text style={styles.name}>{`${item.data_efectuare}`}</Text>*/}
               {/*<Text style={styles.name}>{`${item.ora_efectuare}`}</Text>*/} 
-              <Text style={styles.name}>{`${item.linie}`}</Text>
-              {/*<Text>{`Statie: ${item.statie}`}</Text>*/}
+              <Text style={styles.name}>Linia {`${item.linie}`}</Text>
+              <Text>{`Statie: ${item.statie}`}</Text>
               <Text>{`Timp: ${item.timp} minute`}</Text>
             </View>
               <TouchableOpacity 

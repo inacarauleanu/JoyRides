@@ -135,7 +135,8 @@ const Rute = ({navigation}) => {
         {  
 
           route_id: item.route_id,
-          linie: item.route_short_name
+          linie: item.route_short_name,
+          mijloc: mijloc
         });
       }} 
       style={styles.itemContainer}>
