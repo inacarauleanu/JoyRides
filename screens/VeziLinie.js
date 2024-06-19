@@ -47,6 +47,8 @@ const VeziLinie = ({ route, navigation }) => {
   const [heading, setHeading] = useState(null);
   const [butonStopShare, setButonStopShare] = useState(false);
   const [locations, setLocations] = useState({});
+  const [modalStationName, setModalStationName] = useState(null);
+  const [selectedStopName, setSelectedStopName] = useState(null);
 
 
 
@@ -361,6 +363,7 @@ useEffect(() => {
                     } else {
                       setShowOverlay(true);
                       setModalStationId(stopId);
+                      setModalStationName(stopData.stopName);
                       stationFound = true;
                       setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
                     }
@@ -491,7 +494,7 @@ const navigateToStation = (latitude, longitude) => {
 };
 
   
-const handleBellPress = async (stopId, stopLat, stop_lon) => {
+const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
  // console.log("bell pressed");
   const userId = auth.currentUser.uid; // Get the current user's ID
   const db = getDatabase();
@@ -511,6 +514,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
         pressedByNo: [],
         latitude: stopLat, 
         longitude: stop_lon, 
+        stopName: stop_name
        };
     }
 
@@ -531,7 +535,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon) => {
             stopData.lastUpdate = currentTime;
             await update(stopRef, stopData);
             console.log(`User ${userId} pressed the bell for stop ${stopId}`);
-            alert(`Ai raportat control RATT pentru statia ${stopId}`);
+            alert(`Ai raportat control RATT pentru statia ${stop_name}`);
             
      }
       else 
@@ -618,7 +622,7 @@ const handleOverlayButtonNo = async () => {
 
         await update(stopRef, stopData);
         console.log(`User ${userId} pressed the button NO at stop ${modalStationId}`);
-	alert(`Ai raportat control RATT pentru statia ${modalStationId}`);
+	alert(`Ai raportat control RATT pentru statia ${modalStationName}`);
         setShowOverlay(false);
         setProcessedStations(prev => [...prev, modalStationId]);
         checkThreeClicksForStations(); // Re-run the check to see if there arS
@@ -663,6 +667,7 @@ const checkThreeClicksForStations = async () => {
               } else {
                 setShowOverlay(true);
                 setModalStationId(stopId);
+                setModalStationName(stopData.stopName);
                 stationFound = true;
                 setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
               }
@@ -734,9 +739,10 @@ const handleMarkerPress = (vehicleId) => {
   setModalVisible(true);
 };
 
-const handleStopMarkerPress = (stop_id) => {
+const handleStopMarkerPress = (stop_id, stop_name) => {
   //const selected = vehicles.find(vehicle => vehicle.id === vehicleId);
   setSelectedStopId(stop_id);
+  setSelectedStopName(stop_name);
  // setSelectedVehicle(selected);
  // console.log("vehicul selectat", selected);
   setStopModalVisible(true);
@@ -1084,7 +1090,8 @@ useEffect(() => {
             <View style={styles.stopContainer}>
               <View style={styles.stopItem}>
                 <Text style={styles.stopName}>{id_headsign}</Text>
-                <Text style={styles.arrivalTime}>{id_trip}</Text>
+               {/* <Text style={styles.arrivalTime}>{id_trip}</Text> */}
+               <Icon name="refresh" size={15} color="#C1CDCF" />
               </View> 
             </View>
             </TouchableOpacity>
@@ -1102,7 +1109,7 @@ useEffect(() => {
 
 {showOverlay && (
         <View style={styles.overlayContent}>
-          <Text>Three users have pressed the button for station {modalStationId}!</Text>
+          <Text>Mai mulți utilizatori au raportat control pentru stația {modalStationName}! Mai este acolo?</Text>
           <Button onPress={handleOverlayButtonYes} title="Este tot acolo" color="#841584" />
           <Button onPress={handleOverlayButtonNo} title="Nu mai este" color="#33D7FF" />
           <View style={styles.progressBarContainer}>
@@ -1113,7 +1120,7 @@ useEffect(() => {
 
       {showOverlayVehicul && (
         <View style={styles.overlayContent}>
-          <Text>Three users have pressed the button for vehicle {selectedVehicleIdForOverlay}!</Text>
+          <Text>Mai mulți utilizatori au raportat un control în vehiculul {selectedVehicleIdForOverlay}! Mai este acolo?</Text>
           <Button onPress={handleModalButtonYes} title="Este tot acolo" color="#841584" />
           <Button onPress={handleModalButtonNo} title="Nu mai este" color="#33D7FF" />
           <View style={styles.progressBarContainer}>
@@ -1157,7 +1164,7 @@ useEffect(() => {
               latitude: shape.shape_pt_lat,
               longitude: shape.shape_pt_lon
             }))}
-            strokeColor="#FF0000"
+            strokeColor="#195EC1"
             strokeWidth={3}
           />
         )}
@@ -1171,12 +1178,12 @@ useEffect(() => {
             }}
            // title={stop.stop_name}
             tracksViewChanges = {false}
-            onPress={() =>handleStopMarkerPress(stop.stop_id)}
+            onPress={() =>handleStopMarkerPress(stop.stop_id, stop.stop_name)}
           >
           <Image source={require('../assets/icons/station.png')}
       style={{
-          width:20,
-          height:20
+          width:15,
+          height:15
       }}/>
         <Callout tooltip>
           <View style={styles.calloutContainer}>
@@ -1292,7 +1299,7 @@ useEffect(() => {
                   <Image source={require('../assets/icons/close.png')} style={{ width: 30, height: 30}}/>
                   
             </TouchableOpacity>
-            <Text style={styles.modalText}>Ce ai vrea să raportrezi despre statia {selectedStopId} ?</Text>
+            <Text style={styles.modalText}>Ce ai vrea să raportrezi despre statia {selectedStopName} ?</Text>
             <View style={styles.buttonRow}>
             <View style={styles.buttonContainer}>
             <TouchableOpacity 
@@ -1316,7 +1323,7 @@ useEffect(() => {
      >
       <View style={styles.flatcontainer}>
       <View style={{ alignItems: 'center' }}>
-    <Icon name="minus" size={15} color="#0FF" />
+    <Icon name="minus" size={15} color="#C1CDCF" />
   </View>
       {filteredStops.length > 0 && loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
       <View style={styles.Slidecontainer}>
@@ -1332,7 +1339,7 @@ useEffect(() => {
                 <Text style={styles.arrivalTime}>{arrivalTimes[item.stop_id]}</Text>
                 <TouchableOpacity 
                   style={styles.favoriteButton}
-                  onPress={() =>  handleBellPress(item.stop_id, item.stop_lat, item.stop_lon)}
+                  onPress={() =>  handleBellPress(item.stop_id, item.stop_lat, item.stop_lon, item.stop_name)}
                   >
                   <Image source={require('../assets/icons/collector.png')} style={{ width: 20, height: 20}}/>
             </TouchableOpacity>
