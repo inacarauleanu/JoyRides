@@ -11,6 +11,7 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as BackgroundFetch from 'expo-background-fetch';
 import { startBackgroundLocationUpdates, stopBackgroundLocationUpdates } from "./BackgroundTasks.js";
 import * as Notifications from "expo-notifications";
+import RatingComponent from "../components/RatingComponent.js";
 
 
 const VeziLinie = ({ route, navigation }) => {
@@ -1037,6 +1038,20 @@ useEffect(() => {
   });
 };*/
 
+const [showRating, setShowRating] = useState(false);
+
+const handleAglomerație = () => {
+  setShowRating(!showRating); 
+};
+
+const handleRatingChange = (rating) => {
+  console.log(`Rating changed to: ${rating}`);
+};
+
+const navigateToStreetView = (stop_id, stop_name, lat, lng) => {
+  navigation.navigate('VeziStatie', { stop_id, stop_name, lat, lng });
+};
+
   return (
     <View style={styles.container}>
       {/*<Text style={styles.lineTitle}>{lineParams.line}</Text>*/}
@@ -1265,6 +1280,20 @@ useEffect(() => {
                   <Image source={require('../assets/icons/share-location.png')} style={{ width: 30, height: 30}}/>
                   <Text style={styles.buttonText}>Mijloc lipsă</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                  style={styles.favoriteButtonModal}
+                  onPress={handleAglomerație}
+                  >
+                    
+                  <Image source={require('../assets/icons/crowde.png')} style={{ width: 30, height: 30}}/>
+                  <Text style={styles.buttonText}>Aglomerație</Text>
+            </TouchableOpacity>
+            {showRating && (
+        <View style={styles.ratingContainer}>
+          <Text style={styles.title}>Cât de aglomerată e stația?</Text>
+          <RatingComponent stopId={selectedStopId} onRatingChange={handleRatingChange} />
+        </View>
+      )}
             </View>
             </View>
             </View>
@@ -1288,7 +1317,7 @@ useEffect(() => {
           keyExtractor={(item) => item.stop_id}
           renderItem={({ item }) => (
             <TouchableOpacity       
-            onPress={() => navigateToStation(item.stop_lat, item.stop_lon)}>
+            onPress={() =>  navigateToStreetView(item.stop_id, item.stop_name, item.stop_lat, item.stop_lon)}>
             <View style={styles.stopContainer}>
               <View style={styles.stopItem}>
                 <Text style={styles.stopName}>{item.stop_name}</Text>
@@ -1355,6 +1384,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
+  },
+  ratingContainer: {
+    marginTop: 20,
+    alignItems: 'center',
   },
   flatcontainer: {
     flex: 1,
