@@ -183,7 +183,7 @@ const AdaugaNotififcare = ({navigation, route}) =>{
           if(mijloc == "buses") { rute = data.filter(obj => obj.route_type === 3); }
 
         
-          console.log(rute);
+        //  console.log(rute);
           setRoutes(rute);
 
 
@@ -220,7 +220,7 @@ const AdaugaNotififcare = ({navigation, route}) =>{
           const data = await response.json();
           let tripuri = data.filter(obj => obj.route_id === id_ruta);
 
-          console.log("tripuri", tripuri);
+         // console.log("tripuri", tripuri);
           setTrips(tripuri);
           if (tripuri.length > 0) {
             let id_trip = tripuri[0].trip_id;
@@ -256,7 +256,7 @@ const AdaugaNotififcare = ({navigation, route}) =>{
       const data = await response.json();
       let stops = data.filter(obj => obj.trip_id === id_trip);
 
-      console.log("STOPS", stops);
+     // console.log("STOPS", stops);
       setStops(stops);
       setLoading(false);
     } catch (error) {
@@ -288,7 +288,7 @@ const getStopsNames = async (stops) => {
       return stopA.stop_sequence - stopB.stop_sequence;
     });
  
-    console.log("STOPS", filteredStops);
+    //console.log("STOPS", filteredStops);
     setFilteredStops(filteredStops);
     setLoading(false);
 

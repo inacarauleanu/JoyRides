@@ -19,6 +19,7 @@ import VeziBilet from '../screens/VeziBilet.js';
 import VeziLinie from '../screens/VeziLinie.js';
 import AdaugaNotififcare from '../screens/AdaugaNotificare.js';
 import VeziAbonament from '../screens/VeziAbonament';
+import VeziStatie from '../screens/VeziStatie';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -153,6 +154,7 @@ export default function UserStack() {
         <Stack.Screen name="VeziLinie" component={VeziLinie} options={{ headerShown: false }} />
         <Stack.Screen name="AdaugaNotififcare" component={AdaugaNotififcare} options={{ headerShown: false }} />
         <Stack.Screen name="VeziAbonament" component={VeziAbonament} options={{ headerShown: false }} />
+        <Stack.Screen name="VeziStatie" component={VeziStatie} options={{ headerShown: false }} />
       </Stack.Navigator>
       
       
