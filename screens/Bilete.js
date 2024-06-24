@@ -11,6 +11,7 @@ import axios from 'axios';
 import { getStorage, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { ref as sRef } from 'firebase/storage';
 import uuid from 'react-native-uuid';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Bilete = ({navigation}) =>{
 
@@ -314,6 +315,7 @@ const Bilete = ({navigation}) =>{
   
 
     return (
+      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
       <View style={styles.container}>
       <Text style={styles.title}>{selectedIndexes == 0 ? 'Biletele tale' : 'Abonamentele tale' }</Text>
       <ButtonGroup
@@ -441,6 +443,7 @@ const Bilete = ({navigation}) =>{
         </View>
       )}
     </View>
+    </SafeAreaView>
       );
     };
 
@@ -449,7 +452,6 @@ const Bilete = ({navigation}) =>{
         flex: 1,
         padding: 20,
         backgroundColor: '#ffffff',
-        marginTop: 35,
         alignContent: "center",
         alignItems: 'center'
       },

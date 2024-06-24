@@ -449,8 +449,8 @@ const navigateToStation = (latitude, longitude) => {
 
   
 const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
-  // console.log("bell pressed");
-   const userId = auth.currentUser.uid; // Get the current user's ID
+
+   const userId = auth.currentUser.uid; 
    const db = getDatabase();
    const controaleRef = ref(db, `stops/${stopId}/controale`);
    const proximityThreshold = 2; 
@@ -471,7 +471,8 @@ const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
         };
      }
  
-      const distance = haversine(currentLocation.latitude, currentLocation.longitude, stopLat, stop_lon);
+      const distance = haversine(currentLocation.latitude, currentLocation.longitude,
+         stopLat, stop_lon);
       console.log("distance", distance);
  
      if (distance <= proximityThreshold) 
@@ -610,21 +611,24 @@ const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
            controaleData.pressedBy &&
            controaleData.pressedBy.length >= 3 &&
            isStopIDOnThisLine(stopId) &&
-           !processedStations.includes(stopId) // Verifică dacă stația nu a fost deja procesată
+           !processedStations.includes(stopId) 
          ) {
-           const userInPressedBy = controaleData.pressedBy.some(entry => entry.userId === currentUser);
-           const userInPressedByNo = controaleData.pressedByNo && controaleData.pressedByNo.some(entry => entry.userId === currentUser);
+           const userInPressedBy = controaleData.pressedBy.some
+           (entry => entry.userId === currentUser);
+           const userInPressedByNo = controaleData.pressedByNo && 
+           controaleData.pressedByNo.some(entry => entry.userId === currentUser);
  
            if (!userInPressedBy && !userInPressedByNo) {
              if (!stationFound) {
-               if (controaleData.pressedByNo && controaleData.pressedByNo.length > controaleData.pressedBy.length / 2) {
+               if (controaleData.pressedByNo && controaleData.pressedByNo.length 
+                > controaleData.pressedBy.length / 2) {
                  setShowOverlay(false);
                } else {
                  setShowOverlay(true);
                  setModalStationId(stopId);
                  setModalStationName(controaleData.stopName);
                  stationFound = true;
-                 setProcessedStations(prev => [...prev, stopId]); // Adaugă stația la lista procesată
+                 setProcessedStations(prev => [...prev, stopId]); 
                }
              }
            }
@@ -655,11 +659,10 @@ const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
            if (controaleData && controaleData.lastUpdate) {
              const lastUpdateTimestamp = Date.parse(controaleData.lastUpdate); 
              const currentTimestamp = new Date().getTime();
-             const twoMinutesInMillis = 2 * 60 * 1000; // 2 minute în milisecunde
- 
-             // Verifică dacă ultima actualizare a fost mai veche de 2 minute
+             const twoMinutesInMillis = 5 * 60 * 1000; 
+
              if (currentTimestamp - lastUpdateTimestamp > twoMinutesInMillis) {
-               // Șterge stația din Firebase
+
                deleteStopFromFirebase(stopId);
              }
            }
@@ -670,7 +673,7 @@ const handleBellPress = async (stopId, stopLat, stop_lon, stop_name) => {
      }
    };
  
-   const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); // Verifică la fiecare 2 minute
+   const intervalId = setInterval(deleteStopsIfNotUpdated, 5 * 60 * 1000); 
  
    return () => clearInterval(intervalId);
  }, []);
@@ -1151,11 +1154,19 @@ const navigateToStreetView = (stop_id, stop_name, lat, lng) => {
             tracksViewChanges = {false}
             onPress={() =>handleStopMarkerPress(stop.stop_id, stop.stop_name)}
           >
-          <Image source={require('../assets/icons/station.png')}
+
+      {modalStationId == stop.stop_id ?
+      <Image source={require('../assets/icons/collector.png')}
       style={{
           width:15,
           height:15
       }}/>
+       : (<Image source={require('../assets/icons/station.png')}
+       style={{
+           width:15,
+           height:15
+       }}/>)}
+
         <Callout tooltip>
           <View style={styles.calloutContainer}>
             <Text style={styles.calloutTitle}>{stop.stop_name}</Text>

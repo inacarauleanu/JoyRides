@@ -11,6 +11,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import {decode} from "@mapbox/polyline";
 import RenderHtml from 'react-native-render-html';
 import SlidingUpPanel from 'rn-sliding-up-panel';
+import { Colors } from '../constants';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LandingPage = (navigation) => {
 
@@ -198,12 +200,12 @@ const LandingPage = (navigation) => {
      {item.html_instructions ? (
       <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
     ) : (
-      <Text>No instructions available</Text>
+      <Text>Nicio instrucțiune disponibilă</Text>
     )}
-      <Text>Distance: {item.distance}</Text>
-      <Text>Duration: {item.duration}</Text>
-      <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
-      <Text>End Location: {item.endLocation.lat}, {item.endLocation.lng}</Text>
+      <Text>Distanță: {item.distance}</Text>
+      <Text>Durată: {item.duration}</Text>
+     {/* <Text>Locație plecare: {item.startLocation.lat}, {item.startLocation.lng}</Text>
+      <Text>Locație sosire: {item.endLocation.lat}, {item.endLocation.lng}</Text>*/}
     </View>
   );
 
@@ -213,52 +215,55 @@ const LandingPage = (navigation) => {
      {item.html_instructions ? (
       <RenderHtml contentWidth={300} source={{ html: item.html_instructions }} />
     ) : (
-      <Text>No instructions available</Text>
+      <Text>Nicio instrucțiune disponibilă</Text>
     )}
-      <Text>Distance: {item.distance}</Text>
-      <Text>Duration: {item.duration}</Text>
-      <Text>Start Location: {item.startLocation.lat}, {item.startLocation.lng}</Text>
-      <Text>End Location: {item.endLocation.lat}, {item.endLocation.lng}</Text>
+
+      <Text>Distanță: {item.distance}</Text>
+      <Text>Durată: {item.duration}</Text>
+      {/*<Text>Locație start: {item.startLocation.lat}, {item.startLocation.lng}</Text>
+      <Text>Locație finală: {item.endLocation.lat}, {item.endLocation.lng}</Text>*/}
       {item.transitDetails && (
         <View style={styles.transitDetails}>
-          <Text>Bus Line: {item.transitDetails.line.short_name}</Text>
-          <Text>Departure Stop: {item.transitDetails.departure_stop.name}</Text>
-          <Text>Departure Time: {item.transitDetails.departure_time.text}</Text>
-          <Text>Arrival Stop: {item.transitDetails.arrival_stop.name}</Text>
-          <Text>Arrival Time: {item.transitDetails.arrival_time.text}</Text>
-          <Text>Number of Stops: {item.transitDetails.num_stops}</Text>
+          <Text>Linia: {item.transitDetails.line.short_name}</Text>
+          <Text>Stop plecare: {item.transitDetails.departure_stop.name}</Text>
+          <Text>Ora plecare: {item.transitDetails.departure_time.text}</Text>
+          <Text>Stop sosire: {item.transitDetails.arrival_stop.name}</Text>
+          <Text>Ora sosire: {item.transitDetails.arrival_time.text}</Text>
+          <Text>Număr de opriri: {item.transitDetails.num_stops}</Text>
         </View>
       )}
-      {item.subSteps.length > 0 && (
+      {/*item.subSteps.length > 0 && (
         <FlatList
           data={item.subSteps}
           renderItem={renderSubSteps}
-          keyExtractor={(subStep, index) => `subStep-${index}`} // Unique key for subStep
+          keyExtractor={(subStep, index) => `subStep-${index}`}  
         />
-      )}
+      )*/}
     </View>
   );
 
   const renderLegInstructions = ({ item }) => (
     <View style={styles.legContainer}>
-      <Text>Leg {item.legIndex + 1}:</Text>
-      <Text>From: {item.startAddress}</Text>
-      <Text>To: {item.endAddress}</Text>
-      <Text>Departure Time: {item.departureTime}</Text>
-      <Text>Arrival Time: {item.arrivalTime}</Text>
-      <Text>Distance: {item.distance}</Text>
-      <Text>Duration: {item.duration}</Text>
+    {/*<Text>Pasul {item.legIndex + 1}:</Text>
+      <Text>De la: {item.startAddress}</Text>
+      <Text>Până la: {item.endAddress}</Text>
+      <Text>Timp de plecare: {item.departureTime}</Text>
+      <Text>Timp de sosire: {item.arrivalTime}</Text>
+      <Text>Distanță: {item.distance}</Text>
+      <Text>Durată: {item.duration}</Text>*/}
       <FlatList
         data={item.steps}
         renderItem={renderStepInstructions}
-        keyExtractor={(step, index) => `step-${item.legIndex}-${index}`} // Unique key for step
+        keyExtractor={(step, index) => `step-${item.legIndex}-${index}`} 
       />
     </View>
   );
 
   const renderRouteInstructions = ({ item }) => (
+
+
     <View style={styles.routeContainer}>
-      <Text>Route {item.routeIndex + 1}:</Text>
+      <Text>Ruta {item.routeIndex + 1}:</Text>
       
       <FlatList
         data={item.legs}
@@ -266,6 +271,7 @@ const LandingPage = (navigation) => {
         keyExtractor={(leg, index) => `leg-${item.routeIndex}-${index}`} // Unique key for leg
       />
     </View>
+
   );
 
   
@@ -377,7 +383,7 @@ useEffect (() => {
         <GooglePlacesAutocomplete
         placeholder='Destinație'
         onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
+
           console.log(data, details);
           setDestinationAddress(data.description);
         }}
@@ -494,17 +500,28 @@ useEffect (() => {
     />
   </>
 )}
+
+
 </MapView>
 
 {searchPressed && stepDetails.length > 0 && (
+      <SlidingUpPanel
+      ref={c => this._panel = c}
+      draggableRange={{ top: 500, bottom: 200 }} 
+      allowDragging={true}
+      showBackdrop={false}
+      >
   <View style={styles.instructionsContainer}>
-      
+  <View style={{ alignItems: 'center' }}>
+    <Icon name="minus" size={15} color="#C1CDCF" />
+  </View>
 <FlatList
-    data={stepDetails} // The data contains the details of each route
-    renderItem={renderRouteInstructions} // Function to render each route
-    keyExtractor={(route, index) => `route-${index}`} // Unique key for each route
+    data={stepDetails} 
+    renderItem={renderRouteInstructions} 
+    keyExtractor={(route, index) => `route-${index}`} 
   />
 </View>
+</SlidingUpPanel>
       )}
       
     </View>
@@ -513,13 +530,17 @@ useEffect (() => {
   };
 
   const styles = StyleSheet.create(
+    
     {
       container:{
         flex:1,
       },
+      routeContainer:{
+        alignItems: 'center'
+      },
       mapPressed: {
         width: '100%',
-        height: '60%',
+        height: '100%',
       },
   
       mapUnPressed: {
@@ -567,20 +588,20 @@ useEffect (() => {
       },
   
       instructionsContainer: {
-      flex: 1, // Takes the remaining space
+      flex: 1, 
       backgroundColor: 'white',
       borderRadius: 10,
       padding: 10,
     },
     legContainer: {
       marginBottom: 20,
-      backgroundColor: '#f0f0f0',
+      backgroundColor: Colors.babyOrange,
       padding: 10,
       borderRadius: 10,
     },
     stepContainer: {
       marginBottom: 10,
-      backgroundColor: '#e0e0e0',
+      backgroundColor: Colors.white,
       padding: 10,
       borderRadius: 10,
     },

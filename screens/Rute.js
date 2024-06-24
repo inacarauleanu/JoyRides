@@ -105,6 +105,7 @@ const Rute = ({navigation}) => {
   };
 
   return (
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style={styles.container}>
       <Text style={styles.title}>Rute</Text>
       <ButtonGroup
@@ -154,6 +155,7 @@ const Rute = ({navigation}) => {
 </View>
 </View>
   </View>
+  </SafeAreaView>
 
   );
 };

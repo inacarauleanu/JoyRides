@@ -5,6 +5,7 @@ import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { updateEmail, updatePassword, getAuth, signOut } from 'firebase/auth';
 import { Colors, Sizes, Fonts } from '../constants/styles.js';
 import { Button } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Profil = () => {
   
@@ -44,7 +45,8 @@ const Profil = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
+      <View style={styles.container}>
       <Text style={styles.title}>Profil Utilizator</Text>
       <Text style={styles.label}>Email curent: {user?.email}</Text>
       <TextInput
@@ -88,7 +90,8 @@ const Profil = () => {
         titleStyle={styles.titlu}
         onPress={() => signOut(auth)}
       />
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#ffffff',
-    marginTop: 35,
     alignItems: 'center',
   },
   btn: {
