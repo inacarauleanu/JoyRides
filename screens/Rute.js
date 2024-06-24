@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   longName: {
     fontSize: 16,
-    color: 'gray', // Adjust color as needed
+    color: 'gray',
   },
   name: {
     fontSize: 18,
