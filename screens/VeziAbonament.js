@@ -6,6 +6,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -107,6 +108,7 @@ const VeziAbonament = ({ route }) => {
  // console.log(mijloc);
 
   return (
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style={styles.container}>
       <Text style={styles.title}>Detalii Abonament</Text>
       <Text style={styles.name}>{nume}</Text>
@@ -133,6 +135,7 @@ const VeziAbonament = ({ route }) => {
         iconRight={true}
       />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -141,7 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#ffffff',
-    marginTop: 35,
     alignItems: 'center',
   },
   title: {

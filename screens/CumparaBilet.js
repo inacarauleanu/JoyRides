@@ -5,6 +5,7 @@ import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { ButtonGroup, Button, Image } from 'react-native-elements';
 import { Dropdown } from 'react-native-element-dropdown';
 import * as SMS from 'expo-sms';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CumparaBilet = ({navigation}) =>{
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -60,19 +61,15 @@ console.error = function(...args) {
   const sendSMS = async () => {
     
     const mesaj = selectedIndex === 0 ? `B${message}` : `ZI`;
-   // console.log("LINIE",message);
+
     const isAvailable = await SMS.isAvailableAsync();
 
     if (isAvailable) {
       const { result } = await SMS.sendSMSAsync(
-        ['7442'], // numărul de telefon
-       mesaj // textul mesajului
+        ['7442'],
+       mesaj 
       );
-      if (result === 'sent') {
-       // Alert.alert('Mesaj trimis cu succes!');
-      } else {
-       // Alert.alert('Mesajul nu a fost trimis.');
-      }
+
     } else {
       Alert.alert('Funcția de trimitere SMS nu este disponibilă pe acest dispozitiv.');
     }
@@ -84,6 +81,7 @@ console.error = function(...args) {
   }));
 
     return ( 
+      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
         <View style={styles.container}>
 
       <Text style={styles.title}>Configurează-ți biletul</Text>
@@ -181,6 +179,7 @@ console.error = function(...args) {
                 iconRight = 'true'
             />
         </View>
+        </SafeAreaView>
       );
     };
 
@@ -190,7 +189,7 @@ console.error = function(...args) {
           flex: 1,
           padding: 20,
           backgroundColor: '#ffffff',
-          marginTop: 35,
+
 
         },
         pickCont: {

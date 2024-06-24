@@ -10,6 +10,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import uuid from 'react-native-uuid';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -347,14 +348,11 @@ const dropdownDataStops = filteredStops.map(stop => ({
           }
 
           async function schedulePushNotificationParam(linie, statie, minuteParametru, minute) {
-            console.log("s-a trimis notificarea");
-          
+
             let triggerSeconds;
-            
-            // Verificăm tipul și convertim minuteParametru la minute totale
-           // Verificăm tipul și convertim minuteParametru la secunde totale
+
               if (typeof minuteParametru === 'string' && minuteParametru.includes(':')) {
-                // Dacă este HH:MM, convertim în secunde
+
                 const [hours, mins] = minuteParametru.split(':').map(Number);
 
                 if (isNaN(hours) || isNaN(mins)) {
@@ -363,14 +361,12 @@ const dropdownDataStops = filteredStops.map(stop => ({
                 }
                 console.log("MINUTE", mins);
                 const currentMinutes = new Date().getMinutes();
-                const totalSeconds = mins; // Transformăm ora și minutele în secunde
-                const minuteInSeconds = minute; // Transformăm minutele în secunde
-                triggerSeconds = (totalSeconds - currentMinutes - minuteInSeconds) * 60; // Calculăm când trebuie să fie notificarea
-            
-                console.log(`HH:MM converted to total seconds: ${totalSeconds}, trigger in ${triggerSeconds} seconds`);
+                const totalSeconds = mins; 
+                const minuteInSeconds = minute; 
+                triggerSeconds = (totalSeconds - currentMinutes - minuteInSeconds) * 60; 
             
             } else {
-              // Dacă este deja în minute, păstrăm valoarea
+
               const totalMinutes = parseInt(minuteParametru, 10);
               triggerSeconds = (totalMinutes - minute) * 60; // Calculăm când trebuie să fie notificarea
             }
@@ -419,6 +415,7 @@ const dropdownDataStops = filteredStops.map(stop => ({
           };
          // console.log(mijloc);
     return (
+      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
         <View style={styles.container}>
           <Text style={styles.title}>Adaugă Notificare</Text>
           <Text style={styles.semititle}>Mijlocul de transport</Text>
@@ -574,6 +571,7 @@ const dropdownDataStops = filteredStops.map(stop => ({
 
 
         </View>
+        </SafeAreaView>
       );
     };
 
@@ -582,7 +580,6 @@ const dropdownDataStops = filteredStops.map(stop => ({
           flex: 1,
           padding: 20,
           backgroundColor: '#ffffff',
-          marginTop: 35,
 
         },
         pickCont: {

@@ -4,6 +4,7 @@ import {Image } from 'react-native-elements';
 import {Colors, Sizes, Fonts} from "../constants/styles.js"
 import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue,set, update } from "firebase/database";
 import { auth } from "../firebase-config.js";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const VeziBilet = ({navigation, route}) =>{
 
@@ -61,6 +62,7 @@ const VeziBilet = ({navigation, route}) =>{
       }, []);
 
       return (
+        <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
         <View style={styles.container}>
         {remainingTime === 'Expirat' ? (
             <Text style={styles.titleExpirat}>Expirat</Text>
@@ -85,6 +87,7 @@ const VeziBilet = ({navigation, route}) =>{
             </View>
         )}
     </View>
+    </SafeAreaView>
       );
     };
 

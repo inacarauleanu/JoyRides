@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator }
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { auth } from "../firebase-config.js";
 import { Colors, Sizes, Fonts } from "../constants/styles.js";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Favorites = ({navigation}) => {
   const [favorites, setFavorites] = useState([]);
@@ -41,6 +42,7 @@ const Favorites = ({navigation}) => {
   }
 
   return (
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style={styles.container}>
       <Text style={styles.title}>Favorite</Text>
       
@@ -69,6 +71,7 @@ const Favorites = ({navigation}) => {
         <Text>Nicio stație favorită</Text>
       )}
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -77,7 +80,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#ffffff',
-    marginTop: 35,
     alignContent:"center",
     alignItems: 'center'
   },

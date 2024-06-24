@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, ScrollView } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -15,8 +16,7 @@ const VeziStatie = ({ route }) => {
   const fetchRatingsData = () => {
     const db = getDatabase();
     const ratingsRef = ref(db, `stops/${stop_id}/ratings`);
-
-    // Ascultăm modificările din 'ratings'
+    
     onValue(ratingsRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -55,6 +55,7 @@ const VeziStatie = ({ route }) => {
   };
 
   return (
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <ScrollView style={styles.container}>
       <Text style={styles.title}>{stop_name}</Text>
       <View style={styles.imageContainer}>
@@ -80,10 +81,13 @@ const VeziStatie = ({ route }) => {
             strokeWidth: 2,
             stroke: '#ffa726',
           },
+          barPercentage: 0.4, 
+          categoryPercentage: 0.6, 
         }}
         style={styles.chart}
       />
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 35,
     marginBottom: 10,
   },
   imageContainer: {

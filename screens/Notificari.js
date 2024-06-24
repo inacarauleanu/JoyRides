@@ -8,6 +8,7 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { getDatabase, ref, onValue, off, query, orderByChild, orderByValue, update, remove } from "firebase/database";
 import { auth } from "../firebase-config.js";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -167,6 +168,7 @@ const Notificari = ({navigation}) =>{
     return <ActivityIndicator size="large" color={Colors.babyOrange}/>;
   }
     return (
+      <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
         <View style={styles.container}>
           <Text style={styles.title}>Notificări</Text>
           {notificari.length ? ( 
@@ -218,6 +220,7 @@ const Notificari = ({navigation}) =>{
                 onPress = {()=>navigation.navigate('AdaugaNotififcare')}
           />
         </View>
+        </SafeAreaView>
       );
     };
 
@@ -226,7 +229,6 @@ const Notificari = ({navigation}) =>{
         flex: 1,
         padding: 20,
         backgroundColor: '#ffffff',
-        marginTop: 35,
         alignContent: "center",
         alignItems: 'center'
       },
