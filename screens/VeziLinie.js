@@ -12,6 +12,7 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import { startBackgroundLocationUpdates, stopBackgroundLocationUpdates } from "./BackgroundTasks.js";
 import * as Notifications from "expo-notifications";
 import RatingComponent from "../components/RatingComponent.js";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const VeziLinie = ({ route, navigation }) => {
@@ -1056,6 +1057,7 @@ const navigateToStreetView = (stop_id, stop_name, lat, lng) => {
 };
 
   return (
+    <SafeAreaView style={{flex:1, backgroundColor: "white" }} >
     <View style={styles.container}>
       {/*<Text style={styles.lineTitle}>{lineParams.line}</Text>*/}
       {loading ? <ActivityIndicator size="small" color="#0000ff" /> : 
@@ -1371,6 +1373,7 @@ const navigateToStreetView = (stop_id, stop_name, lat, lng) => {
       </View>
       </SlidingUpPanel>
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -1379,7 +1382,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#ffffff',
-    marginTop: 35,
   },
   map: {
     flex: 1,
